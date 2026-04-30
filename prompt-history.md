@@ -125,6 +125,18 @@ reader. Keep this updated going forward.
 
 ---
 
+### Prompt 5 — Create AGENTS.md, CLAUDE.md, and implementation plan
+
+```
+Read the PRD and 1. create an AGENTS.md with appropriate context setting for the project
+and a CLAUDE.md that references the AGENTS.md, and 2. create a full implementation plan
+with tasks lists for the project, breaking it into logical phases.
+```
+
+> **What happened:** Claude created three files: `AGENTS.md` (project context, tech stack, DS rules, architecture decisions, file conventions, and anti-patterns), `CLAUDE.md` (concise reference pointing to AGENTS.md with quick rules), and `implementation-plan.md` (9-phase plan with 52 tasks covering scaffolding through polish, including a dependency graph). Key technique: AGENTS.md is the portable context file — any AI tool or team member can read it and understand the project constraints.
+
+---
+
 ## Best Practices Observed
 
 1. **Start with "interview me"** — Asking Claude to interview you before generating anything produces much better requirements coverage than trying to write everything upfront.
