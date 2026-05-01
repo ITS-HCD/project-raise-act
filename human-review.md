@@ -6,8 +6,6 @@ Manual edits made after each phase are documented here. Each entry should includ
 
 ## Phase 1: Project Scaffolding & DS Integration
 
-**Status:** Complete — reviewed
-
 **Manual edits after review:**
 
 - Removed `nysLogo` from `NysGlobalHeader`. Phase 1 output included it but `nys-globalheader` does not use this prop since the Unavheader was included. This was a misunderstanding of the design system documentation. The PRD specifies to include the Unavheader, which already contains the NYS logo, so the `nysLogo` prop is not needed and should be omitted to avoid confusion.
@@ -16,9 +14,9 @@ Manual edits made after each phase are documented here. Each entry should includ
 
 ## Phase 2: Application Shell & Routing
 
-**Status:** Not started
-
 **Manual edits after review:**
+
+- Needed to prompt to rename step files from BusinessInfo.tsx to 01-BusinessInfo.tsx, etc. to ensure they are ordered correctly in the file system for easy human reference. This was not specified in the original implementation plan but is necessary for proper organization and to match the expected step order in the UI. The PRD does not explicitly state file naming conventions for steps, so this was an oversight that required manual intervention to correct.
 
 ---
 
