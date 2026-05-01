@@ -10,20 +10,20 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ### Tasks
 
-- [ ] 1.1 — Scaffold Vite project with React + TypeScript template (`npm create vite@latest`)
-- [ ] 1.2 — Install dependencies: `react-router-dom`, `@lit/react`, NYSDS packages (`@nysds/components`)
-- [ ] 1.3 — Configure TypeScript strict mode in `tsconfig.json`
-- [ ] 1.4 — Set up font loading: import `nysds-fonts.css` in `src/styles/app.css`, verify font file paths resolve from `/fonts/`
-- [ ] 1.5 — Apply `business` theme: set `data-theme="business"` on the root `<html>` element
-- [ ] 1.6 — Import NYSDS global styles (grid utility classes, reset) in `app.css`
-- [ ] 1.7 — Create `@lit/react` wrappers for all DS components used (see PRD section 7):
+- [x] 1.1 — Scaffold Vite project with React + TypeScript template (`npm create vite@latest`)
+- [x] 1.2 — Install dependencies: `react-router-dom`, `@lit/react`, NYSDS packages (`@nysds/components`, `@nysds/styles`)
+- [x] 1.3 — Configure TypeScript strict mode in `tsconfig.json`
+- [x] 1.4 — Set up font loading: `@font-face` declarations in `src/styles/app.css` pointing to `/fonts/` (files in `public/fonts/`)
+- [x] 1.5 — Apply `business` theme: set `data-theme="business"` on the root `<html>` element
+- [x] 1.6 — Import NYSDS global styles (`@nysds/styles/full` — reset, typography, grid utilities, CSS variables) in `app.css`
+- [x] 1.7 — Create wrappers for all DS components used (re-exports of `@nysds/components/react` — NYSDS ships its own React wrappers):
   - `NysUnavHeader`, `NysGlobalHeader`, `NysGlobalFooter`, `NysUnavFooter`
   - `NysStepper`, `NysStep`
   - `NysButton`, `NysTextinput`, `NysTextarea`, `NysSelect`, `NysDatepicker`
   - `NysRadiogroup`, `NysRadiobutton`
   - `NysCheckbox`, `NysFileinput`
   - `NysIcon`, `NysDivider`, `NysAlert`
-- [ ] 1.8 — Verify: render a page with `nys-unavheader`, `nys-globalheader`, and a `nys-button` — confirm theme colors, fonts, and component rendering all work
+- [x] 1.8 — Verify: `App.tsx` renders `nys-unavheader`, `nys-globalheader`, and `nys-button` — dev server confirmed 200 on all assets, fonts load from `/fonts/`, TypeScript passes with strict mode
 
 **Deliverable:** Empty app shell with DS components rendering, correct theme, and fonts.
 
