@@ -35,18 +35,18 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ### Tasks
 
-- [ ] 2.1 — Set up React Router with routes (see PRD section 2 — Routes table):
+- [x] 2.1 — Set up React Router with routes (see PRD section 2 — Routes table):
   - `/register/business-info` through `/register/review` + `/register/success`
   - Redirect `/` and `/register` to `/register/business-info`
-- [ ] 2.2 — Build `AppShell.tsx`: full layout with `nys-unavheader`, `nys-globalheader` (appName="RAISE", agencyName="Department of Financial Services"), grid container, `nys-globalfooter`, `nys-unavfooter`
-- [ ] 2.3 — Add `nys-stepper` in left sidebar (col-3) with 6 `nys-step` children, each with `href` matching its route
-- [ ] 2.4 — Add "Save and Exit" button in stepper's `actions` slot
-- [ ] 2.5 — Wire stepper navigation: listen for `nys-step-click` events, `preventDefault()`, use React Router `navigate()`
-- [ ] 2.6 — Render `<Outlet />` in the right main area (col-9) for step content
-- [ ] 2.7 — Create placeholder components for all 6 steps + success page (just headings for now)
-- [ ] 2.8 — Build `StepNavigation.tsx`: reusable Back + Continue button pair. Props: `onBack`, `onContinue`, `showBack` (false for step 1), `continueLabel` (default "Continue", "Continue to review" for step 5, "Submit" for step 6)
-- [ ] 2.9 — Manage stepper state: track `currentStep` (furthest reached) and `selectedStep` (currently viewing). Update `current` and `selected` attributes on `nys-step` elements as user navigates.
-- [ ] 2.10 — Verify: click through all steps via Continue/Back, confirm stepper highlights correctly, completed steps are clickable, future steps are not
+- [x] 2.2 — Build `AppShell.tsx`: full layout with `nys-unavheader`, `nys-globalheader` (appName="RAISE", agencyName="Department of Financial Services"), grid container, `nys-globalfooter`, `nys-unavfooter`
+- [x] 2.3 — Add `nys-stepper` in left sidebar (col-3) with 6 `nys-step` children, each with `href` matching its route
+- [x] 2.4 — Add "Save and Exit" button in stepper's `actions` slot
+- [x] 2.5 — Wire stepper navigation: listen for `nys-step-click` events, `preventDefault()`, use React Router `navigate()`
+- [x] 2.6 — Render `<Outlet />` in the right main area (col-9) for step content
+- [x] 2.7 — Create placeholder components for all 6 steps + success page (just headings for now)
+- [x] 2.8 — Build `StepNavigation.tsx`: reusable Back + Continue button pair. Props: `onBack`, `onContinue`, `showBack` (false for step 1), `continueLabel` (default "Continue", "Continue to review" for step 5, "Submit" for step 6)
+- [x] 2.9 — Manage stepper state: track `currentStep` (furthest reached) and `selectedStep` (currently viewing). Update `current` and `selected` attributes on `nys-step` elements as user navigates.
+- [x] 2.10 — Verify: click through all steps via Continue/Back, confirm stepper highlights correctly, completed steps are clickable, future steps are not
 
 **Deliverable:** Fully navigable wizard shell with working stepper, headers, footers, and route-based step switching.
 
