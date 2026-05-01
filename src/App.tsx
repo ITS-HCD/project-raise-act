@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AppShell from './components/AppShell';
-import BusinessInfo from './steps/BusinessInfo';
-import Addresses from './steps/Addresses';
-import Ownership from './steps/Ownership';
-import Contacts from './steps/Contacts';
-import Documents from './steps/Documents';
-import ReviewCertify from './steps/ReviewCertify';
-import SuccessPage from './steps/SuccessPage';
+import BusinessInfo from './steps/01-BusinessInfo';
+import Addresses from './steps/02-Addresses';
+import Ownership from './steps/03-Ownership';
+import Contacts from './steps/04-Contacts';
+import Documents from './steps/05-Documents';
+import ReviewCertify from './steps/06-ReviewCertify';
+import SuccessPage from './steps/07-SuccessPage';
 
 export default function App() {
   return (

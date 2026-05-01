@@ -1,5 +1,4 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { NysUnavHeader } from './wrappers/NysUnavHeader';
 import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
 import { NysStepper } from './wrappers/NysStepper';
@@ -25,14 +24,9 @@ function routeToStepIndex(pathname: string): number {
 export default function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [currentStep, setCurrentStep] = useState(0);
 
   const selectedStep = routeToStepIndex(location.pathname);
-
-  // Advance furthest-reached step when user navigates forward
-  useEffect(() => {
-    setCurrentStep(prev => Math.max(prev, selectedStep));
-  }, [selectedStep]);
+  const currentStep = STEPS.length - 1;
 
   return (
     <>
