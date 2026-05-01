@@ -11,7 +11,6 @@ function App() {
       <NysGlobalHeader
         appName="RAISE"
         agencyName="Department of Financial Services"
-        nysLogo
       />
       <main style={{ padding: 'var(--nys-space-400)' }}>
         <h1 style={{ fontFamily: 'var(--nys-font-heading)', marginBottom: 'var(--nys-space-300)' }}>
