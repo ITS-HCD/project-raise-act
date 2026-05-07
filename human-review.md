@@ -18,6 +18,8 @@ Manual edits made after each phase are documented here. Each entry should includ
 
 - Needed to prompt to rename step files from BusinessInfo.tsx to 01-BusinessInfo.tsx, etc. to ensure they are ordered correctly in the file system for easy human reference. This was not specified in the original implementation plan but is necessary for proper organization and to match the expected step order in the UI. The PRD does not explicitly state file naming conventions for steps, so this was an oversight that required manual intervention to correct.
 
+- Stepper state still not correct, will need to update documentation so moving back and forth is properly managed by state
+
 ---
 
 ## Phase 3: Step 1 — Business Information Form

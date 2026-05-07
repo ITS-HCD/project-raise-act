@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { RegistrationProvider } from './context/RegistrationContext';
 import AppShell from './components/AppShell';
 import BusinessInfo from './steps/01-BusinessInfo';
 import Addresses from './steps/02-Addresses';
@@ -10,6 +11,7 @@ import SuccessPage from './steps/07-SuccessPage';
 
 export default function App() {
   return (
+    <RegistrationProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/register/business-info" replace />} />
@@ -25,5 +27,6 @@ export default function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </RegistrationProvider>
   );
 }

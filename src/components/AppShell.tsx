@@ -6,6 +6,8 @@ import { NysStep } from './wrappers/NysStep';
 import { NysButton } from './wrappers/NysButton';
 import { NysGlobalFooter } from './wrappers/NysGlobalFooter';
 import { NysUnavFooter } from './wrappers/NysUnavFooter';
+import { useRegistration } from '../context/RegistrationContext';
+import { saveRegistration } from '../api/stubs';
 
 const STEPS = [
   { label: 'Business Info', route: '/register/business-info' },
@@ -24,9 +26,15 @@ function routeToStepIndex(pathname: string): number {
 export default function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { data } = useRegistration();
 
   const selectedStep = routeToStepIndex(location.pathname);
   const currentStep = STEPS.length - 1;
+
+  async function handleSaveAndExit() {
+    await saveRegistration(selectedStep + 1, data);
+    navigate('/');
+  }
 
   return (
     <>
@@ -61,6 +69,7 @@ export default function AppShell() {
                 variant="outline"
                 size="sm"
                 fullWidth
+                onNysClick={handleSaveAndExit}
               />
             </div>
           </NysStepper>

@@ -58,16 +58,16 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ### Tasks
 
-- [ ] 3.1 — Define TypeScript interfaces in `src/types/registration.ts`: `RegistrationData`, `Address`, `Owner`, `Contact` (see PRD section 4)
-- [ ] 3.2 — Build `RegistrationContext.tsx`: React Context + `useReducer` with actions for updating each section of form data (businessInfo, addresses, ownership, contacts, documents, certification)
-- [ ] 3.3 — Define initial state with empty/default values for all fields
-- [ ] 3.4 — Wrap the router in `RegistrationProvider` so all steps can access form state
-- [ ] 3.5 — Build API stubs in `src/api/stubs.ts`:
+- [x] 3.1 — Define TypeScript interfaces in `src/types/registration.ts`: `RegistrationData`, `Address`, `Owner`, `Contact` (see PRD section 4)
+- [x] 3.2 — Build `RegistrationContext.tsx`: React Context + `useReducer` with actions for updating each section of form data (businessInfo, addresses, ownership, contacts, documents, certification)
+- [x] 3.3 — Define initial state with empty/default values for all fields
+- [x] 3.4 — Wrap the router in `RegistrationProvider` so all steps can access form state
+- [x] 3.5 — Build API stubs in `src/api/stubs.ts`:
   - `saveRegistration(step, data)` — POST stub with ~500ms delay, returns `{ success, registrationId }`
   - `submitRegistration(data)` — POST stub, returns `{ success, registrationId, submittedAt }`
   - `loadRegistration(id)` — GET stub, returns `{ data, currentStep }`
-- [ ] 3.6 — Wire "Save and Exit" button to call `saveRegistration` with current form state
-- [ ] 3.7 — Verify: update form state from one step, navigate away and back, confirm data persists
+- [x] 3.6 — Wire "Save and Exit" button to call `saveRegistration` with current form state
+- [x] 3.7 — Verify: update form state from one step, navigate away and back, confirm data persists
 
 **Deliverable:** Form state context that all steps can read and write, with stubbed API endpoints.
 
