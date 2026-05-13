@@ -130,17 +130,17 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ### Tasks
 
-- [ ] 6.1 — **Step 1: Business Info** (`src/steps/BusinessInfo.tsx`)
+- [x] 6.1 — **Step 1: Business Info** (`src/steps/BusinessInfo.tsx`)
   - Legal Company Name: nys-textinput, required
   - Additional Names: nys-textarea + RepeatableFieldGroup for adding/removing names
   - Ownership Structure: nys-radiogroup with two nys-radiobutton options
   - Wire all fields to RegistrationContext (read initial values, dispatch on change)
   - Continue button triggers step validation, advances to step 2 on success
-- [ ] 6.2 — **Step 2: Addresses** (`src/steps/Addresses.tsx`)
+- [x] 6.2 — **Step 2: Addresses** (`src/steps/Addresses.tsx`)
   - Section A — Principal address: Street, Suite, City, State (nys-select with all US states/territories), Zip (width="md", pattern validation)
   - Section B — NY office addresses: RepeatableFieldGroup with same address field set, summary shows formatted address string
   - Wire to context, validate on Continue
-- [ ] 6.3 — Verify: complete steps 1 and 2 with valid data, confirm data persists in context, navigate back and forth, trigger validation errors
+- [x] 6.3 — Verify: complete steps 1 and 2 with valid data, confirm data persists in context, navigate back and forth, trigger validation errors
 
 **Deliverable:** Steps 1 and 2 fully functional with validation and state management.
 
