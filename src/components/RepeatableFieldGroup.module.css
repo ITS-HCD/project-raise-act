@@ -1,0 +1,38 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nys-space-200);
+}
+
+.card {
+  background: var(--nys-color-ink-reverse);
+  border: 1px solid var(--nys-color-neutral-200);
+  border-radius: var(--nys-radius-md);
+  box-shadow: var(--nys-shadow-sm);
+  padding: var(--nys-space-300);
+}
+
+.cardContent {
+  margin-bottom: var(--nys-space-200);
+}
+
+.cardActions {
+  display: flex;
+  gap: var(--nys-space-100);
+}
+
+.formPanel {
+  border: 1px solid var(--nys-color-neutral-200);
+  border-radius: var(--nys-radius-md);
+  padding: var(--nys-space-300);
+}
+
+.formActions {
+  display: flex;
+  gap: var(--nys-space-100);
+  margin-top: var(--nys-space-300);
+}
+
+.addRow {
+  margin-top: var(--nys-space-200);
+}

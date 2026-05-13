@@ -100,7 +100,7 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ### Tasks
 
-- [ ] 5.1 — Build `RepeatableFieldGroup.tsx`:
+- [x] 5.1 — Build `RepeatableFieldGroup.tsx`:
   - Accepts a render prop or child function for the form fields of each entry
   - Manages a list of entries with add / edit / remove operations
   - "+ Add" button (nys-button, outline, sm)
@@ -108,17 +108,17 @@ Reference: `raise-act-prd.md` for detailed specs.
   - Edit mode swaps the summary card for the inline form
   - Accessible: `aria-live` region for list updates, `aria-label` on each entry
   - Styled with DS tokens only
-- [ ] 5.2 — Build `ReviewSection.tsx`:
+- [x] 5.2 — Build `ReviewSection.tsx`:
   - Props: `title`, `editRoute`, `children`
   - Renders section heading with "Edit Section" link (nys-button, text variant, navigates to `editRoute`)
   - Children slot for key-value content
   - Separated with `nys-divider` between sections
   - Styled with DS tokens only
-- [ ] 5.3 — Build `SuccessConfirmation.tsx`:
+- [x] 5.3 — Build `SuccessConfirmation.tsx`:
   - Full-width layout (no stepper sidebar)
   - nys-icon with check_circle, heading, body text with `registrationId` and `submittedAt`, "Home" nys-button
   - Styled with DS tokens only
-- [ ] 5.4 — Verify: render each component in isolation, confirm correct layout and DS token usage
+- [x] 5.4 — Verify: render each component in isolation, confirm correct layout and DS token usage
 
 **Deliverable:** Reusable custom components ready for step integration.
 

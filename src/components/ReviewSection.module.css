@@ -1,0 +1,16 @@
+.section {
+  margin-bottom: var(--nys-space-400);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--nys-space-200);
+}
+
+.title {
+  font-size: var(--nys-font-size-lg);
+  font-weight: var(--nys-font-weight-semibold);
+  margin: 0;
+}
