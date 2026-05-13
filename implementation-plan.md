@@ -79,16 +79,16 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ### Tasks
 
-- [ ] 4.1 — Build `src/utils/validation.ts` with validators:
+- [x] 4.1 — Build `src/utils/validation.ts` with validators:
   - `isRequired(value)` — non-empty after trim
   - `isValidEmail(value)` — email format (supplement DS built-in)
   - `isValidPhone(value)` — US phone format
   - `isValidZip(value)` — 5 or 9 digit (XXXXX or XXXXX-XXXX)
   - `isValidPercentage(value)` — number 0-100
   - `isDateAfter(date, referenceDate)` — for end date > start date
-- [ ] 4.2 — Build a `validateStep(stepNumber, data)` function that returns a map of field names to error messages
-- [ ] 4.3 — Build a `useStepValidation` hook that integrates validation with component error state (`showError`, `errorMessage` props) and scrolls to the first error on Continue click
-- [ ] 4.4 — Verify: trigger validation on a step with empty required fields, confirm error messages appear on the correct components
+- [x] 4.2 — Build a `validateStep(stepNumber, data)` function that returns a map of field names to error messages
+- [x] 4.3 — Build a `useStepValidation` hook that integrates validation with component error state (`showError`, `errorMessage` props) and scrolls to the first error on Continue click
+- [x] 4.4 — Verify: trigger validation on a step with empty required fields, confirm error messages appear on the correct components
 
 **Deliverable:** Validation layer ready for integration into each step.
 
