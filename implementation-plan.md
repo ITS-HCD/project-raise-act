@@ -152,17 +152,17 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ### Tasks
 
-- [ ] 7.1 — **Step 3: Ownership** (`src/steps/Ownership.tsx`)
+- [x] 7.1 — **Step 3: Ownership** (`src/steps/Ownership.tsx`)
   - Section A — Current beneficial owners: RepeatableFieldGroup with Owner Type radio (Person/Entity), conditional fields (first/last name for Person, entity name for Entity), Percentage Owned (number, width="sm"), Start Date (nys-datepicker)
   - Section B — Former beneficial owners: same fields + End Date (nys-datepicker, must be after Start Date)
   - Summary cards show "Name - Type" with percentage and date
   - Wire to context, validate on Continue
-- [ ] 7.2 — **Step 4: Contacts** (`src/steps/Contacts.tsx`)
+- [x] 7.2 — **Step 4: Contacts** (`src/steps/Contacts.tsx`)
   - Three contact sections (Primary, Secondary, Tertiary) using a shared `ContactFields` sub-component
   - Primary: all fields required. Secondary/Tertiary: all fields optional
   - Fields: First Name, Last Name, Title, Business Phone (type="tel"), Business Email (type="email")
   - Wire to context, validate on Continue
-- [ ] 7.3 — Verify: add multiple owners (both current and former), confirm conditional fields toggle correctly, fill all three contacts, validate
+- [x] 7.3 — Verify: add multiple owners (both current and former), confirm conditional fields toggle correctly, fill all three contacts, validate
 
 **Deliverable:** Steps 3 and 4 fully functional.
 

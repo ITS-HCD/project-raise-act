@@ -1,19 +1,295 @@
 import { useNavigate } from 'react-router-dom';
+import { useRegistration } from '../context/RegistrationContext';
+import { useStepValidation } from '../utils/useStepValidation';
+import { NysTextinput } from '../components/wrappers/NysTextinput';
+import { NysRadiogroup } from '../components/wrappers/NysRadiogroup';
+import { NysRadiobutton } from '../components/wrappers/NysRadiobutton';
+import { NysDatepicker } from '../components/wrappers/NysDatepicker';
+import { NysDivider } from '../components/wrappers/NysDivider';
+import { RepeatableFieldGroup } from '../components/RepeatableFieldGroup';
 import StepNavigation from '../components/StepNavigation';
+import type { Owner } from '../types/registration';
+
+const EMPTY_CURRENT_OWNER: Owner = {
+  type: 'person',
+  firstName: '',
+  lastName: '',
+  entityName: '',
+  percentageOwned: NaN,
+  startDate: '',
+};
+
+const EMPTY_FORMER_OWNER: Owner = {
+  ...EMPTY_CURRENT_OWNER,
+  endDate: '',
+};
+
+function getOwnerDisplayName(owner: Owner): string {
+  if (owner.type === 'person') {
+    return `${owner.firstName} ${owner.lastName}`.trim() || '(unnamed)';
+  }
+  return owner.entityName || '(unnamed)';
+}
+
+function OwnerFormFields({
+  owner,
+  onChange,
+  isFormer = false,
+}: {
+  owner: Owner;
+  onChange: (o: Owner) => void;
+  isFormer?: boolean;
+}) {
+  function handleInput(field: keyof Owner) {
+    return (e: Event) => {
+      const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
+      onChange({ ...owner, [field]: value });
+    };
+  }
+
+  function handleDateInput(field: 'startDate' | 'endDate') {
+    return (e: Event) => {
+      const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
+      onChange({ ...owner, [field]: value });
+    };
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--nys-space-300)' }}>
+      <NysRadiogroup label="Owner Type" required>
+        <NysRadiobutton
+          name="ownerType"
+          value="person"
+          label="Person"
+          checked={owner.type === 'person'}
+          onNysChange={(e: Event) => {
+            const { checked } = (e as CustomEvent<{ checked: boolean; value: string }>).detail;
+            if (checked) onChange({ ...owner, type: 'person' });
+          }}
+        />
+        <NysRadiobutton
+          name="ownerType"
+          value="entity"
+          label="Entity"
+          checked={owner.type === 'entity'}
+          onNysChange={(e: Event) => {
+            const { checked } = (e as CustomEvent<{ checked: boolean; value: string }>).detail;
+            if (checked) onChange({ ...owner, type: 'entity' });
+          }}
+        />
+      </NysRadiogroup>
+
+      {owner.type === 'person' && (
+        <>
+          <NysTextinput
+            label="Owner First Name"
+            required
+            value={owner.firstName}
+            onNysInput={handleInput('firstName')}
+          />
+          <NysTextinput
+            label="Owner Last Name"
+            required
+            value={owner.lastName}
+            onNysInput={handleInput('lastName')}
+          />
+        </>
+      )}
+
+      {owner.type === 'entity' && (
+        <NysTextinput
+          label="Entity Name"
+          required
+          value={owner.entityName}
+          onNysInput={handleInput('entityName')}
+        />
+      )}
+
+      <NysTextinput
+        label="Percentage Owned"
+        type="number"
+        width="sm"
+        required
+        value={isNaN(owner.percentageOwned) ? '' : String(owner.percentageOwned)}
+        min={0}
+        max={100}
+        onNysInput={(e: Event) => {
+          const raw = (e as CustomEvent<{ value: string }>).detail.value;
+          onChange({ ...owner, percentageOwned: raw === '' ? NaN : Number(raw) });
+        }}
+      />
+
+      <NysDatepicker
+        label="Ownership Start Date"
+        required
+        value={owner.startDate || undefined}
+        onNysInput={handleDateInput('startDate')}
+      />
+
+      {isFormer && (
+        <NysDatepicker
+          label="Ownership End Date"
+          required
+          value={owner.endDate || undefined}
+          onNysInput={handleDateInput('endDate')}
+        />
+      )}
+    </div>
+  );
+}
+
+function OwnerSummary({ owner, isFormer }: { owner: Owner; isFormer: boolean }) {
+  const name = getOwnerDisplayName(owner);
+  const type = owner.type === 'person' ? 'Person' : 'Entity';
+  const pct = isNaN(owner.percentageOwned) ? '' : `${owner.percentageOwned}%`;
+
+  return (
+    <div>
+      <strong style={{ fontFamily: 'var(--nys-font-body)' }}>
+        {name} — {type}
+      </strong>
+      <div
+        style={{
+          fontFamily: 'var(--nys-font-body)',
+          fontSize: 'var(--nys-font-size-sm)',
+          color: 'var(--nys-color-text-secondary)',
+          marginTop: 'var(--nys-space-100)',
+        }}
+      >
+        {[
+          pct && `${pct} owned`,
+          owner.startDate && `Start: ${owner.startDate}`,
+          isFormer && owner.endDate && `End: ${owner.endDate}`,
+        ]
+          .filter(Boolean)
+          .join(' · ')}
+      </div>
+    </div>
+  );
+}
 
 export default function Ownership() {
   const navigate = useNavigate();
+  const { data, dispatch } = useRegistration();
+  const { validate } = useStepValidation(3, data);
+
+  const { current, former } = data.ownership;
+
+  function handleContinue() {
+    if (validate()) navigate('/register/contacts');
+  }
+
   return (
     <div style={{ padding: 'var(--nys-space-400)' }}>
-      <h2 style={{ fontFamily: 'var(--nys-font-heading)', marginBottom: 'var(--nys-space-300)' }}>
-        Step 3: Ownership
+      <h2
+        style={{
+          fontFamily: 'var(--nys-font-heading)',
+          fontSize: 'var(--nys-font-size-3xl)',
+          marginBottom: 'var(--nys-space-400)',
+        }}
+      >
+        Ownership
       </h2>
-      <p style={{ color: 'var(--nys-color-text-secondary)', marginBottom: 'var(--nys-space-400)' }}>
-        Ownership fields will be implemented in Phase 7.
+
+      {/* Section A: Current Beneficial Owners */}
+      <h3
+        style={{
+          fontFamily: 'var(--nys-font-heading)',
+          fontSize: 'var(--nys-font-size-xl)',
+          marginBottom: 'var(--nys-space-100)',
+        }}
+      >
+        Current beneficial owners
+      </h3>
+      <p
+        style={{
+          fontFamily: 'var(--nys-font-body)',
+          fontSize: 'var(--nys-font-size-sm)',
+          color: 'var(--nys-color-text-secondary)',
+          marginBottom: 'var(--nys-space-300)',
+        }}
+      >
+        List all individuals or entities with a beneficial ownership interest in the company.
       </p>
+
+      <RepeatableFieldGroup<Owner>
+        items={current}
+        emptyItem={EMPTY_CURRENT_OWNER}
+        addLabel="+ Add additional owner"
+        entryLabel="owner"
+        onAdd={(owner) =>
+          dispatch({ type: 'SET_CURRENT_OWNERS', payload: [...current, owner] })
+        }
+        onUpdate={(index, owner) => {
+          const updated = [...current];
+          updated[index] = owner;
+          dispatch({ type: 'SET_CURRENT_OWNERS', payload: updated });
+        }}
+        onRemove={(index) =>
+          dispatch({
+            type: 'SET_CURRENT_OWNERS',
+            payload: current.filter((_, i) => i !== index),
+          })
+        }
+        renderForm={(item, onChange) => (
+          <OwnerFormFields owner={item} onChange={onChange} isFormer={false} />
+        )}
+        renderSummary={(item) => <OwnerSummary owner={item} isFormer={false} />}
+      />
+
+      <div style={{ margin: 'var(--nys-space-400) 0' }}>
+        <NysDivider />
+      </div>
+
+      {/* Section B: Former Beneficial Owners */}
+      <h3
+        style={{
+          fontFamily: 'var(--nys-font-heading)',
+          fontSize: 'var(--nys-font-size-xl)',
+          marginBottom: 'var(--nys-space-100)',
+        }}
+      >
+        Former beneficial owners
+      </h3>
+      <p
+        style={{
+          fontFamily: 'var(--nys-font-body)',
+          fontSize: 'var(--nys-font-size-sm)',
+          color: 'var(--nys-color-text-secondary)',
+          marginBottom: 'var(--nys-space-300)',
+        }}
+      >
+        List any individuals or entities who previously held a beneficial ownership interest.
+      </p>
+
+      <RepeatableFieldGroup<Owner>
+        items={former}
+        emptyItem={EMPTY_FORMER_OWNER}
+        addLabel="+ Add additional former owner"
+        entryLabel="former owner"
+        onAdd={(owner) =>
+          dispatch({ type: 'SET_FORMER_OWNERS', payload: [...former, owner] })
+        }
+        onUpdate={(index, owner) => {
+          const updated = [...former];
+          updated[index] = owner;
+          dispatch({ type: 'SET_FORMER_OWNERS', payload: updated });
+        }}
+        onRemove={(index) =>
+          dispatch({
+            type: 'SET_FORMER_OWNERS',
+            payload: former.filter((_, i) => i !== index),
+          })
+        }
+        renderForm={(item, onChange) => (
+          <OwnerFormFields owner={item} onChange={onChange} isFormer={true} />
+        )}
+        renderSummary={(item) => <OwnerSummary owner={item} isFormer={true} />}
+      />
+
       <StepNavigation
         onBack={() => navigate('/register/addresses')}
-        onContinue={() => navigate('/register/contacts')}
+        onContinue={handleContinue}
       />
     </div>
   );
