@@ -15,7 +15,7 @@ Execute Phase $ARGUMENTS from the RAISE Act implementation plan.
    - Relevant PRD excerpts
    - NYSDS API facts gathered in step 2
    - File paths and conventions from `AGENTS.md`
-   
+
    Sequential tasks run after their dependencies complete.
 
 5. **Verify** — Run the verification step described in the phase's last task (typically a smoke-test or dev-server check). Fix any issues before proceeding.
