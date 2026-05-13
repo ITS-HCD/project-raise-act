@@ -174,18 +174,18 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ### Tasks
 
-- [ ] 8.1 — **Step 5: Documents** (`src/steps/Documents.tsx`)
+- [x] 8.1 — **Step 5: Documents** (`src/steps/Documents.tsx`)
   - nys-fileinput with `multiple`, `dropzone`, `accept=".pdf,.doc,.docx"`
   - Wire uploaded files to context (store File objects or file metadata)
   - Continue button label: "Continue to review"
-- [ ] 8.2 — **Step 6: Review & Certify** (`src/steps/ReviewCertify.tsx`)
+- [x] 8.2 — **Step 6: Review & Certify** (`src/steps/ReviewCertify.tsx`)
   - Render 5 ReviewSection components (Business Info, Addresses, Ownership, Contacts, Documents)
   - Each section reads from RegistrationContext and displays formatted summary
   - "Edit Section" links navigate to the corresponding step route (stepper shows `selected` on that step, `current` stays on step 6)
   - Certification nys-checkbox, required
   - Submit button calls `submitRegistration` API stub, navigates to `/register/success` on success
-- [ ] 8.3 — **Success page** — Wire `SuccessConfirmation` component with registration ID and submission date from API response
-- [ ] 8.4 — Verify: complete full wizard end-to-end — fill all steps, review all data on step 6, click "Edit Section" links and return, submit, see success page
+- [x] 8.3 — **Success page** — Wire `SuccessConfirmation` component with registration ID and submission date from API response
+- [x] 8.4 — Verify: complete full wizard end-to-end — fill all steps, review all data on step 6, click "Edit Section" links and return, submit, see success page
 
 **Deliverable:** Complete, end-to-end functional registration wizard.
 

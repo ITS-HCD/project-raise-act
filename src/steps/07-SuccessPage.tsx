@@ -1,9 +1,22 @@
+import { useLocation } from 'react-router-dom';
 import { NysUnavHeader } from '../components/wrappers/NysUnavHeader';
 import { NysGlobalHeader } from '../components/wrappers/NysGlobalHeader';
 import { NysGlobalFooter } from '../components/wrappers/NysGlobalFooter';
 import { NysUnavFooter } from '../components/wrappers/NysUnavFooter';
+import { SuccessConfirmation } from '../components/SuccessConfirmation';
+
+interface SuccessState {
+  registrationId: string;
+  submittedAt: string;
+}
 
 export default function SuccessPage() {
+  const location = useLocation();
+  const state = location.state as SuccessState | null;
+
+  const registrationId = state?.registrationId ?? 'REG-2024-00000';
+  const submittedAt = state?.submittedAt ?? new Date().toISOString();
+
   return (
     <>
       <NysUnavHeader hideSearch hideTranslate />
@@ -13,17 +26,11 @@ export default function SuccessPage() {
       />
       <div className="nys-grid-container">
         <div className="nys-grid-row">
-          <main
-            className="nys-grid-col-12"
-            id="main-content"
-            style={{ padding: 'var(--nys-space-600) var(--nys-space-400)', textAlign: 'center' }}
-          >
-            <h1 style={{ fontFamily: 'var(--nys-font-heading)', marginBottom: 'var(--nys-space-300)' }}>
-              Your registration was successfully submitted!
-            </h1>
-            <p style={{ color: 'var(--nys-color-text-secondary)' }}>
-              Success page content will be implemented in Phase 8.
-            </p>
+          <main className="nys-grid-col-12" id="main-content">
+            <SuccessConfirmation
+              registrationId={registrationId}
+              submittedAt={submittedAt}
+            />
           </main>
         </div>
       </div>
