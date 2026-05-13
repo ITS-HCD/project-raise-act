@@ -47,3 +47,33 @@ Session
 **Work performed:** Phase 2 review/corrections — fixed `<nys-stepper>` gating: revert URL-based auto-advance of `currentStep`, advance only on adjacent forward navigation (Continue), redirect URLs past the gate back to `STEPS[currentStep].route`. Fixed `NysStepper.willUpdate` timing bug (children's `current`/`selected` attributes not yet reflected on first render) by holding a stepper ref and calling `requestUpdate()` from `useLayoutEffect`. Renamed `src/steps/*.tsx` to `NN-Name.tsx` pattern (`01-BusinessInfo.tsx` … `07-SuccessPage.tsx`) for visible step ordering and updated imports in `App.tsx`.
 
 ---
+## Phase 3 — Form State & Data Layer
+
+| Field | Value |
+| --- | --- |
+| Date | 2026-05-06 |
+| Model | claude-sonnet-4-6 |
+| Input tokens | _(copy from CLI session summary)_ |
+| Output tokens | _(copy from CLI session summary)_ |
+| Cache read tokens | _(copy from CLI session summary)_ |
+| Total cost | _(copy from CLI session summary)_ |
+
+**Work performed:** TypeScript interfaces in `src/types/registration.ts` (RegistrationData, Address, Owner, Contact), RegistrationContext with useReducer and typed actions, initial state, RegistrationProvider wrapping the router, API stubs in `src/api/stubs.ts` (saveRegistration, submitRegistration, loadRegistration with ~500ms delay), Save and Exit button wired to saveRegistration.
+
+---
+
+## Phase 4 — Validation Utilities
+
+| Field | Value |
+| --- | --- |
+| Date | 2026-05-13 |
+| Model | claude-sonnet-4-6 |
+| Input tokens | _(copy from CLI session summary)_ |
+| Output tokens | _(copy from CLI session summary)_ |
+| Cache read tokens | _(copy from CLI session summary)_ |
+| Total cost | _(copy from CLI session summary)_ |
+
+**Work performed:** `src/utils/validation.ts` — primitive validators (isRequired, isValidEmail, isValidPhone, isValidZip, isValidPercentage, isDateAfter) and `validateStep(stepNumber, data)` returning dot-notation keyed error maps for steps 1–4 and 6. `src/utils/useStepValidation.ts` — hook that wraps validateStep, exposes `getFieldProps(fieldName)` returning `{ showError, errorMessage }` for NYSDS components, and scroll-to-first-error on validation failure. NYSDS MCP queried for showError/errorMessage API on nys-textinput, nys-select, nys-radiogroup, nys-datepicker, nys-checkbox, nys-textarea. All validators smoke-tested with tsx against real types.
+
+---
+
