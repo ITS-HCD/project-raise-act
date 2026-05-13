@@ -127,7 +127,7 @@ export default function Contacts() {
           marginBottom: 'var(--nys-space-200)',
         }}
       >
-        Contacts
+        Point of Contact
       </h2>
       <p
         style={{
@@ -137,9 +137,9 @@ export default function Contacts() {
           marginBottom: 'var(--nys-space-400)',
         }}
       >
-        Provide contact information for company representatives who can be reached regarding this
-        registration.
+        This contact is responsible for receiving inquiries from the office or other governmental entities.
       </p>
+      <div style={{ margin: 'var(--nys-space-300) 0' }}><NysDivider /></div>
 
       {/* Primary Contact */}
       <h3

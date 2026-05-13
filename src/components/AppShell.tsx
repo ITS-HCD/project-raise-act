@@ -1,4 +1,5 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { NysUnavHeader } from './wrappers/NysUnavHeader';
 import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
 import { NysStepper } from './wrappers/NysStepper';
@@ -30,6 +31,14 @@ export default function AppShell() {
 
   const selectedStep = routeToStepIndex(location.pathname);
   const currentStep = STEPS.length - 1;
+
+  useEffect(() => {
+    const el = document.querySelector<HTMLElement>('#main-content h1, #main-content h2');
+    if (el) {
+      if (!el.getAttribute('tabindex')) el.setAttribute('tabindex', '-1');
+      el.focus();
+    }
+  }, [location.pathname]);
 
   async function handleSaveAndExit() {
     await saveRegistration(selectedStep + 1, data);

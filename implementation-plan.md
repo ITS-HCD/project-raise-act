@@ -197,15 +197,15 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ### Tasks
 
-- [ ] 9.1 — Test at desktop (>=1024px), tablet (768-1023px), and mobile (<768px) widths
-- [ ] 9.2 — Confirm stepper collapses to compact view on tablet/mobile
-- [ ] 9.3 — Confirm form fields stack vertically on mobile, buttons are full-width
-- [ ] 9.4 — Compare each step against its screenshot — adjust spacing, field widths, section headings, divider placement
-- [ ] 9.5 — Keyboard navigation: tab through all fields and buttons in order, confirm focus management
-- [ ] 9.6 — Screen reader testing: verify form labels, error messages announced, stepper state communicated
-- [ ] 9.7 — Focus management: when navigating between steps, focus moves to the step heading or first field
-- [ ] 9.8 — Error scroll: on validation failure, scroll to and focus the first field with an error
-- [ ] 9.9 — Verify: full end-to-end walkthrough at each breakpoint, no layout breaks, all interactions accessible
+- [x] 9.1 — Test at desktop (>=1024px), tablet (768-1023px), and mobile (<768px) widths
+- [x] 9.2 — Confirm stepper collapses to compact view on tablet/mobile
+- [x] 9.3 — Confirm form fields stack vertically on mobile, buttons are full-width
+- [x] 9.4 — Compare each step against its screenshot — adjust spacing, field widths, section headings, divider placement
+- [x] 9.5 — Keyboard navigation: tab through all fields and buttons in order, confirm focus management
+- [x] 9.6 — Screen reader testing: verify form labels, error messages announced, stepper state communicated
+- [x] 9.7 — Focus management: when navigating between steps, focus moves to the step heading or first field
+- [x] 9.8 — Error scroll: on validation failure, scroll to and focus the first field with an error
+- [x] 9.9 — Verify: full end-to-end walkthrough at each breakpoint, no layout breaks, all interactions accessible
 
 **Deliverable:** Production-quality, accessible, responsive registration portal.
 

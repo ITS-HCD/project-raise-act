@@ -1,11 +1,12 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegistration } from '../context/RegistrationContext';
 import { useStepValidation } from '../utils/useStepValidation';
 import { NysTextinput } from '../components/wrappers/NysTextinput';
-import { NysTextarea } from '../components/wrappers/NysTextarea';
 import { NysRadiogroup } from '../components/wrappers/NysRadiogroup';
 import { NysRadiobutton } from '../components/wrappers/NysRadiobutton';
-import { RepeatableFieldGroup } from '../components/RepeatableFieldGroup';
+import { NysButton } from '../components/wrappers/NysButton';
+import { NysDivider } from '../components/wrappers/NysDivider';
 import StepNavigation from '../components/StepNavigation';
 
 export default function BusinessInfo() {
@@ -14,6 +15,8 @@ export default function BusinessInfo() {
   const { validate, getFieldProps } = useStepValidation(1, data);
 
   const { legalName, additionalNames, ownershipStructure } = data.businessInfo;
+
+  const [nameInput, setNameInput] = useState('');
 
   function handleContinue() {
     if (validate()) navigate('/register/addresses');
@@ -28,6 +31,23 @@ export default function BusinessInfo() {
     dispatch({ type: 'UPDATE_BUSINESS_INFO', payload: { ownershipStructure: value } });
   }
 
+  function handleAddName() {
+    if (nameInput.trim()) {
+      dispatch({
+        type: 'UPDATE_BUSINESS_INFO',
+        payload: { additionalNames: [...additionalNames, nameInput.trim()] },
+      });
+      setNameInput('');
+    }
+  }
+
+  function handleRemoveName(index: number) {
+    dispatch({
+      type: 'UPDATE_BUSINESS_INFO',
+      payload: { additionalNames: additionalNames.filter((_, i) => i !== index) },
+    });
+  }
+
   const legalNameProps = getFieldProps('legalName');
   const ownershipProps = getFieldProps('ownershipStructure');
 
@@ -40,7 +60,7 @@ export default function BusinessInfo() {
           marginBottom: 'var(--nys-space-400)',
         }}
       >
-        Business Information
+        Register your Company
       </h2>
 
       {/* Legal Company Name */}
@@ -54,6 +74,10 @@ export default function BusinessInfo() {
           errorMessage={legalNameProps.errorMessage}
           onNysInput={handleLegalNameInput}
         />
+      </div>
+
+      <div style={{ margin: 'var(--nys-space-300) 0' }}>
+        <NysDivider />
       </div>
 
       {/* Additional Names */}
@@ -78,43 +102,67 @@ export default function BusinessInfo() {
         >
           Include any trade names, DBAs, or other names your company is known by.
         </p>
-        <RepeatableFieldGroup<string>
-          items={additionalNames}
-          emptyItem=""
-          addLabel="+ Add name"
-          entryLabel="name"
-          onAdd={(name) =>
-            dispatch({
-              type: 'UPDATE_BUSINESS_INFO',
-              payload: { additionalNames: [...additionalNames, name] },
-            })
-          }
-          onUpdate={(index, name) => {
-            const updated = [...additionalNames];
-            updated[index] = name;
-            dispatch({ type: 'UPDATE_BUSINESS_INFO', payload: { additionalNames: updated } });
+
+        <NysTextinput
+          label="Additional Name"
+          optional
+          value={nameInput}
+          onNysInput={(e: Event) => {
+            const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
+            setNameInput(value);
           }}
-          onRemove={(index) =>
-            dispatch({
-              type: 'UPDATE_BUSINESS_INFO',
-              payload: { additionalNames: additionalNames.filter((_, i) => i !== index) },
-            })
-          }
-          renderForm={(item, onChange) => (
-            <NysTextarea
-              label="Additional Name"
-              value={item}
-              rows={2}
-              onNysInput={(e: Event) => {
-                const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
-                onChange(value);
-              }}
-            />
-          )}
-          renderSummary={(item) => (
-            <span style={{ fontFamily: 'var(--nys-font-body)' }}>{item}</span>
-          )}
         />
+
+        <div style={{ marginTop: 'var(--nys-space-200)' }}>
+          <NysButton
+            label="+ Add name"
+            variant="outline"
+            fullWidth
+            onNysClick={handleAddName}
+          />
+        </div>
+
+        {additionalNames.length > 0 && (
+          <div style={{ marginTop: 'var(--nys-space-300)' }}>
+            <p
+              style={{
+                fontFamily: 'var(--nys-font-body)',
+                fontWeight: 'var(--nys-font-weight-semibold)',
+                fontSize: 'var(--nys-font-size-md)',
+                marginBottom: 'var(--nys-space-200)',
+              }}
+            >
+              Added Names
+            </p>
+            {additionalNames.map((name, index) => (
+              <div
+                key={index}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: 'var(--nys-space-200) var(--nys-space-300)',
+                  border: '1px solid var(--nys-color-neutral-200)',
+                  borderRadius: 'var(--nys-border-radius-md)',
+                  marginBottom: 'var(--nys-space-100)',
+                  backgroundColor: 'var(--nys-color-neutral-50)',
+                }}
+              >
+                <span style={{ fontFamily: 'var(--nys-font-body)' }}>{name}</span>
+                <NysButton
+                  label="Remove"
+                  variant="text"
+                  size="sm"
+                  onNysClick={() => handleRemoveName(index)}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div style={{ margin: 'var(--nys-space-300) 0' }}>
+        <NysDivider />
       </div>
 
       {/* Ownership Structure */}
@@ -146,6 +194,10 @@ export default function BusinessInfo() {
             }}
           />
         </NysRadiogroup>
+      </div>
+
+      <div style={{ margin: 'var(--nys-space-300) 0' }}>
+        <NysDivider />
       </div>
 
       <StepNavigation showBack={false} onContinue={handleContinue} />

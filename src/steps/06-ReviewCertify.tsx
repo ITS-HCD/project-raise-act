@@ -56,24 +56,11 @@ interface ReviewFieldProps {
 
 function ReviewField({ label, value }: ReviewFieldProps) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        gap: 'var(--nys-space-300)',
-        marginBottom: 'var(--nys-space-200)',
-        fontFamily: 'var(--nys-font-body)',
-      }}
-    >
-      <span
-        style={{
-          fontWeight: 'var(--nys-font-weight-semibold)',
-          minWidth: '180px',
-          flexShrink: 0,
-        }}
-      >
-        {label}
-      </span>
-      <span style={{ color: 'var(--nys-color-text)' }}>{value || '—'}</span>
+    <div style={{ marginBottom: 'var(--nys-space-300)', fontFamily: 'var(--nys-font-body)' }}>
+      <div style={{ fontWeight: 'var(--nys-font-weight-semibold)', marginBottom: 'var(--nys-space-100)' }}>
+        {label}:
+      </div>
+      <div style={{ color: 'var(--nys-color-text)' }}>{value || '—'}</div>
     </div>
   );
 }
@@ -119,8 +106,7 @@ export default function ReviewCertify() {
           marginBottom: 'var(--nys-space-400)',
         }}
       >
-        Review your registration information below. Use "Edit Section" to make corrections before
-        submitting.
+        Review the information below before submitting your registration.
       </p>
 
       {/* Business Info */}
@@ -231,6 +217,9 @@ export default function ReviewCertify() {
         data-field-name="certification"
         style={{ marginTop: 'var(--nys-space-400)', marginBottom: 'var(--nys-space-400)' }}
       >
+        <h3 style={{ fontFamily: 'var(--nys-font-heading)', fontSize: 'var(--nys-font-size-xl)', marginBottom: 'var(--nys-space-300)' }}>
+          Certification
+        </h3>
         <NysCheckbox
           label="I certify that the information provided in this registration is true, complete, and current to the best of my knowledge."
           required

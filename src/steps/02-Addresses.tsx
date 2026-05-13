@@ -107,7 +107,7 @@ function AddressFormFields({ address, onChange, fieldErrors, fieldPrefix = '' }:
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--nys-space-300)' }}>
       <NysTextinput
-        label="Street"
+        label="Street Address"
         required
         value={address.street}
         showError={field('street').showError}
@@ -115,7 +115,7 @@ function AddressFormFields({ address, onChange, fieldErrors, fieldPrefix = '' }:
         onNysInput={handleInput('street')}
       />
       <NysTextinput
-        label="Suite / Unit"
+        label="Suite/Unit"
         optional
         value={address.suite}
         onNysInput={handleInput('suite')}
@@ -239,8 +239,7 @@ export default function Addresses() {
           marginBottom: 'var(--nys-space-300)',
         }}
       >
-        List all offices your company maintains within New York State. If your principal place of
-        business is in New York, include it here as well.
+        List each office address maintained in New York State other than the principal place of business. If none, leave blank.
       </p>
 
       <RepeatableFieldGroup<Address>
