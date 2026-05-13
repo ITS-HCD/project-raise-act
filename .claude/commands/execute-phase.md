@@ -22,8 +22,6 @@ Execute Phase $ARGUMENTS from the RAISE Act implementation plan.
 
 6. **Mark done** — For each completed task, update `implementation-plan.md` by changing `- [ ]` to `- [x]`
 
-7. **Record Token and Model Usage** — After completing the phase, record the total tokens used and the model(s) involved in `token-usage.md` for project tracking.
-
 ## Constraints
 
 - Follow all rules in `AGENTS.md` and `CLAUDE.md`.
