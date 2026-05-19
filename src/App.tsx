@@ -12,7 +12,7 @@ import SuccessPage from './steps/07-SuccessPage';
 export default function App() {
   return (
     <RegistrationProvider>
-    <BrowserRouter>
+    <BrowserRouter basename="/project-raise-act">
       <Routes>
         <Route path="/" element={<Navigate to="/register/business-info" replace />} />
         <Route path="/register/success" element={<SuccessPage />} />
