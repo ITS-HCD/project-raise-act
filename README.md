@@ -5,7 +5,7 @@ Frontend for the DFS RAISE Act Frontier AI Company Registration Portal. AI devel
 - **Framework:** React 19 + TypeScript (strict mode)
 - **Build:** Vite 8 (dev server + production bundle)
 - **Routing:** React Router 7
-- **Design System:** NYSDS 1.17.0 (`business` theme)
+- **Design System:** NYSDS 1.18.1 (`business` theme)
 - **State:** React Context + `useReducer` (no Redux, no external store)
 - **API layer:** Fully stubbed — replace stubs to connect a real backend
 
@@ -18,12 +18,12 @@ npm run dev        # Dev server on http://localhost:5173
 
 ### Available scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start Vite dev server with hot reload |
-| `npm run build` | TypeScript check + production bundle |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Run ESLint |
+| Command           | Description                           |
+| ----------------- | ------------------------------------- |
+| `npm run dev`     | Start Vite dev server with hot reload |
+| `npm run build`   | TypeScript check + production bundle  |
+| `npm run preview` | Preview production build locally      |
+| `npm run lint`    | Run ESLint                            |
 
 ### Prerequisites
 
@@ -71,16 +71,16 @@ All API calls go through `src/api/stubs.ts`. Replace the three stub functions wi
 // Save draft at any step
 export async function saveRegistration(
   step: number,
-  data: Partial<RegistrationData>
-): Promise<SaveResponse>
+  data: Partial<RegistrationData>,
+): Promise<SaveResponse>;
 
 // Final submission (called on Step 6 — Review & Certify)
 export async function submitRegistration(
-  data: RegistrationData
-): Promise<SubmitResponse>
+  data: RegistrationData,
+): Promise<SubmitResponse>;
 
 // Load a saved draft by ID
-export async function loadRegistration(id: string): Promise<LoadResponse>
+export async function loadRegistration(id: string): Promise<LoadResponse>;
 ```
 
 ### Expected response shapes
@@ -88,13 +88,13 @@ export async function loadRegistration(id: string): Promise<LoadResponse>
 ```typescript
 interface SaveResponse {
   success: boolean;
-  registrationId: string;    // e.g. "REG-DRAFT-001"
+  registrationId: string; // e.g. "REG-DRAFT-001"
 }
 
 interface SubmitResponse {
   success: boolean;
-  registrationId: string;    // e.g. "REG-2024-00042" — shown on success page
-  submittedAt: string;       // ISO 8601 datetime — shown on success page
+  registrationId: string; // e.g. "REG-2024-00042" — shown on success page
+  submittedAt: string; // ISO 8601 datetime — shown on success page
 }
 
 interface LoadResponse {
@@ -105,11 +105,11 @@ interface LoadResponse {
 
 ### Routes
 
-| Method | Path | Description |
-|--------|------|-------------|
-| `POST` | `/api/registration/save` | Save draft for a given step |
-| `POST` | `/api/registration/submit` | Final submission |
-| `GET` | `/api/registration/:id` | Load saved draft |
+| Method | Path                              | Description                 |
+| ------ | --------------------------------- | --------------------------- |
+| `POST` | `/api/registration/save`          | Save draft for a given step |
+| `POST` | `/api/registration/submit`        | Final submission            |
+| `GET`  | `/api/registration/:id`           | Load saved draft            |
 | `POST` | `/api/registration/:id/documents` | Upload supporting documents |
 
 > Note: The document upload endpoint is not yet stubbed — file handling will need to be added to both `stubs.ts` and Step 5 (`05-Documents.tsx`).
@@ -123,7 +123,7 @@ interface RegistrationData {
   businessInfo: {
     legalName: string;
     additionalNames: string[];
-    ownershipStructure: 'private' | 'public' | '';
+    ownershipStructure: "private" | "public" | "";
   };
   addresses: {
     principal: Address;
@@ -151,20 +151,20 @@ interface Address {
 }
 
 interface Owner {
-  type: 'person' | 'entity';
-  firstName: string;       // person only
-  lastName: string;        // person only
-  entityName: string;      // entity only
+  type: "person" | "entity";
+  firstName: string; // person only
+  lastName: string; // person only
+  entityName: string; // entity only
   percentageOwned: number;
-  startDate: string;       // ISO date (YYYY-MM-DD)
-  endDate?: string;        // ISO date — required for former owners
+  startDate: string; // ISO date (YYYY-MM-DD)
+  endDate?: string; // ISO date — required for former owners
 }
 
 interface Contact {
   firstName: string;
   lastName: string;
   title: string;
-  phone: string;           // 10 digits, formatting stripped client-side
+  phone: string; // 10 digits, formatting stripped client-side
   email: string;
 }
 ```
@@ -173,40 +173,40 @@ interface Contact {
 
 Client-side validation is in `src/utils/validation.ts`. These rules should be mirrored server-side.
 
-| Field | Rule |
-|-------|------|
-| Required fields | Non-empty string or valid number |
-| Email | Standard format (`user@domain.tld`) |
-| Phone | 10 digits after stripping non-numeric characters |
-| Zip code | `12345` or `12345-6789` |
-| Percentage | 0–100 (numeric) |
-| Former owner `endDate` | Must be after `startDate` |
-| Certification | Must be `true` to submit |
+| Field                  | Rule                                             |
+| ---------------------- | ------------------------------------------------ |
+| Required fields        | Non-empty string or valid number                 |
+| Email                  | Standard format (`user@domain.tld`)              |
+| Phone                  | 10 digits after stripping non-numeric characters |
+| Zip code               | `12345` or `12345-6789`                          |
+| Percentage             | 0–100 (numeric)                                  |
+| Former owner `endDate` | Must be after `startDate`                        |
+| Certification          | Must be `true` to submit                         |
 
 ### Step-by-step required fields
 
-| Step | Required |
-|------|----------|
-| 1 — Business Info | `legalName`, `ownershipStructure` |
-| 2 — Addresses | `principal.street`, `principal.city`, `principal.state`, `principal.zip` |
-| 3 — Ownership | Per owner: `type`, name fields (based on type), `percentageOwned`, `startDate`; former owners also require `endDate` |
-| 4 — Contacts | `primary`: all five fields (`firstName`, `lastName`, `title`, `phone`, `email`) |
-| 5 — Documents | No required fields — upload is optional |
-| 6 — Review & Certify | `certification: true` |
+| Step                 | Required                                                                                                             |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| 1 — Business Info    | `legalName`, `ownershipStructure`                                                                                    |
+| 2 — Addresses        | `principal.street`, `principal.city`, `principal.state`, `principal.zip`                                             |
+| 3 — Ownership        | Per owner: `type`, name fields (based on type), `percentageOwned`, `startDate`; former owners also require `endDate` |
+| 4 — Contacts         | `primary`: all five fields (`firstName`, `lastName`, `title`, `phone`, `email`)                                      |
+| 5 — Documents        | No required fields — upload is optional                                                                              |
+| 6 — Review & Certify | `certification: true`                                                                                                |
 
 ## Frontend Routes
 
 The app is a single-page application. All routes are client-side — your backend only needs to serve `index.html` for any path under `/register/*`.
 
-| Route | Step |
-|-------|------|
-| `/register/business-info` | Step 1 — Business Info |
-| `/register/addresses` | Step 2 — Addresses |
-| `/register/ownership` | Step 3 — Ownership |
-| `/register/contacts` | Step 4 — Contacts |
-| `/register/documents` | Step 5 — Documents |
-| `/register/review` | Step 6 — Review & Certify |
-| `/register/success` | Success page (shown after submission) |
+| Route                     | Step                                  |
+| ------------------------- | ------------------------------------- |
+| `/register/business-info` | Step 1 — Business Info                |
+| `/register/addresses`     | Step 2 — Addresses                    |
+| `/register/ownership`     | Step 3 — Ownership                    |
+| `/register/contacts`      | Step 4 — Contacts                     |
+| `/register/documents`     | Step 5 — Documents                    |
+| `/register/review`        | Step 6 — Review & Certify             |
+| `/register/success`       | Success page (shown after submission) |
 
 ## Design System (NYSDS)
 
@@ -232,11 +232,11 @@ If you need to look up a component's API or available tokens, the NYSDS document
 
 ## Key Documents
 
-| File | Description |
-|------|-------------|
-| `raise-act-prd.md` | Full product requirements — data model, business rules, gap analysis |
-| `implementation-plan.md` | Frontend build plan (all phases complete) — useful for understanding what was built and why |
-| `src/api/stubs.ts` | The three API stubs to replace |
-| `src/types/registration.ts` | TypeScript data model |
-| `src/utils/validation.ts` | All client-side validation rules |
-| `screenshots/` | Visual mockups for each step |
+| File                        | Description                                                                                 |
+| --------------------------- | ------------------------------------------------------------------------------------------- |
+| `raise-act-prd.md`          | Full product requirements — data model, business rules, gap analysis                        |
+| `implementation-plan.md`    | Frontend build plan (all phases complete) — useful for understanding what was built and why |
+| `src/api/stubs.ts`          | The three API stubs to replace                                                              |
+| `src/types/registration.ts` | TypeScript data model                                                                       |
+| `src/utils/validation.ts`   | All client-side validation rules                                                            |
+| `screenshots/`              | Visual mockups for each step                                                                |
