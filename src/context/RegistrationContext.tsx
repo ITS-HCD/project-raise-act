@@ -112,6 +112,7 @@ const RegistrationContext = createContext<RegistrationContextValue | null>(null)
 
 export function RegistrationProvider({ children }: { children: ReactNode }) {
   const [data, dispatch] = useReducer(reducer, initialState);
+
   return (
     <RegistrationContext.Provider value={{ data, dispatch }}>
       {children}
