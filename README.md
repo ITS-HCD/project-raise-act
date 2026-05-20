@@ -210,7 +210,7 @@ The app is a single-page application. All routes are client-side — your backen
 
 ## Design System (NYSDS)
 
-The frontend uses the [New York State Design System](https://designsystem.ny.gov/) (NYSDS) v1.17.0. You do not need to interact with NYSDS for backend work, but here is context in case you need to run or modify the frontend:
+The frontend uses the [New York State Design System](https://designsystem.ny.gov/) (NYSDS) v1.18.1. You do not need to interact with NYSDS for backend work, but here is context in case you need to run or modify the frontend:
 
 - **Theme:** `business` — set via `data-theme="business"` on `<html>` in `index.html`
 - **Components:** NYSDS ships as HTML custom elements (web components). In this React project they are wrapped with `@lit/react` — see `src/components/wrappers/`
