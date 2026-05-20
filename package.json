@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "link": "npm link @nysds/components @nysds/styles && npm run dev"
   },
   "dependencies": {
     "@lit/react": "^1.0.8",

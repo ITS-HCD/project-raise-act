@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, type ReactNode } from 'react';
+import { createContext, useContext, useReducer, useState, type ReactNode } from 'react';
 import type { RegistrationData, Address, Owner, Contact } from '../types/registration';
 
 const emptyAddress: Address = {
@@ -106,14 +106,22 @@ function reducer(state: RegistrationData, action: Action): RegistrationData {
 interface RegistrationContextValue {
   data: RegistrationData;
   dispatch: React.Dispatch<Action>;
+  farthestStep: number;
+  advanceToStep: (step: number) => void;
 }
 
 const RegistrationContext = createContext<RegistrationContextValue | null>(null);
 
 export function RegistrationProvider({ children }: { children: ReactNode }) {
   const [data, dispatch] = useReducer(reducer, initialState);
+  const [farthestStep, setFarthestStep] = useState(0);
+
+  function advanceToStep(step: number) {
+    setFarthestStep(prev => Math.max(prev, step));
+  }
+
   return (
-    <RegistrationContext.Provider value={{ data, dispatch }}>
+    <RegistrationContext.Provider value={{ data, dispatch, farthestStep, advanceToStep }}>
       {children}
     </RegistrationContext.Provider>
   );

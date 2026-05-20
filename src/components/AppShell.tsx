@@ -1,5 +1,5 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { NysUnavHeader } from './wrappers/NysUnavHeader';
 import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
 import { NysStepper } from './wrappers/NysStepper';
@@ -27,10 +27,24 @@ function routeToStepIndex(pathname: string): number {
 export default function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { data } = useRegistration();
+  const { data, farthestStep, advanceToStep } = useRegistration();
+  const stepperRef = useRef<HTMLElement | null>(null);
 
   const selectedStep = routeToStepIndex(location.pathname);
-  const currentStep = STEPS.length - 1;
+
+  useEffect(() => {
+    advanceToStep(selectedStep);
+  }, [selectedStep]);
+
+  // toggleAttribute for `current` only — fixes a Lit initialization timing bug where
+  // _validateSteps() runs before React props settle, marking all steps as `previous`.
+  // `selected` stays in React props so the stepper's own update cycle manages it correctly.
+  useLayoutEffect(() => {
+    const steps = Array.from(stepperRef.current?.querySelectorAll<HTMLElement>('nys-step') ?? []);
+    steps.forEach((el, i) => {
+      el.toggleAttribute('current', i === farthestStep);
+    });
+  }, [farthestStep]);
 
   useEffect(() => {
     const el = document.querySelector<HTMLElement>('#main-content h1, #main-content h2');
@@ -55,6 +69,7 @@ export default function AppShell() {
       <div className="nys-grid-container">
         <div className="nys-grid-row">
           <NysStepper
+            ref={stepperRef}
             label="Register your Company"
             className="nys-grid-col-12 nys-desktop:nys-grid-col-3"
           >
@@ -63,12 +78,10 @@ export default function AppShell() {
                 key={step.route}
                 label={step.label}
                 href={step.route}
-                current={idx === currentStep}
-                selected={idx === selectedStep && selectedStep !== currentStep}
+                selected={idx === selectedStep || undefined}
                 onNysStepClick={(e: CustomEvent) => {
                   e.preventDefault();
-                  const detail = e.detail as { href: string };
-                  navigate(detail.href);
+                  navigate(step.route);
                 }}
               />
             ))}
