@@ -7,6 +7,7 @@ import { NysRadiogroup } from '../components/wrappers/NysRadiogroup';
 import { NysRadiobutton } from '../components/wrappers/NysRadiobutton';
 import { NysButton } from '../components/wrappers/NysButton';
 import { NysDivider } from '../components/wrappers/NysDivider';
+import { NysFileinput } from '../components/wrappers/NysFileinput';
 import StepNavigation from '../components/StepNavigation';
 
 export default function BusinessInfo() {
@@ -82,30 +83,9 @@ export default function BusinessInfo() {
 
       {/* Additional Names */}
       <div style={{ marginBottom: 'var(--nys-space-400)' }}>
-        <p
-          style={{
-            fontFamily: 'var(--nys-font-body)',
-            fontWeight: 'var(--nys-font-weight-semibold)',
-            fontSize: 'var(--nys-font-size-md)',
-            marginBottom: 'var(--nys-space-100)',
-          }}
-        >
-          Additional Names
-        </p>
-        <p
-          style={{
-            fontFamily: 'var(--nys-font-body)',
-            fontSize: 'var(--nys-font-size-sm)',
-            color: 'var(--nys-color-text-secondary)',
-            marginBottom: 'var(--nys-space-200)',
-          }}
-        >
-          Include any trade names, DBAs, or other names your company is known by.
-        </p>
-
         <NysTextinput
-          label="Additional Name"
-          optional
+          label="Additional Names"
+          description="All names under which the large frontier developer conducts business."
           value={nameInput}
           onNysInput={(e: Event) => {
             const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
@@ -115,9 +95,8 @@ export default function BusinessInfo() {
 
         <div style={{ marginTop: 'var(--nys-space-200)' }}>
           <NysButton
-            label="+ Add name"
-            variant="outline"
-            fullWidth
+            label="+ Add additional name"
+            variant="text"
             onNysClick={handleAddName}
           />
         </div>
@@ -168,7 +147,7 @@ export default function BusinessInfo() {
       {/* Ownership Structure */}
       <div data-field-name="ownershipStructure" style={{ marginBottom: 'var(--nys-space-400)' }}>
         <NysRadiogroup
-          label="Ownership structure"
+          label="Ownership structure of LFD or ultimate parent"
           required
           showError={ownershipProps.showError}
           errorMessage={ownershipProps.errorMessage}
@@ -194,6 +173,26 @@ export default function BusinessInfo() {
             }}
           />
         </NysRadiogroup>
+      </div>
+
+      <div style={{ margin: 'var(--nys-space-300) 0' }}>
+        <NysDivider />
+      </div>
+
+      {/* Supporting Documentation */}
+      <div style={{ marginBottom: 'var(--nys-space-400)' }}>
+        <NysFileinput
+          label="Supporting Documentation"
+          description=" Upload any required supporting documents for this registration. You can upload PDF, JPG,
+          or PNG files up to 10MB each."
+          multiple
+          dropzone
+          accept=".pdf,.jpg,.jpeg,.png"
+          onNysChange={(e: Event) => {
+            const { files } = (e as CustomEvent<{ id: string; files: File[] }>).detail;
+            dispatch({ type: 'SET_DOCUMENTS', payload: files });
+          }}
+        />
       </div>
 
       <div style={{ margin: 'var(--nys-space-300) 0' }}>

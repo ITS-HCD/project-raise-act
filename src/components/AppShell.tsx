@@ -62,8 +62,7 @@ export default function AppShell() {
     <>
       <NysUnavHeader hideSearch hideTranslate />
       <NysGlobalHeader
-        appName="RAISE"
-        agencyName="Department of Financial Services"
+        appName="Responsible AI Safety and Education (RAISE) Act"
       />
       <div className="nys-grid-container">
         <div className="nys-grid-row">
