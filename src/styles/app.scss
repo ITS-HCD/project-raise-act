@@ -100,6 +100,13 @@
   font-display: swap;
 }
 
+// Remove button — danger styling for all "Remove" actions
+.remove-btn {
+  --nys-button-color: var(--nys-color-danger);
+  --nys-button-color--hover: var(--nys-color-danger-strong);
+  --nys-button-color--active: var(--nys-color-danger-strong);
+}
+
 // Layout
 #main-content {
   padding: var(--nys-space-400) 0;
@@ -112,7 +119,7 @@
     display: flex;
     flex-direction: column;
 
-    > h2 {
+    h2 {
       font-family: var(--nys-font-family-ui, "Proxima Nova");
       font-size: var(--nys-font-size-ui-xl, 20px);
       font-style: normal;
@@ -120,7 +127,25 @@
       line-height: var(--nys-font-lineheight-ui-xl, 28px); /* 140% */
       letter-spacing: var(--nys-font-letterspacing-ui-xl, 0.017px);
       margin: 0;
-      padding-bottom: var(--nys-space-300);
+
+      &:first-of-type {
+        padding-bottom: var(--nys-space-300);
+      }
+    }
+
+    h3 {
+      /* UI/Large/Semibold */
+      font-family: var(--nys-font-family-ui, "Proxima Nova");
+      font-size: var(--nys-font-size-ui-lg, 18px);
+      font-style: normal;
+      font-weight: 600;
+      line-height: var(--nys-font-lineheight-ui-lg, 28px); /* 155.556% */
+      letter-spacing: var(--nys-font-letterspacing-ui-lg, 0.028px);
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
     }
 
     nys-divider {

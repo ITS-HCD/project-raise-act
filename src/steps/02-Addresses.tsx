@@ -1,10 +1,13 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegistration } from '../context/RegistrationContext';
 import { useStepValidation } from '../utils/useStepValidation';
+import type { Address } from '../types/registration';
 import { NysTextinput } from '../components/wrappers/NysTextinput';
 import { NysSelect } from '../components/wrappers/NysSelect';
 import { NysDivider } from '../components/wrappers/NysDivider';
 import { NysFileinput } from '../components/wrappers/NysFileinput';
+import { NysButton } from '../components/wrappers/NysButton';
 import StepNavigation from '../components/StepNavigation';
 
 const COUNTRIES = [
@@ -82,12 +85,14 @@ const US_STATES = [
   { value: 'VI', label: 'U.S. Virgin Islands' },
 ];
 
+const emptyNyAddress = () => ({ country: 'US', street: '', suite: '', state: 'NY', city: '', zip: '' });
+
 export default function Addresses() {
   const navigate = useNavigate();
   const { data, dispatch } = useRegistration();
   const { validate, getFieldProps } = useStepValidation(2, data);
 
-  const { principal } = data.addresses;
+  const { principal, nyOffices } = data.addresses;
 
   function handleContinue() {
     if (validate()) navigate('/register/ownership');
@@ -98,6 +103,22 @@ export default function Addresses() {
       const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
       dispatch({ type: 'UPDATE_PRINCIPAL_ADDRESS', payload: { [field]: value } });
     };
+  }
+
+  function updateNyOffice(index: number, field: keyof Address) {
+    return (e: Event) => {
+      const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
+      const updated = nyOffices.map((addr, i) => (i === index ? { ...addr, [field]: value } : addr));
+      dispatch({ type: 'SET_NY_OFFICES', payload: updated });
+    };
+  }
+
+  function addNyOffice() {
+    dispatch({ type: 'SET_NY_OFFICES', payload: [...nyOffices, emptyNyAddress()] });
+  }
+
+  function removeNyOffice(index: number) {
+    dispatch({ type: 'SET_NY_OFFICES', payload: nyOffices.filter((_, i) => i !== index) });
   }
 
   return (
@@ -173,6 +194,75 @@ export default function Addresses() {
         showError={getFieldProps('principal.zip').showError}
         errorMessage={getFieldProps('principal.zip').errorMessage}
         onNysInput={update('zip')}
+      />
+
+      <NysDivider />
+
+      <h2>New York office addresses</h2>
+      <p>List each office address maintained in New York State other than the principal place of business. If none, leave blank.</p>
+
+      {nyOffices.map((office, index) => (
+        <div key={index}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3>Address {index + 1}</h3>
+            <NysButton
+              variant="text"
+              label="Remove"
+              type="button"
+              className="remove-btn"
+              onClick={() => removeNyOffice(index)}
+            />
+          </div>
+
+          <NysTextinput
+            label="Street Address"
+            required
+            value={office.street}
+            onNysInput={updateNyOffice(index, 'street')}
+          />
+
+          <NysTextinput
+            label="Suite/Unit"
+            optional
+            value={office.suite}
+            onNysInput={updateNyOffice(index, 'suite')}
+          />
+
+          <NysTextinput
+            label="State"
+            width="sm"
+            value="NY"
+            readonly
+          >
+            <option value="NY">NY</option>
+          </NysTextinput>
+
+          <NysTextinput
+            label="City"
+            width="md"
+            required
+            value={office.city}
+            onNysInput={updateNyOffice(index, 'city')}
+          />
+
+          <NysTextinput
+            label="Zip"
+            width="md"
+            required
+            value={office.zip}
+            pattern="^\d{5}(-\d{4})?$"
+            onNysInput={updateNyOffice(index, 'zip')}
+          />
+        </div>
+      ))}
+
+      <NysButton
+        variant="text"
+        label="Add additional address"
+        prefixIcon="add"
+        type="button"
+        onClick={addNyOffice}
+        style={{ '--nys-button-color': 'var(--nys-color-theme)', '--nys-button-color--hover': 'var(--nys-color-theme-strong)', '--nys-button-color--active': 'var(--nys-color-theme-stronger)' } as React.CSSProperties}
       />
 
       <NysDivider />

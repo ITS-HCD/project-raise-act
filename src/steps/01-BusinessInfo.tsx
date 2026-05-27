@@ -98,10 +98,8 @@ export default function BusinessInfo() {
             <NysButton
               label="Remove"
               variant="text"
-              style={{
-                '--nys-button-color': 'var(--nys-color-danger)',
-                visibility: index > 0 ? 'visible' : 'hidden',
-              } as React.CSSProperties}
+              className="remove-btn"
+              style={{ visibility: index > 0 ? 'visible' : 'hidden' } as React.CSSProperties}
               onNysClick={() => handleRemoveName(index)}
             />
           </div>
