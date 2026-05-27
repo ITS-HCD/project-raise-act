@@ -1,8 +1,9 @@
 export interface Address {
+  country: string;
   street: string;
   suite: string;
-  city: string;
   state: string;
+  city: string;
   zip: string;
 }
 

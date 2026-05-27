@@ -44,6 +44,7 @@ export function validateStep(stepNumber: number, data: RegistrationData): Valida
 
     case 2: {
       const p = data.addresses.principal;
+      if (!isRequired(p.country)) errors['principal.country'] = 'Country is required.';
       if (!isRequired(p.street)) errors['principal.street'] = 'Street is required.';
       if (!isRequired(p.city)) errors['principal.city'] = 'City is required.';
       if (!isRequired(p.state)) errors['principal.state'] = 'State is required.';

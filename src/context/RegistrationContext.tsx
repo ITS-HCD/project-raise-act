@@ -2,10 +2,11 @@ import { createContext, useContext, useReducer, type ReactNode } from 'react';
 import type { RegistrationData, Address, Owner, Contact } from '../types/registration';
 
 const emptyAddress: Address = {
+  country: '',
   street: '',
   suite: '',
-  city: '',
   state: '',
+  city: '',
   zip: '',
 };
 
