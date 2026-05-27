@@ -20,7 +20,7 @@ const emptyContact: Contact = {
 const initialState: RegistrationData = {
   businessInfo: {
     legalName: '',
-    additionalNames: [],
+    additionalNames: [''],
     ownershipStructure: '',
   },
   addresses: {

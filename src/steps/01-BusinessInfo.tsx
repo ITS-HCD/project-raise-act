@@ -71,27 +71,6 @@ export default function BusinessInfo() {
 
       {/* Additional Names */}
       <div style={{ marginBottom: 'var(--nys-space-400)' }}>
-        <p
-          style={{
-            fontFamily: 'var(--nys-font-body)',
-            fontWeight: 'var(--nys-font-weight-semibold)',
-            fontSize: 'var(--nys-font-size-md)',
-            marginBottom: 'var(--nys-space-100)',
-          }}
-        >
-          Additional Names
-        </p>
-        <p
-          style={{
-            fontFamily: 'var(--nys-font-body)',
-            fontSize: 'var(--nys-font-size-sm)',
-            color: 'var(--nys-color-text-secondary)',
-            marginBottom: 'var(--nys-space-200)',
-          }}
-        >
-          All names under which the large frontier developer conducts business.
-        </p>
-
         {additionalNames.map((name, index) => (
           <div
             key={index}
@@ -99,11 +78,16 @@ export default function BusinessInfo() {
               display: 'flex',
               alignItems: 'center',
               gap: 'var(--nys-space-200)',
-              marginBottom: 'var(--nys-space-200)',
             }}
           >
             <div style={{ flex: 1 }}>
               <NysTextinput
+                label={index === 0 ? 'Additional Names' : undefined}
+                description={
+                  index === 0
+                    ? 'All names under which the large frontier developer conducts business.'
+                    : undefined
+                }
                 value={name}
                 onNysInput={(e: Event) => {
                   const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
@@ -111,12 +95,14 @@ export default function BusinessInfo() {
                 }}
               />
             </div>
-            <NysButton
-              label="Remove"
-              variant="text"
-              style={{ '--nys-button-color': 'var(--nys-color-danger)' } as React.CSSProperties}
-              onNysClick={() => handleRemoveName(index)}
-            />
+            {index > 0 && (
+              <NysButton
+                label="Remove"
+                variant="text"
+                style={{ '--nys-button-color': 'var(--nys-color-danger)' } as React.CSSProperties}
+                onNysClick={() => handleRemoveName(index)}
+              />
+            )}
           </div>
         ))}
 
@@ -126,7 +112,7 @@ export default function BusinessInfo() {
       <NysDivider />
 
       {/* Ownership Structure */}
-      <div data-field-name="ownershipStructure" style={{ marginBottom: 'var(--nys-space-400)' }}>
+      <div data-field-name="ownershipStructure">
         <NysRadiogroup
           label="Ownership structure of LFD or ultimate parent"
           required
@@ -161,7 +147,6 @@ export default function BusinessInfo() {
       <NysDivider />
 
       {/* Supporting Documentation */}
-      <div style={{ marginBottom: 'var(--nys-space-400)' }}>
         <NysFileinput
           label="Supporting documentation"
           description="Upload any required supporting documents for this registration. You can upload PDF, JPG, or PNG files up to 10MB each"
@@ -173,7 +158,6 @@ export default function BusinessInfo() {
             dispatch({ type: 'SET_DOCUMENTS', payload: files });
           }}
         />
-      </div>
 
       <NysDivider />
 
