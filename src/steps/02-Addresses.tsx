@@ -202,7 +202,7 @@ export default function Addresses() {
       <p>List each office address maintained in New York State other than the principal place of business. If none, leave blank.</p>
 
       {nyOffices.map((office, index) => (
-        <div key={index}>
+        <div key={index} style={{margin: 'var(--nys-space-150) 0', gap: 'var(--nys-space-150)', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h3>Address {index + 1}</h3>
             <NysButton
@@ -278,6 +278,8 @@ export default function Addresses() {
           dispatch({ type: 'SET_DOCUMENTS', payload: files });
         }}
       />
+      
+      <NysDivider />
 
       <StepNavigation
         onBack={() => navigate('/register/business-info')}
