@@ -30,18 +30,18 @@ export function SuccessConfirmation({
         />
       </div>
 
-      <p style={{ fontFamily: 'var(--nys-font-body)', marginBottom: 'var(--nys-space-300)' }}>
+      <p style={{ fontFamily: 'var(--nys-font-family-body)', marginBottom: 'var(--nys-space-300)' }}>
         DFS is currently reviewing your submission and will update you when the status of
         your registration has changed, or to request additional information.
       </p>
 
       {contactEmail && (
-        <p style={{ fontFamily: 'var(--nys-font-body)', marginBottom: 'var(--nys-space-300)' }}>
+        <p style={{ fontFamily: 'var(--nys-font-family-body)', marginBottom: 'var(--nys-space-300)' }}>
           <strong>Confirmation email sent to:</strong> {contactEmail}
         </p>
       )}
 
-      <p style={{ fontFamily: 'var(--nys-font-body)', marginBottom: 'var(--nys-space-400)' }}>
+      <p style={{ fontFamily: 'var(--nys-font-family-body)', marginBottom: 'var(--nys-space-400)' }}>
         If you need to refer to this registration, you can reference:
         <br />
         <strong>Registration ID:</strong> {registrationId}
