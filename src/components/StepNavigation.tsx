@@ -14,11 +14,11 @@ export default function StepNavigation({
   continueLabel = 'Continue',
 }: StepNavigationProps) {
   return (
-    <div style={{ display: 'flex', gap: 'var(--nys-space-200)', marginTop: 'var(--nys-space-400)' }}>
+    <div style={{ display: 'flex', gap: 'var(--nys-space-200)'}}>
       {showBack && (
         <NysButton
           label="Back"
-          variant="outline"
+          variant="text"
           type="button"
           onNysClick={onBack}
         />

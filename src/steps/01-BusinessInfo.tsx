@@ -70,14 +70,14 @@ export default function BusinessInfo() {
       <NysDivider />
 
       {/* Additional Names */}
-      <div style={{ marginBottom: 'var(--nys-space-400)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--nys-space-200)' }}>
         {additionalNames.map((name, index) => (
           <div
             key={index}
             style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: 'var(--nys-space-200)',
+              alignItems: 'flex-end',
+              gap: 'var(--nys-space-100)',
             }}
           >
             <div style={{ flex: 1 }}>
@@ -95,14 +95,15 @@ export default function BusinessInfo() {
                 }}
               />
             </div>
-            {index > 0 && (
-              <NysButton
-                label="Remove"
-                variant="text"
-                style={{ '--nys-button-color': 'var(--nys-color-danger)' } as React.CSSProperties}
-                onNysClick={() => handleRemoveName(index)}
-              />
-            )}
+            <NysButton
+              label="Remove"
+              variant="text"
+              style={{
+                '--nys-button-color': 'var(--nys-color-danger)',
+                visibility: index > 0 ? 'visible' : 'hidden',
+              } as React.CSSProperties}
+              onNysClick={() => handleRemoveName(index)}
+            />
           </div>
         ))}
 
