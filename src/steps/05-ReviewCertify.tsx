@@ -7,6 +7,7 @@ import { ReviewSection } from '../components/ReviewSection';
 import { NysCheckbox } from '../components/wrappers/NysCheckbox';
 import { NysButton } from '../components/wrappers/NysButton';
 import type { Address, Owner, Contact } from '../types/registration';
+import { NysDivider } from '../components/wrappers/NysDivider';
 
 function formatAddress(addr: Address): string {
   const parts = [addr.street];
@@ -68,7 +69,7 @@ function ReviewField({ label, value }: ReviewFieldProps) {
 export default function ReviewCertify() {
   const navigate = useNavigate();
   const { data, dispatch } = useRegistration();
-  const { validate, getFieldProps } = useStepValidation(6, data);
+  const { validate, getFieldProps } = useStepValidation(5, data);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { businessInfo, addresses, ownership, contacts, documents, certification } = data;
@@ -80,7 +81,11 @@ export default function ReviewCertify() {
     try {
       const response = await submitRegistration(data);
       navigate('/register/success', {
-        state: { registrationId: response.registrationId, submittedAt: response.submittedAt },
+        state: {
+          registrationId: response.registrationId,
+          submittedAt: response.submittedAt,
+          contactEmail: data.contacts.primary.email,
+        },
       });
     } finally {
       setIsSubmitting(false);
@@ -195,7 +200,7 @@ export default function ReviewCertify() {
       </ReviewSection>
 
       {/* Documents */}
-      <ReviewSection title="Documents" onEdit={() => navigate('/register/documents')}>
+      <ReviewSection title="Documents" onEdit={() => navigate('/register/ownership')}>
         <ReviewField
           label="Uploaded Files"
           value={
@@ -232,14 +237,21 @@ export default function ReviewCertify() {
           }}
         />
       </div>
-
+      <NysDivider />
+      <NysButton
+        label="Print to PDF"
+        variant="outline"
+        type="button"
+        onNysClick={() => window.print()}
+      />
+      <NysDivider />
       {/* Navigation */}
       <div style={{ display: 'flex', gap: 'var(--nys-space-200)' }}>
         <NysButton
           label="Back"
-          variant="outline"
+          variant="text"
           type="button"
-          onNysClick={() => navigate('/register/documents')}
+          onNysClick={() => navigate('/register/contacts')}
         />
         <NysButton
           label={isSubmitting ? 'Submitting…' : 'Submit'}

@@ -111,7 +111,7 @@ export default function Contacts() {
   const { primary, secondary, tertiary } = data.contacts;
 
   function handleContinue() {
-    if (validate()) navigate('/register/documents');
+    if (validate()) navigate('/register/review');
   }
 
   function getFieldError(key: string) {
@@ -206,7 +206,7 @@ export default function Contacts() {
         getFieldError={getFieldError}
         prefix="tertiary"
       />
-
+      <NysDivider />
       <StepNavigation
         onBack={() => navigate('/register/ownership')}
         onContinue={handleContinue}

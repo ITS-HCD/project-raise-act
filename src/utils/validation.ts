@@ -118,7 +118,7 @@ export function validateStep(stepNumber: number, data: RegistrationData): Valida
       break;
     }
 
-    case 6: {
+    case 5: {
       if (!data.certification)
         errors['certification'] = 'You must certify the information before submitting.';
       break;

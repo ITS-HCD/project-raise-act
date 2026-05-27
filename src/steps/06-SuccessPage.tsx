@@ -8,6 +8,7 @@ import { SuccessConfirmation } from '../components/SuccessConfirmation';
 interface SuccessState {
   registrationId: string;
   submittedAt: string;
+  contactEmail?: string;
 }
 
 export default function SuccessPage() {
@@ -16,20 +17,19 @@ export default function SuccessPage() {
 
   const registrationId = state?.registrationId ?? 'REG-2024-00000';
   const submittedAt = state?.submittedAt ?? new Date().toISOString();
+  const contactEmail = state?.contactEmail ?? '';
 
   return (
     <>
       <NysUnavHeader hideSearch hideTranslate />
-      <NysGlobalHeader
-        appName="RAISE"
-        agencyName="Department of Financial Services"
-      />
+      <NysGlobalHeader appName="Responsible AI Safety and Education (RAISE) Act" />
       <div className="nys-grid-container">
         <div className="nys-grid-row">
           <main className="nys-grid-col-12" id="main-content">
             <SuccessConfirmation
               registrationId={registrationId}
               submittedAt={submittedAt}
+              contactEmail={contactEmail}
             />
           </main>
         </div>
