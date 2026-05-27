@@ -17,7 +17,6 @@ const STEPS = [
   { label: 'Addresses', route: '/register/addresses' },
   { label: 'Ownership', route: '/register/ownership' },
   { label: 'Contacts', route: '/register/contacts' },
-  { label: 'Documents', route: '/register/documents' },
   { label: 'Review & Certify', route: '/register/review' },
 ];
 

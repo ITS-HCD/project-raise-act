@@ -1,14 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { NysIcon } from './wrappers/NysIcon';
+import { NysAlert } from './wrappers/NysAlert';
 import { NysButton } from './wrappers/NysButton';
-import { NysDivider } from './wrappers/NysDivider';
 
 interface SuccessConfirmationProps {
   registrationId: string;
   submittedAt: string;
+  contactEmail?: string;
 }
 
-export function SuccessConfirmation({ registrationId, submittedAt }: SuccessConfirmationProps) {
+export function SuccessConfirmation({
+  registrationId,
+  submittedAt,
+  contactEmail,
+}: SuccessConfirmationProps) {
   const navigate = useNavigate();
   const formattedDate = new Date(submittedAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -18,28 +22,36 @@ export function SuccessConfirmation({ registrationId, submittedAt }: SuccessConf
 
   return (
     <div style={{ padding: 'var(--nys-space-400)' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--nys-space-200)', marginBottom: 'var(--nys-space-300)' }}>
-        <NysIcon name="check_circle" size="2xl" color="var(--nys-color-success)" ariaLabel="Success" />
-        <h1 style={{ fontFamily: 'var(--nys-font-heading)', fontSize: 'var(--nys-font-size-2xl)', margin: 0 }}>
-          Your registration was successfully submitted!
-        </h1>
+      <div style={{ marginBottom: 'var(--nys-space-400)' }}>
+        <NysAlert
+          type="success"
+          heading="Your registration was successfully submitted!"
+          text={`Your recent registration submission in the DFS RAISE System has been received on ${formattedDate}.`}
+        />
       </div>
-      <NysDivider />
-      <div style={{ margin: 'var(--nys-space-400) 0' }}>
+
+      <p style={{ fontFamily: 'var(--nys-font-body)', marginBottom: 'var(--nys-space-300)' }}>
+        DFS is currently reviewing your submission and will update you when the status of
+        your registration has changed, or to request additional information.
+      </p>
+
+      {contactEmail && (
         <p style={{ fontFamily: 'var(--nys-font-body)', marginBottom: 'var(--nys-space-300)' }}>
-          Your recent registration submission in the DFS RAISE System has been received on {formattedDate}.
+          <strong>Confirmation email sent to:</strong> {contactEmail}
         </p>
-        <p style={{ fontFamily: 'var(--nys-font-body)', marginBottom: 'var(--nys-space-300)' }}>
-          DFS is currently reviewing your submission and will update you when the status of your registration has changed, or to request additional information.
-        </p>
-        <p style={{ fontFamily: 'var(--nys-font-body)' }}>
-          If you need to refer to this registration, you can reference Registration ID {registrationId}.
-        </p>
-      </div>
-      <NysDivider />
-      <div style={{ marginTop: 'var(--nys-space-400)' }}>
-        <NysButton label="Home" variant="filled" onNysClick={() => navigate('/')} />
-      </div>
+      )}
+
+      <p style={{ fontFamily: 'var(--nys-font-body)', marginBottom: 'var(--nys-space-400)' }}>
+        If you need to refer to this registration, you can reference:
+        <br />
+        <strong>Registration ID:</strong> {registrationId}
+      </p>
+
+      <NysButton
+        label="Return to Dashboard"
+        variant="filled"
+        onNysClick={() => navigate('/')}
+      />
     </div>
   );
 }

@@ -5,9 +5,8 @@ import BusinessInfo from './steps/01-BusinessInfo';
 import Addresses from './steps/02-Addresses';
 import Ownership from './steps/03-Ownership';
 import Contacts from './steps/04-Contacts';
-import Documents from './steps/05-Documents';
-import ReviewCertify from './steps/06-ReviewCertify';
-import SuccessPage from './steps/07-SuccessPage';
+import ReviewCertify from './steps/05-ReviewCertify';
+import SuccessPage from './steps/06-SuccessPage';
 
 export default function App() {
   return (
@@ -22,7 +21,6 @@ export default function App() {
           <Route path="addresses" element={<Addresses />} />
           <Route path="ownership" element={<Ownership />} />
           <Route path="contacts" element={<Contacts />} />
-          <Route path="documents" element={<Documents />} />
           <Route path="review" element={<ReviewCertify />} />
         </Route>
       </Routes>
