@@ -17,13 +17,13 @@ Reference: `raise-act-prd.md` for detailed specs.
 - [x] 1.5 — Apply `business` theme: set `data-theme="business"` on the root `<html>` element
 - [x] 1.6 — Import NYSDS global styles (`@nysds/styles/full` — reset, typography, grid utilities, CSS variables) in `app.css`
 - [x] 1.7 — Create wrappers for all DS components used (re-exports of `@nysds/components/react` — NYSDS ships its own React wrappers):
-  - `NysUnavHeader`, `NysGlobalHeader`, `NysGlobalFooter`, `NysUnavFooter`
+  - `NysGlobalHeader`, `NysGlobalFooter`
   - `NysStepper`, `NysStep`
   - `NysButton`, `NysTextinput`, `NysTextarea`, `NysSelect`, `NysDatepicker`
   - `NysRadiogroup`, `NysRadiobutton`
   - `NysCheckbox`, `NysFileinput`
   - `NysIcon`, `NysDivider`, `NysAlert`
-- [x] 1.8 — Verify: `App.tsx` renders `nys-unavheader`, `nys-globalheader`, and `nys-button` — dev server confirmed 200 on all assets, fonts load from `/fonts/`, TypeScript passes with strict mode
+- [x] 1.8 — Verify: `App.tsx` renders `nys-globalheader`, and `nys-button` — dev server confirmed 200 on all assets, fonts load from `/fonts/`, TypeScript passes with strict mode
 
 **Deliverable:** Empty app shell with DS components rendering, correct theme, and fonts.
 
@@ -38,7 +38,7 @@ Reference: `raise-act-prd.md` for detailed specs.
 - [x] 2.1 — Set up React Router with routes (see PRD section 2 — Routes table):
   - `/register/business-info` through `/register/review` + `/register/success`
   - Redirect `/` and `/register` to `/register/business-info`
-- [x] 2.2 — Build `AppShell.tsx`: full layout with `nys-unavheader`, `nys-globalheader` (appName="RAISE", agencyName="Department of Financial Services"), grid container, `nys-globalfooter`, `nys-unavfooter`
+- [x] 2.2 — Build `AppShell.tsx`: full layout with `nys-globalheader` (appName="RAISE", agencyName="Department of Financial Services" nysLogo), grid container, `nys-globalfooter`
 - [x] 2.3 — Add `nys-stepper` in left sidebar (col-3) with 6 `nys-step` children, each with `href` matching its route
 - [x] 2.4 — Add "Save and Exit" button in stepper's `actions` slot
 - [x] 2.5 — Wire stepper navigation: listen for `nys-step-click` events, `preventDefault()`, use React Router `navigate()`
@@ -213,18 +213,18 @@ Reference: `raise-act-prd.md` for detailed specs.
 
 ## Phase Summary
 
-| Phase | Description | Estimated Tasks |
-|---|---|---|
-| 1 | Project scaffolding & DS integration | 8 |
-| 2 | Application shell & routing | 10 |
-| 3 | Form state & data layer | 7 |
-| 4 | Validation utilities | 4 |
-| 5 | Custom shared components | 4 |
-| 6 | Steps 1 & 2 (Business Info, Addresses) | 3 |
-| 7 | Steps 3 & 4 (Ownership, Contacts) | 3 |
-| 8 | Steps 5 & 6 + Success (Documents, Review, Confirmation) | 4 |
-| 9 | Polish & responsive | 9 |
-| **Total** | | **52 tasks** |
+| Phase     | Description                                             | Estimated Tasks |
+| --------- | ------------------------------------------------------- | --------------- |
+| 1         | Project scaffolding & DS integration                    | 8               |
+| 2         | Application shell & routing                             | 10              |
+| 3         | Form state & data layer                                 | 7               |
+| 4         | Validation utilities                                    | 4               |
+| 5         | Custom shared components                                | 4               |
+| 6         | Steps 1 & 2 (Business Info, Addresses)                  | 3               |
+| 7         | Steps 3 & 4 (Ownership, Contacts)                       | 3               |
+| 8         | Steps 5 & 6 + Success (Documents, Review, Confirmation) | 4               |
+| 9         | Polish & responsive                                     | 9               |
+| **Total** |                                                         | **52 tasks**    |
 
 ### Dependencies
 

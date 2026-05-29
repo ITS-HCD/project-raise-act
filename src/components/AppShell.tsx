@@ -1,12 +1,10 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useLayoutEffect } from 'react';
-import { NysUnavHeader } from './wrappers/NysUnavHeader';
 import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
 import { NysStepper } from './wrappers/NysStepper';
 import { NysStep } from './wrappers/NysStep';
 import { NysButton } from './wrappers/NysButton';
 import { NysGlobalFooter } from './wrappers/NysGlobalFooter';
-import { NysUnavFooter } from './wrappers/NysUnavFooter';
 import { useRegistration } from '../context/RegistrationContext';
 import { saveRegistration } from '../api/stubs';
 
@@ -59,8 +57,8 @@ export default function AppShell() {
 
   return (
     <>
-      <NysUnavHeader hideSearch hideTranslate />
       <NysGlobalHeader
+        nysLogo
         appName="Responsible AI Safety and Education (RAISE) Act"
       />
       <div className="nys-grid-container">
@@ -101,7 +99,6 @@ export default function AppShell() {
         </div>
       </div>
       <NysGlobalFooter agencyName="Department of Financial Services" />
-      <NysUnavFooter />
     </>
   );
 }
