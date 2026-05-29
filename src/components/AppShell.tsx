@@ -4,6 +4,7 @@ import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
 import { NysStepper } from './wrappers/NysStepper';
 import { NysStep } from './wrappers/NysStep';
 import { NysButton } from './wrappers/NysButton';
+import { NysAvatar } from './wrappers/NysAvatar';
 import { NysGlobalFooter } from './wrappers/NysGlobalFooter';
 import { useRegistration } from '../context/RegistrationContext';
 import { saveRegistration } from '../api/stubs';
@@ -60,7 +61,19 @@ export default function AppShell() {
       <NysGlobalHeader
         nysLogo
         appName="Responsible AI Safety and Education (RAISE) Act"
-      />
+      >
+        <NysButton
+          slot="user-actions"
+          label="User Name"
+          prefixIcon="slotted"
+        >
+          <NysAvatar
+            slot="prefix-icon"
+            ariaLabel="User avatar"
+            initials="NY"
+          />
+        </NysButton>
+      </NysGlobalHeader>
       <div className="nys-grid-container">
         <div className="nys-grid-row">
           <NysStepper
