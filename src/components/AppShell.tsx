@@ -1,21 +1,21 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
-import { NysUnavHeader } from './wrappers/NysUnavHeader';
+import { useEffect, useLayoutEffect } from 'react';
 import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
 import { NysStepper } from './wrappers/NysStepper';
 import { NysStep } from './wrappers/NysStep';
 import { NysButton } from './wrappers/NysButton';
+import { NysAvatar } from './wrappers/NysAvatar';
 import { NysGlobalFooter } from './wrappers/NysGlobalFooter';
-import { NysUnavFooter } from './wrappers/NysUnavFooter';
 import { useRegistration } from '../context/RegistrationContext';
 import { saveRegistration } from '../api/stubs';
+
+const STORAGE_KEY = 'stepper-furthest-step';
 
 const STEPS = [
   { label: 'Business Info', route: '/register/business-info' },
   { label: 'Addresses', route: '/register/addresses' },
   { label: 'Ownership', route: '/register/ownership' },
   { label: 'Contacts', route: '/register/contacts' },
-  { label: 'Documents', route: '/register/documents' },
   { label: 'Review & Certify', route: '/register/review' },
 ];
 
@@ -30,7 +30,18 @@ export default function AppShell() {
   const { data } = useRegistration();
 
   const selectedStep = routeToStepIndex(location.pathname);
-  const currentStep = STEPS.length - 1;
+
+  const stored = sessionStorage.getItem(STORAGE_KEY);
+  const farthestStep = Math.max(stored !== null ? parseInt(stored, 10) : 0, selectedStep);
+
+  useEffect(() => {
+    const prev = parseInt(sessionStorage.getItem(STORAGE_KEY) ?? '0', 10);
+    sessionStorage.setItem(STORAGE_KEY, String(Math.max(prev, selectedStep)));
+  }, [selectedStep]);
+
+  useLayoutEffect(() => {
+    (document.querySelector('nys-stepper') as any)?.requestUpdate?.();
+  }, [selectedStep, farthestStep]);
 
   useEffect(() => {
     const el = document.querySelector<HTMLElement>('#main-content h1, #main-content h2');
@@ -47,11 +58,22 @@ export default function AppShell() {
 
   return (
     <>
-      <NysUnavHeader hideSearch hideTranslate />
       <NysGlobalHeader
-        appName="RAISE"
-        agencyName="Department of Financial Services"
-      />
+        nysLogo
+        appName="Responsible AI Safety and Education (RAISE) Act"
+      >
+        <NysButton
+          slot="user-actions"
+          label="User Name"
+          prefixIcon="slotted"
+        >
+          <NysAvatar
+            slot="prefix-icon"
+            ariaLabel="User avatar"
+            initials="NY"
+          />
+        </NysButton>
+      </NysGlobalHeader>
       <div className="nys-grid-container">
         <div className="nys-grid-row">
           <NysStepper
@@ -63,12 +85,11 @@ export default function AppShell() {
                 key={step.route}
                 label={step.label}
                 href={step.route}
-                current={idx === currentStep}
-                selected={idx === selectedStep && selectedStep !== currentStep}
+                current={idx === farthestStep || undefined}
+                selected={idx === selectedStep || undefined}
                 onNysStepClick={(e: CustomEvent) => {
                   e.preventDefault();
-                  const detail = e.detail as { href: string };
-                  navigate(detail.href);
+                  navigate(step.route);
                 }}
               />
             ))}
@@ -91,7 +112,6 @@ export default function AppShell() {
         </div>
       </div>
       <NysGlobalFooter agencyName="Department of Financial Services" />
-      <NysUnavFooter />
     </>
   );
 }

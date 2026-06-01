@@ -2,10 +2,11 @@ import { createContext, useContext, useReducer, type ReactNode } from 'react';
 import type { RegistrationData, Address, Owner, Contact } from '../types/registration';
 
 const emptyAddress: Address = {
+  country: '',
   street: '',
   suite: '',
-  city: '',
   state: '',
+  city: '',
   zip: '',
 };
 
@@ -20,7 +21,7 @@ const emptyContact: Contact = {
 const initialState: RegistrationData = {
   businessInfo: {
     legalName: '',
-    additionalNames: [],
+    additionalNames: [''],
     ownershipStructure: '',
   },
   addresses: {
@@ -112,6 +113,7 @@ const RegistrationContext = createContext<RegistrationContextValue | null>(null)
 
 export function RegistrationProvider({ children }: { children: ReactNode }) {
   const [data, dispatch] = useReducer(reducer, initialState);
+
   return (
     <RegistrationContext.Provider value={{ data, dispatch }}>
       {children}

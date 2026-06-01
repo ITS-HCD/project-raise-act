@@ -6,10 +6,6 @@ Manual edits made after each phase are documented here. Each entry should includ
 
 ## Phase 1: Project Scaffolding & DS Integration
 
-**Manual edits after review:**
-
-- Removed `nysLogo` from `NysGlobalHeader`. Phase 1 output included it but `nys-globalheader` does not use this prop since the Unavheader was included. This was a misunderstanding of the design system documentation. The PRD specifies to include the Unavheader, which already contains the NYS logo, so the `nysLogo` prop is not needed and should be omitted to avoid confusion.
-
 ---
 
 ## Phase 2: Application Shell & Routing

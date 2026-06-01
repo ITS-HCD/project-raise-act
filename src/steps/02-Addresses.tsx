@@ -1,12 +1,30 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRegistration } from '../context/RegistrationContext';
 import { useStepValidation } from '../utils/useStepValidation';
+import type { Address } from '../types/registration';
 import { NysTextinput } from '../components/wrappers/NysTextinput';
 import { NysSelect } from '../components/wrappers/NysSelect';
 import { NysDivider } from '../components/wrappers/NysDivider';
-import { RepeatableFieldGroup } from '../components/RepeatableFieldGroup';
+import { NysFileinput } from '../components/wrappers/NysFileinput';
+import { NysButton } from '../components/wrappers/NysButton';
 import StepNavigation from '../components/StepNavigation';
-import type { Address } from '../types/registration';
+
+const COUNTRIES = [
+  { value: 'US', label: 'United States' },
+  { value: 'CA', label: 'Canada' },
+  { value: 'MX', label: 'Mexico' },
+  { value: 'GB', label: 'United Kingdom' },
+  { value: 'AU', label: 'Australia' },
+  { value: 'CN', label: 'China' },
+  { value: 'DE', label: 'Germany' },
+  { value: 'FR', label: 'France' },
+  { value: 'IN', label: 'India' },
+  { value: 'JP', label: 'Japan' },
+  { value: 'KR', label: 'South Korea' },
+  { value: 'SG', label: 'Singapore' },
+  { value: 'OTHER', label: 'Other' },
+];
 
 const US_STATES = [
   { value: 'AL', label: 'Alabama' },
@@ -67,95 +85,7 @@ const US_STATES = [
   { value: 'VI', label: 'U.S. Virgin Islands' },
 ];
 
-const EMPTY_ADDRESS: Address = { street: '', suite: '', city: '', state: '', zip: '' };
-
-function formatAddressSummary(addr: Address): string {
-  const parts = [addr.street];
-  if (addr.suite) parts.push(addr.suite);
-  parts.push(`${addr.city}, ${addr.state} ${addr.zip}`);
-  return parts.join(', ');
-}
-
-interface AddressFormFieldsProps {
-  address: Address;
-  onChange: (update: Partial<Address>) => void;
-  fieldErrors?: { showError: (key: string) => boolean; message: (key: string) => string };
-  fieldPrefix?: string;
-}
-
-function AddressFormFields({ address, onChange, fieldErrors, fieldPrefix = '' }: AddressFormFieldsProps) {
-  function field(name: keyof Address) {
-    const key = fieldPrefix ? `${fieldPrefix}.${name}` : name;
-    return {
-      showError: fieldErrors ? fieldErrors.showError(key) : false,
-      errorMessage: fieldErrors ? fieldErrors.message(key) : '',
-    };
-  }
-
-  function handleInput(fieldName: keyof Address) {
-    return (e: Event) => {
-      const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
-      onChange({ [fieldName]: value });
-    };
-  }
-
-  function handleStateChange(e: Event) {
-    const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
-    onChange({ state: value });
-  }
-
-  return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--nys-space-300)' }}>
-      <NysTextinput
-        label="Street Address"
-        required
-        value={address.street}
-        showError={field('street').showError}
-        errorMessage={field('street').errorMessage}
-        onNysInput={handleInput('street')}
-      />
-      <NysTextinput
-        label="Suite/Unit"
-        optional
-        value={address.suite}
-        onNysInput={handleInput('suite')}
-      />
-      <NysTextinput
-        label="City"
-        required
-        value={address.city}
-        showError={field('city').showError}
-        errorMessage={field('city').errorMessage}
-        onNysInput={handleInput('city')}
-      />
-      <NysSelect
-        label="State"
-        required
-        value={address.state}
-        showError={field('state').showError}
-        errorMessage={field('state').errorMessage}
-        onNysChange={handleStateChange}
-      >
-        <option value="">-- Select a state --</option>
-        {US_STATES.map((s) => (
-          <option key={s.value} value={s.value}>
-            {s.label}
-          </option>
-        ))}
-      </NysSelect>
-      <NysTextinput
-        label="Zip"
-        required
-        value={address.zip}
-        width="md"
-        pattern="^\d{5}(-\d{4})?$"
-        showError={field('zip').showError}
-        errorMessage={field('zip').errorMessage}
-        onNysInput={handleInput('zip')}
-      />
-    </div>
-  );
-}
+const emptyNyAddress = () => ({ country: 'US', street: '', suite: '', state: 'NY', city: '', zip: '' });
 
 export default function Addresses() {
   const navigate = useNavigate();
@@ -168,103 +98,188 @@ export default function Addresses() {
     if (validate()) navigate('/register/ownership');
   }
 
-  function updatePrincipal(update: Partial<typeof principal>) {
-    dispatch({ type: 'UPDATE_PRINCIPAL_ADDRESS', payload: update });
+  function update(field: keyof typeof principal) {
+    return (e: Event) => {
+      const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
+      dispatch({ type: 'UPDATE_PRINCIPAL_ADDRESS', payload: { [field]: value } });
+    };
   }
 
-  const principalErrors = {
-    showError: (key: string) => getFieldProps(key).showError,
-    message: (key: string) => getFieldProps(key).errorMessage,
-  };
+  function updateNyOffice(index: number, field: keyof Address) {
+    return (e: Event) => {
+      const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
+      const updated = nyOffices.map((addr, i) => (i === index ? { ...addr, [field]: value } : addr));
+      dispatch({ type: 'SET_NY_OFFICES', payload: updated });
+    };
+  }
+
+  function addNyOffice() {
+    dispatch({ type: 'SET_NY_OFFICES', payload: [...nyOffices, emptyNyAddress()] });
+  }
+
+  function removeNyOffice(index: number) {
+    dispatch({ type: 'SET_NY_OFFICES', payload: nyOffices.filter((_, i) => i !== index) });
+  }
 
   return (
-    <div style={{ padding: 'var(--nys-space-400)' }}>
-      <h2
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-3xl)',
-          marginBottom: 'var(--nys-space-400)',
-        }}
-      >
-        Addresses
-      </h2>
+    <div>
+      <h2>Address of the principal place of business</h2>
 
-      {/* Section A: Principal Place of Business */}
-      <h3
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-xl)',
-          marginBottom: 'var(--nys-space-100)',
-        }}
+      <NysSelect
+        label="Country"
+        width="lg"
+        required
+        value={principal.country}
+        showError={getFieldProps('principal.country').showError}
+        errorMessage={getFieldProps('principal.country').errorMessage}
+        onNysChange={update('country')}
       >
-        Address of the principal place of business
-      </h3>
-      <p
-        style={{
-          fontFamily: 'var(--nys-font-body)',
-          fontSize: 'var(--nys-font-size-sm)',
-          color: 'var(--nys-color-text-secondary)',
-          marginBottom: 'var(--nys-space-300)',
-        }}
-      >
-        Provide the primary business address where your company is headquartered.
-      </p>
+        <option value="">-- Select a country --</option>
+        {COUNTRIES.map((c) => (
+          <option key={c.value} value={c.value}>
+            {c.label}
+          </option>
+        ))}
+      </NysSelect>
 
-      <AddressFormFields
-        address={principal}
-        onChange={updatePrincipal}
-        fieldErrors={principalErrors}
-        fieldPrefix="principal"
+      <NysTextinput
+        label="Street Address"
+        required
+        value={principal.street}
+        showError={getFieldProps('principal.street').showError}
+        errorMessage={getFieldProps('principal.street').errorMessage}
+        onNysInput={update('street')}
       />
 
-      <div style={{ margin: 'var(--nys-space-400) 0' }}>
-        <NysDivider />
-      </div>
-
-      {/* Section B: NY Office Addresses */}
-      <h3
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-xl)',
-          marginBottom: 'var(--nys-space-100)',
-        }}
-      >
-        New York office addresses
-      </h3>
-      <p
-        style={{
-          fontFamily: 'var(--nys-font-body)',
-          fontSize: 'var(--nys-font-size-sm)',
-          color: 'var(--nys-color-text-secondary)',
-          marginBottom: 'var(--nys-space-300)',
-        }}
-      >
-        List each office address maintained in New York State other than the principal place of business. If none, leave blank.
-      </p>
-
-      <RepeatableFieldGroup<Address>
-        items={nyOffices}
-        emptyItem={EMPTY_ADDRESS}
-        addLabel="+ Add NY office address"
-        entryLabel="NY office address"
-        onAdd={(addr) =>
-          dispatch({ type: 'SET_NY_OFFICES', payload: [...nyOffices, addr] })
-        }
-        onUpdate={(index, addr) => {
-          const updated = [...nyOffices];
-          updated[index] = addr;
-          dispatch({ type: 'SET_NY_OFFICES', payload: updated });
-        }}
-        onRemove={(index) =>
-          dispatch({ type: 'SET_NY_OFFICES', payload: nyOffices.filter((_, i) => i !== index) })
-        }
-        renderForm={(item, onChange) => (
-          <AddressFormFields address={item} onChange={(update) => onChange({ ...item, ...update })} />
-        )}
-        renderSummary={(item) => (
-          <span style={{ fontFamily: 'var(--nys-font-body)' }}>{formatAddressSummary(item)}</span>
-        )}
+      <NysTextinput
+        label="Suite/Unit"
+        optional
+        value={principal.suite}
+        onNysInput={update('suite')}
       />
+
+      <NysSelect
+        label="State"
+        width="sm"
+        required
+        value={principal.state}
+        showError={getFieldProps('principal.state').showError}
+        errorMessage={getFieldProps('principal.state').errorMessage}
+        onNysChange={update('state')}
+      >
+        <option value="">-- Select a state --</option>
+        {US_STATES.map((s) => (
+          <option key={s.value} value={s.value}>
+            {s.value}
+          </option>
+        ))}
+      </NysSelect>
+
+      <NysTextinput
+        label="City"
+        width="md"
+        required
+        value={principal.city}
+        showError={getFieldProps('principal.city').showError}
+        errorMessage={getFieldProps('principal.city').errorMessage}
+        onNysInput={update('city')}
+      />
+
+      <NysTextinput
+        label="Zip"
+        required
+        value={principal.zip}
+        width="md"
+        pattern="^\d{5}(-\d{4})?$"
+        showError={getFieldProps('principal.zip').showError}
+        errorMessage={getFieldProps('principal.zip').errorMessage}
+        onNysInput={update('zip')}
+      />
+
+      <NysDivider />
+
+      <h2>New York office addresses</h2>
+      <p>List each office address maintained in New York State other than the principal place of business. If none, leave blank.</p>
+
+      {nyOffices.map((office, index) => (
+        <div key={index} style={{margin: 'var(--nys-space-150) 0', gap: 'var(--nys-space-150)', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3>Address {index + 1}</h3>
+            <NysButton
+              variant="text"
+              label="Remove"
+              type="button"
+              className="remove-btn"
+              onClick={() => removeNyOffice(index)}
+            />
+          </div>
+
+          <NysTextinput
+            label="Street Address"
+            required
+            value={office.street}
+            onNysInput={updateNyOffice(index, 'street')}
+          />
+
+          <NysTextinput
+            label="Suite/Unit"
+            optional
+            value={office.suite}
+            onNysInput={updateNyOffice(index, 'suite')}
+          />
+
+          <NysTextinput
+            label="State"
+            width="sm"
+            value="NY"
+            readonly
+          >
+            <option value="NY">NY</option>
+          </NysTextinput>
+
+          <NysTextinput
+            label="City"
+            width="md"
+            required
+            value={office.city}
+            onNysInput={updateNyOffice(index, 'city')}
+          />
+
+          <NysTextinput
+            label="Zip"
+            width="md"
+            required
+            value={office.zip}
+            pattern="^\d{5}(-\d{4})?$"
+            onNysInput={updateNyOffice(index, 'zip')}
+          />
+        </div>
+      ))}
+
+      <NysButton
+        variant="text"
+        label="Add additional address"
+        prefixIcon="add"
+        type="button"
+        onClick={addNyOffice}
+        style={{ '--nys-button-color': 'var(--nys-color-theme)', '--nys-button-color--hover': 'var(--nys-color-theme-strong)', '--nys-button-color--active': 'var(--nys-color-theme-stronger)' } as React.CSSProperties}
+      />
+
+      <NysDivider />
+
+      <NysFileinput
+        label="Supporting documentation"
+        description="Upload any required supporting documents for this registration. You can upload PDF, JPG, or PNG files up to 10MB each"
+        multiple
+        dropzone
+        accept=".pdf,.jpg,.jpeg,.png"
+        onNysChange={(e: Event) => {
+          const { files } = (e as CustomEvent<{ id: string; files: File[] }>).detail;
+          dispatch({ type: 'SET_DOCUMENTS', payload: files });
+        }}
+      />
+      
+      <NysDivider />
 
       <StepNavigation
         onBack={() => navigate('/register/business-info')}

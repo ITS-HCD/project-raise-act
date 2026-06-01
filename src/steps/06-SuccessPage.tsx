@@ -1,13 +1,14 @@
 import { useLocation } from 'react-router-dom';
-import { NysUnavHeader } from '../components/wrappers/NysUnavHeader';
 import { NysGlobalHeader } from '../components/wrappers/NysGlobalHeader';
 import { NysGlobalFooter } from '../components/wrappers/NysGlobalFooter';
-import { NysUnavFooter } from '../components/wrappers/NysUnavFooter';
+import { NysButton } from '../components/wrappers/NysButton';
+import { NysAvatar } from '../components/wrappers/NysAvatar';
 import { SuccessConfirmation } from '../components/SuccessConfirmation';
 
 interface SuccessState {
   registrationId: string;
   submittedAt: string;
+  contactEmail?: string;
 }
 
 export default function SuccessPage() {
@@ -16,26 +17,35 @@ export default function SuccessPage() {
 
   const registrationId = state?.registrationId ?? 'REG-2024-00000';
   const submittedAt = state?.submittedAt ?? new Date().toISOString();
+  const contactEmail = state?.contactEmail ?? '';
 
   return (
     <>
-      <NysUnavHeader hideSearch hideTranslate />
-      <NysGlobalHeader
-        appName="RAISE"
-        agencyName="Department of Financial Services"
-      />
+      <NysGlobalHeader nysLogo appName="Responsible AI Safety and Education (RAISE) Act" >
+              <NysButton
+                slot="user-actions"
+                label="User Name"
+                prefixIcon="slotted"
+              >
+                <NysAvatar
+                  slot="prefix-icon"
+                  ariaLabel="User avatar"
+                  initials="NY"
+                />
+              </NysButton>
+            </NysGlobalHeader>
       <div className="nys-grid-container">
         <div className="nys-grid-row">
           <main className="nys-grid-col-12" id="main-content">
             <SuccessConfirmation
               registrationId={registrationId}
               submittedAt={submittedAt}
+              contactEmail={contactEmail}
             />
           </main>
         </div>
       </div>
       <NysGlobalFooter agencyName="Department of Financial Services" />
-      <NysUnavFooter />
     </>
   );
 }

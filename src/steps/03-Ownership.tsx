@@ -6,6 +6,7 @@ import { NysRadiogroup } from '../components/wrappers/NysRadiogroup';
 import { NysRadiobutton } from '../components/wrappers/NysRadiobutton';
 import { NysDatepicker } from '../components/wrappers/NysDatepicker';
 import { NysDivider } from '../components/wrappers/NysDivider';
+import { NysFileinput } from '../components/wrappers/NysFileinput';
 import { RepeatableFieldGroup } from '../components/RepeatableFieldGroup';
 import StepNavigation from '../components/StepNavigation';
 import type { Owner } from '../types/registration';
@@ -179,6 +180,11 @@ export default function Ownership() {
     if (validate()) navigate('/register/contacts');
   }
 
+  function handleFilesChange(e: Event) {
+    const { files } = (e as CustomEvent<{ id: string; files: File[] }>).detail;
+    dispatch({ type: 'SET_DOCUMENTS', payload: files });
+  }
+
   return (
     <div style={{ padding: 'var(--nys-space-400)' }}>
       <h2
@@ -287,6 +293,62 @@ export default function Ownership() {
         renderSummary={(item) => <OwnerSummary owner={item} isFormer={true} />}
       />
 
+      <div style={{ margin: 'var(--nys-space-400) 0' }}>
+        <NysDivider />
+      </div>
+
+      <h3
+        style={{
+          fontFamily: 'var(--nys-font-heading)',
+          fontSize: 'var(--nys-font-size-xl)',
+          marginBottom: 'var(--nys-space-100)',
+        }}
+      >
+        Supporting documentation
+      </h3>
+      <p
+        style={{
+          fontFamily: 'var(--nys-font-body)',
+          fontSize: 'var(--nys-font-size-sm)',
+          color: 'var(--nys-color-text-secondary)',
+          marginBottom: 'var(--nys-space-100)',
+        }}
+      >
+        Upload any required supporting documents for this registration.
+      </p>
+      <p
+        style={{
+          fontFamily: 'var(--nys-font-body)',
+          fontSize: 'var(--nys-font-size-sm)',
+          color: 'var(--nys-color-text-secondary)',
+          marginBottom: 'var(--nys-space-300)',
+        }}
+      >
+        You can upload PDF, JPG, or PNG files up to 10MB each
+      </p>
+
+      <NysFileinput
+        label=""
+        multiple
+        dropzone
+        accept=".pdf,.jpg,.jpeg,.png"
+        optional
+        onNysChange={handleFilesChange}
+      />
+
+      {data.documents.length > 0 && (
+        <p
+          style={{
+            fontFamily: 'var(--nys-font-body)',
+            fontSize: 'var(--nys-font-size-sm)',
+            color: 'var(--nys-color-text-secondary)',
+            marginTop: 'var(--nys-space-200)',
+          }}
+        >
+          {data.documents.length} file{data.documents.length !== 1 ? 's' : ''} staged for submission.
+        </p>
+      )}
+      <NysDivider />
       <StepNavigation
         onBack={() => navigate('/register/addresses')}
         onContinue={handleContinue}
