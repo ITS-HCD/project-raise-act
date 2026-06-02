@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RAISE Act Registration — DFS</title>
     <style>
-      body.gated { font-family: system-ui; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f5f5f5; }
-      .password-gate { text-align: center; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-      .password-gate h1 { margin-top: 0; color: #333; }
-      .password-gate input { padding: 0.75rem 1rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px; width: 250px; box-sizing: border-box; }
-      .password-gate button { padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; margin-left: 0.5rem; background: #0066cc; color: white; border: none; border-radius: 4px; }
-      .password-gate button:hover { background: #0052a3; }
-      .password-error { color: #d32f2f; margin-top: 1rem; }
+      body.gated { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: var(--nys-color-background); }
+      .password-gate { text-align: center; padding: 2rem; max-width: 400px; width: 100%; }
+      .password-gate h1 { margin: 0 0 2rem 0; color: var(--nys-color-text); }
+      .password-gate form { display: flex; flex-direction: column; gap: 1rem; }
       #app-container { display: none; }
       body.authenticated #app-container { display: block; }
       body.authenticated .password-gate { display: none; }
@@ -20,12 +17,23 @@
   </head>
   <body class="gated">
     <div class="password-gate">
-      <h1>Enter Password</h1>
-      <div>
-        <input type="password" id="password-input" autofocus />
-        <button onclick="checkPassword()">Submit</button>
-      </div>
-      <div class="password-error" id="password-error"></div>
+      <h1>Enter Password to Continue</h1>
+      <form id="passwordForm">
+        <nys-textinput
+          id="password-input"
+          name="password"
+          type="password"
+          label="Password"
+          required
+          autofocus
+        ></nys-textinput>
+        <nys-button
+          type="submit"
+          label="Unlock"
+          variant="filled"
+          fullwidth="true"
+        ></nys-button>
+      </form>
     </div>
     <div id="app-container">
       <div id="root"></div>
@@ -38,14 +46,17 @@
         return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
       }
 
-      async function checkPassword() {
-        const input = document.getElementById('password-input').value;
+      async function checkPassword(e) {
+        e.preventDefault();
+        const inputEl = document.getElementById('password-input');
+        const input = inputEl.value;
         if (await sha256(input) === PASSWORD_HASH) {
           sessionStorage.setItem('authed', 'true');
           authenticate();
         } else {
-          document.getElementById('password-error').textContent = 'Incorrect password. Try again.';
-          document.getElementById('password-input').value = '';
+          inputEl.showError = true;
+          inputEl.errorMessage = 'Incorrect password. Try again.';
+          inputEl.value = '';
         }
       }
 
@@ -58,9 +69,7 @@
         authenticate();
       }
 
-      document.getElementById('password-input')?.addEventListener('keydown', e => {
-        if (e.key === 'Enter') checkPassword();
-      });
+      document.getElementById('passwordForm')?.addEventListener('submit', checkPassword);
     </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
