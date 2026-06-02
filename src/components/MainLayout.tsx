@@ -4,6 +4,8 @@ import { NysUnavHeader } from './wrappers/NysUnavHeader';
 import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
 import { NysGlobalFooter } from './wrappers/NysGlobalFooter';
 import { NysUnavFooter } from './wrappers/NysUnavFooter';
+import { NysButton } from './wrappers/NysButton';
+import { NysAvatar } from './wrappers/NysAvatar';
 
 export default function MainLayout() {
   const location = useLocation();
@@ -24,6 +26,18 @@ export default function MainLayout() {
           <li><a href="/">Dashboard</a></li>
           <li><a href="/user-management">User Management</a></li>
         </ul>
+          <NysButton
+          slot="user-actions"
+          label="User Name"
+          prefixIcon="slotted"
+        >
+          
+          <NysAvatar
+            slot="prefix-icon"
+            ariaLabel="User avatar"
+            initials="NY"
+          />
+        </NysButton>
       </NysGlobalHeader>
       <main id="main-content">
         <Outlet />
