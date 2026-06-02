@@ -126,7 +126,7 @@ export default function UserManagement() {
             onClick={() => {
               console.log('New user:', formData);
               setShowModal(false);
-              setFormData({ name: '', role: '', email: '' });
+              setFormData({ firstname: '', lastname: '', role: '', email: '' });
             }}
           />
         </div>
