@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { NysUnavHeader } from './wrappers/NysUnavHeader';
 import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
@@ -34,8 +34,8 @@ export default function MainLayout() {
       <NysUnavHeader hideSearch hideTranslate />
       <NysGlobalHeader appName="Responsible AI Safety and Education (RAISE) Act">
         <ul>
-          <li><a href="/">Dashboard</a></li>
-          <li><a href="/user-management">User Management</a></li>
+          <li><Link to="/">Dashboard</Link></li>
+          <li><Link to="/user-management">User Management</Link></li>
         </ul>
         <div slot="user-actions" style={{ display: 'flex', alignItems: 'center' }}>
           <NysButton
