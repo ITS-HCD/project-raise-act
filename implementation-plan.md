@@ -38,7 +38,7 @@ Reference: `raise-act-prd.md` for detailed specs.
 - [x] 2.1 — Set up React Router with routes (see PRD section 2 — Routes table):
   - `/register/business-info` through `/register/review` + `/register/success`
   - Redirect `/` and `/register` to `/register/business-info`
-- [x] 2.2 — Build `AppShell.tsx`: full layout with `nys-globalheader` (appName="RAISE", agencyName="Department of Financial Services" nysLogo), grid container, `nys-globalfooter`
+- [x] 2.2 — Build `AppShell.tsx`: full layout with `nys-globalheader` (appName="RAISE"), grid container, `nys-globalfooter`
 - [x] 2.3 — Add `nys-stepper` in left sidebar (col-3) with 6 `nys-step` children, each with `href` matching its route
 - [x] 2.4 — Add "Save and Exit" button in stepper's `actions` slot
 - [x] 2.5 — Wire stepper navigation: listen for `nys-step-click` events, `preventDefault()`, use React Router `navigate()`

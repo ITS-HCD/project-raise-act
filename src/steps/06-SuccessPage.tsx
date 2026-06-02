@@ -4,6 +4,8 @@ import { NysGlobalFooter } from '../components/wrappers/NysGlobalFooter';
 import { NysButton } from '../components/wrappers/NysButton';
 import { NysAvatar } from '../components/wrappers/NysAvatar';
 import { SuccessConfirmation } from '../components/SuccessConfirmation';
+import { NysUnavHeader } from '../components/wrappers/NysUnavHeader';
+import { NysUnavFooter } from '@nysds/components/react';
 
 interface SuccessState {
   registrationId: string;
@@ -21,7 +23,8 @@ export default function SuccessPage() {
 
   return (
     <>
-      <NysGlobalHeader nysLogo appName="Responsible AI Safety and Education (RAISE) Act" >
+      <NysUnavHeader hideSearch hideTranslate />
+      <NysGlobalHeader appName="Responsible AI Safety and Education (RAISE) Act" >
               <NysButton
                 slot="user-actions"
                 label="User Name"
@@ -45,7 +48,8 @@ export default function SuccessPage() {
           </main>
         </div>
       </div>
-      <NysGlobalFooter agencyName="Department of Financial Services" />
+      <NysGlobalFooter agencyName="Responsible AI Safety and Education (RAISE) Act" />
+      <NysUnavFooter />
     </>
   );
 }

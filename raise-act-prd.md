@@ -74,7 +74,7 @@ The full-app layout wraps every step with a consistent chrome.
 
 ### Layout (top to bottom)
 
-2. **`nys-globalheader`** — `nysLogo appName="RAISE"`, `agencyName="Department of Financial Services"`, `nysLogo`
+2. **`nys-globalheader`** — `appName="RAISE"`, `agencyName="Department of Financial Services"`
 3. **Main content area** — Grid layout:
    - Left sidebar (col-3 on desktop, col-12 on mobile): `nys-stepper` with `nys-step` children + "Save & exit" button in `actions` slot
    - Right main (col-9 on desktop, col-12 on mobile): Active step form content

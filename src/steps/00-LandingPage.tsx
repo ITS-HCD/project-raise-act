@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import { NysUnavHeader } from '../components/wrappers/NysUnavHeader';
+import { NysUnavFooter } from '../components/wrappers/NysUnavFooter';
 import { NysGlobalHeader } from '../components/wrappers/NysGlobalHeader';
 import { NysGlobalFooter } from '../components/wrappers/NysGlobalFooter';
 import { NysAlert } from '../components/wrappers/NysAlert';
@@ -12,7 +14,8 @@ export default function LandingPage() {
 
   return (
     <>
-      <NysGlobalHeader nysLogo appName="Responsible AI Safety and Education (RAISE) Act">
+      <NysUnavHeader hideSearch hideTranslate />
+      <NysGlobalHeader appName="Responsible AI Safety and Education (RAISE) Act">
               <NysButton
                 slot="user-actions"
                 label="User Name"
@@ -91,7 +94,8 @@ export default function LandingPage() {
           </main>
         </div>
       </div>
-      <NysGlobalFooter agencyName="Department of Financial Services" />
+      <NysGlobalFooter agencyName="Responsible AI Safety and Education (RAISE) Act" />
+      <NysUnavFooter />
     </>
   );
 }
