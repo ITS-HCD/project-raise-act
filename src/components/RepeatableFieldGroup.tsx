@@ -96,7 +96,6 @@ export function RepeatableFieldGroup<T>({
                   variant="text"
                   size="sm"
                   type="button"
-                  ariaLabel={`Edit ${entryLabel} ${index + 1}`}
                   onClick={() => handleOpenEdit(index)}
                 />
                 <NysButton
@@ -104,7 +103,6 @@ export function RepeatableFieldGroup<T>({
                   variant="text"
                   size="sm"
                   type="button"
-                  ariaLabel={`Remove ${entryLabel} ${index + 1}`}
                   onClick={() => onRemove(index)}
                 />
               </div>

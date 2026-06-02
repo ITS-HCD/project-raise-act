@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { NysUnavHeader } from './wrappers/NysUnavHeader';
 import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
@@ -6,9 +6,12 @@ import { NysGlobalFooter } from './wrappers/NysGlobalFooter';
 import { NysUnavFooter } from './wrappers/NysUnavFooter';
 import { NysButton } from './wrappers/NysButton';
 import { NysAvatar } from './wrappers/NysAvatar';
+import { NysDropdownMenu } from './wrappers/NysDropdownMenu';
+import { NysDropdownMenuItem } from './wrappers/NysDropdownMenuItem';
 
 export default function MainLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const el = document.querySelector<HTMLElement>('h1, h2');
@@ -18,6 +21,11 @@ export default function MainLayout() {
     }
   }, [location.pathname]);
 
+  const handleLogout = () => {
+    sessionStorage.removeItem('authed');
+    navigate('/');
+  };
+
   return (
     <>
       <NysUnavHeader hideSearch hideTranslate />
@@ -26,18 +34,21 @@ export default function MainLayout() {
           <li><a href="/">Dashboard</a></li>
           <li><a href="/user-management">User Management</a></li>
         </ul>
+        <div slot="user-actions" style={{ display: 'flex', alignItems: 'center' }}>
           <NysButton
-          slot="user-actions"
-          label="User Name"
-          prefixIcon="slotted"
-        >
-          
-          <NysAvatar
-            slot="prefix-icon"
-            ariaLabel="User avatar"
-            initials="NY"
-          />
-        </NysButton>
+            id="user-menu-trigger"
+            label="User Name"
+            prefixIcon="slotted"
+          >
+            <NysAvatar
+              slot="prefix-icon"
+              initials="NY"
+            />
+          </NysButton>
+          <NysDropdownMenu for="user-menu-trigger">
+            <NysDropdownMenuItem label="Sign out" onClick={handleLogout} />
+          </NysDropdownMenu>
+        </div>
       </NysGlobalHeader>
       <main id="main-content">
         <Outlet />
