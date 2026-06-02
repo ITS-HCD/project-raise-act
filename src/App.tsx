@@ -14,7 +14,7 @@ import UserManagement from './steps/UserManagement';
 export default function App() {
   return (
     <RegistrationProvider>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<LandingPage />} />
