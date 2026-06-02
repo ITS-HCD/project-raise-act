@@ -6,6 +6,9 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RAISE Act Registration — DFS</title>
+  <script type="module">
+    import '@nysds/components';
+  </script>
   <style>
     body.gated {
       display: flex;
@@ -51,7 +54,7 @@
     async function checkPassword(e) {
       e.preventDefault();
       const inputEl = document.getElementById('password-input');
-      const input = inputEl.value;
+      const input = inputEl.value || '';
       if (await sha256(input) === PASSWORD_HASH) {
         sessionStorage.setItem('authed', 'true');
         authenticate();
