@@ -109,11 +109,14 @@
 
 // Layout
 #main-content {
-  max-width: 64em;
-  padding: 0 var(--nys-space-200);
+  max-width: 80em;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @media (min-width: 30em) {
-    padding: 0 var(--nys-space-200);
+    padding: 0;
   }
 
   @media (min-width: 64em) {
@@ -164,4 +167,36 @@
   display: flex;
   flex-direction: column;
   gap: var(--nys-space-300);
+}
+
+#user-management {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nys-space-200);
+  width: 100%;
+  padding: var(--nys-space-400);
+
+  @media (min-width: 80em) {
+    margin: 0 auto;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(var(--nys-font-family-heading));
+    font-size: var(var(--nys-font-size-h1));
+    line-height: var(--nys-font-lineheight-h1);
+    letter-spacing: var(--nys-font-letterspacing-heading-h1);
+  }
+
+  nys-table {
+    max-width: 50rem;
+    width: 100%;
+  }
+
+  nys-table,
+  nys-pagination {
+    align-self: center;
+  }
 }
