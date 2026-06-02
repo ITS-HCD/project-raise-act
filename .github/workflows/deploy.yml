@@ -25,6 +25,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - name: Inject password hash
+        run: |
+          HASH=$(echo -n "${{ secrets.SITE_PASSWORD }}" | sha256sum | cut -d' ' -f1)
+          sed -i "s|__PASSWORD_HASH__|${HASH}|g" dist/index.html
       - name: Copy index.html to 404.html for SPA routing
         run: cp dist/index.html dist/404.html
       - uses: actions/upload-pages-artifact@v3

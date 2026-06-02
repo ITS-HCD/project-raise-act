@@ -5,9 +5,63 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RAISE Act Registration — DFS</title>
+    <style>
+      body.gated { font-family: system-ui; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f5f5f5; }
+      .password-gate { text-align: center; background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+      .password-gate h1 { margin-top: 0; color: #333; }
+      .password-gate input { padding: 0.75rem 1rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 4px; width: 250px; box-sizing: border-box; }
+      .password-gate button { padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; margin-left: 0.5rem; background: #0066cc; color: white; border: none; border-radius: 4px; }
+      .password-gate button:hover { background: #0052a3; }
+      .password-error { color: #d32f2f; margin-top: 1rem; }
+      #app-container { display: none; }
+      body.authenticated #app-container { display: block; }
+      body.authenticated .password-gate { display: none; }
+    </style>
   </head>
-  <body>
-    <div id="root"></div>
+  <body class="gated">
+    <div class="password-gate">
+      <h1>Enter Password</h1>
+      <div>
+        <input type="password" id="password-input" autofocus />
+        <button onclick="checkPassword()">Submit</button>
+      </div>
+      <div class="password-error" id="password-error"></div>
+    </div>
+    <div id="app-container">
+      <div id="root"></div>
+    </div>
+    <script>
+      const PASSWORD_HASH = '__PASSWORD_HASH__';
+
+      async function sha256(str) {
+        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+
+      async function checkPassword() {
+        const input = document.getElementById('password-input').value;
+        if (await sha256(input) === PASSWORD_HASH) {
+          sessionStorage.setItem('authed', 'true');
+          authenticate();
+        } else {
+          document.getElementById('password-error').textContent = 'Incorrect password. Try again.';
+          document.getElementById('password-input').value = '';
+        }
+      }
+
+      function authenticate() {
+        document.body.classList.remove('gated');
+        document.body.classList.add('authenticated');
+      }
+
+      if (sessionStorage.getItem('authed') === 'true') {
+        authenticate();
+      }
+
+      document.getElementById('password-input')?.addEventListener('keydown', e => {
+        if (e.key === 'Enter') checkPassword();
+      });
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
