@@ -1,17 +1,27 @@
 import { useState } from 'react';
 import { NysTable } from '../components/wrappers/NysTable';
 import { NysPagination } from '../components/wrappers/NysPagination';
-import '../styles/app.scss';
+import { NysModal } from '../components/wrappers/NysModal';
 import { NysButton } from '../components/wrappers/NysButton';
+import { NysTextinput } from '../components/wrappers/NysTextinput';
+import { NysSelect } from '../components/wrappers/NysSelect';
+import { NysOption } from '../components/wrappers/NysOption';
+import '../styles/app.scss';
 
 export default function UserManagement() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({ firstname: '', lastname: '', role: '', email: '' });
 
   return (
     <div id="user-management">
-      <div className="header">      
+      <div className="header">
         <h2>Manage Users</h2>
-        <NysButton variant="outline" label="Add User"></NysButton>
+        <NysButton
+          variant="filled"
+          label="Add User"
+          onClick={() => setShowModal(true)}
+        />
       </div>
 
       <NysTable bordered sortable>
@@ -57,6 +67,70 @@ export default function UserManagement() {
         totalPages={5}
         onNysChange={(e: CustomEvent) => setCurrentPage(e.detail.page)}
       />
+
+      <NysModal
+        id="add-user-modal"
+        heading="Add New User"
+        open={showModal}
+        onNysClose={() => setShowModal(false)}
+      >
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            console.log('New user:', formData);
+            setShowModal(false);
+            setFormData({ firstname: '', lastname: '', role: '', email: '' });
+          }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
+        >
+          <NysTextinput
+            label="Email address"
+            type="email"
+            value={formData.email}
+            onInput={(e: any) => setFormData({ ...formData, email: e.target.value })}
+            required
+          />
+          <NysTextinput
+            label="First name"
+            value={formData.firstname}
+            onInput={(e: any) => setFormData({ ...formData, firstname: e.target.value })}
+            required
+          />
+          <NysTextinput
+            label="Last name"
+            value={formData.lastname}
+            onInput={(e: any) => setFormData({ ...formData, lastname: e.target.value })}
+            required
+          />
+          <NysSelect
+            label="Role"
+            value={formData.role}
+            onInput={(e: any) => setFormData({ ...formData, role: e.target.value })}
+            required
+          >
+            <NysOption value="">Select a role</NysOption>
+            <NysOption value="DFS Approver">DFS Approver</NysOption>
+            <NysOption value="Admin">Admin</NysOption>
+            <NysOption value="Viewer">Viewer</NysOption>
+          </NysSelect>
+        </form>
+        <div slot="actions">
+          <NysButton
+            label="Cancel"
+            variant="outline"
+            onClick={() => setShowModal(false)}
+          />
+          <NysButton
+            label="Add User"
+            variant="filled"
+            onClick={() => {
+              console.log('New user:', formData);
+              setShowModal(false);
+              setFormData({ name: '', role: '', email: '' });
+            }}
+          />
+        </div>
+      </NysModal>
     </div>
   );
 }
