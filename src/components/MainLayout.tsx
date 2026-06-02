@@ -24,6 +24,9 @@ export default function MainLayout() {
   const handleLogout = () => {
     sessionStorage.removeItem('authed');
     navigate('/');
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   };
 
   return (
