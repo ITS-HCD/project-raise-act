@@ -44,7 +44,7 @@
     <div id="root"></div>
   </div>
   <script>
-    const PASSWORD_HASH = '__PASSWORD_HASH__';
+    const PASSWORD_HASH = '56973bcc793ba8599645f115d9ee309b4be7f1988924bde8d5ac14aa695b3aaf';
 
     async function sha256(str) {
       const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
@@ -55,7 +55,11 @@
       e.preventDefault();
       const inputEl = document.getElementById('password-input');
       const input = inputEl.value || '';
-      if (await sha256(input) === PASSWORD_HASH) {
+      const hash = await sha256(input);
+      console.log('Password hash:', hash);
+      console.log('Expected hash:', PASSWORD_HASH);
+      console.log('Match:', hash === PASSWORD_HASH);
+      if (hash === PASSWORD_HASH) {
         sessionStorage.setItem('authed', 'true');
         authenticate();
       } else {
