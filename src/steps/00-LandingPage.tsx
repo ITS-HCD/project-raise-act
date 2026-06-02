@@ -18,6 +18,20 @@ export default function LandingPage() {
           lineHeight: 'var(--nys-font-lineheight-ui-xl, 28px)',
           letterSpacing: 'var(--nys-font-letterspacing-ui-xl, 0.017px)',
           margin: '0',
+          background: 'var(--Neutral-0, #FFF)',
+          boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.25)',
+          display: 'flex',
+          height: '71px',
+          width: '100vw',
+          position: 'relative',
+          left: '50%',
+          marginLeft: '-50vw',
+          padding: '22px 39px',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          gap: '20px',
+          flexShrink: '0',
+          alignSelf: 'stretch',
         }}
       >
         {COMPANY_NAME}
