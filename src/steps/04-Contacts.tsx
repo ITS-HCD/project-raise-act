@@ -41,7 +41,7 @@ function ContactFields({
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--nys-space-300)' }}>
+    <div style={{ gap: 'var(--nys-space-150)', display: 'flex', flexDirection: 'column' }}>
       <div data-field-name={`${prefix}.firstName`}>
         <NysTextinput
           label="First Name"
@@ -119,36 +119,17 @@ export default function Contacts() {
   }
 
   return (
-    <div style={{ padding: 'var(--nys-space-400)' }}>
-      <h2
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-3xl)',
-          marginBottom: 'var(--nys-space-200)',
-        }}
-      >
+    <div>
+      <h2>
         Point of Contact
       </h2>
-      <p
-        style={{
-          fontFamily: 'var(--nys-font-body)',
-          fontSize: 'var(--nys-font-size-sm)',
-          color: 'var(--nys-color-text-secondary)',
-          marginBottom: 'var(--nys-space-400)',
-        }}
-      >
+      <p>
         This contact is responsible for receiving inquiries from the office or other governmental entities.
       </p>
-      <div style={{ margin: 'var(--nys-space-300) 0' }}><NysDivider /></div>
+      <NysDivider />
 
       {/* Primary Contact */}
-      <h3
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-xl)',
-          marginBottom: 'var(--nys-space-300)',
-        }}
-      >
+      <h3>
         Primary Contact
       </h3>
       <ContactFields
@@ -159,18 +140,10 @@ export default function Contacts() {
         prefix="primary"
       />
 
-      <div style={{ margin: 'var(--nys-space-400) 0' }}>
-        <NysDivider />
-      </div>
+      <NysDivider />
 
       {/* Secondary Contact */}
-      <h3
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-xl)',
-          marginBottom: 'var(--nys-space-300)',
-        }}
-      >
+      <h3>
         Secondary Contact
       </h3>
       <ContactFields
@@ -183,18 +156,10 @@ export default function Contacts() {
         prefix="secondary"
       />
 
-      <div style={{ margin: 'var(--nys-space-400) 0' }}>
-        <NysDivider />
-      </div>
+      <NysDivider />
 
       {/* Tertiary Contact */}
-      <h3
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-xl)',
-          marginBottom: 'var(--nys-space-300)',
-        }}
-      >
+      <h3>
         Tertiary Contact
       </h3>
       <ContactFields

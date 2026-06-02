@@ -56,7 +56,7 @@ function OwnerFormFields({
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--nys-space-300)' }}>
+    <div>
       <NysRadiogroup label="Owner Type" required>
         <NysRadiobutton
           name="ownerType"
@@ -146,17 +146,10 @@ function OwnerSummary({ owner, isFormer }: { owner: Owner; isFormer: boolean }) 
 
   return (
     <div>
-      <strong style={{ fontFamily: 'var(--nys-font-body)' }}>
+      <strong>
         {name} — {type}
       </strong>
-      <div
-        style={{
-          fontFamily: 'var(--nys-font-body)',
-          fontSize: 'var(--nys-font-size-sm)',
-          color: 'var(--nys-color-text-secondary)',
-          marginTop: 'var(--nys-space-100)',
-        }}
-      >
+      <div>
         {[
           pct && `${pct} owned`,
           owner.startDate && `Start: ${owner.startDate}`,
@@ -186,35 +179,14 @@ export default function Ownership() {
   }
 
   return (
-    <div style={{ padding: 'var(--nys-space-400)' }}>
-      <h2
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-3xl)',
-          marginBottom: 'var(--nys-space-400)',
-        }}
-      >
-        Ownership
-      </h2>
+    <div>
+      <h2>Ownership</h2>
 
       {/* Section A: Current Beneficial Owners */}
-      <h3
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-xl)',
-          marginBottom: 'var(--nys-space-100)',
-        }}
-      >
+      <h3>
         Current beneficial owners
       </h3>
-      <p
-        style={{
-          fontFamily: 'var(--nys-font-body)',
-          fontSize: 'var(--nys-font-size-sm)',
-          color: 'var(--nys-color-text-secondary)',
-          marginBottom: 'var(--nys-space-300)',
-        }}
-      >
+      <p>
         List all individuals or entities with a beneficial ownership interest in the company.
       </p>
 
@@ -243,28 +215,13 @@ export default function Ownership() {
         renderSummary={(item) => <OwnerSummary owner={item} isFormer={false} />}
       />
 
-      <div style={{ margin: 'var(--nys-space-400) 0' }}>
-        <NysDivider />
-      </div>
+      <NysDivider />
 
       {/* Section B: Former Beneficial Owners */}
-      <h3
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-xl)',
-          marginBottom: 'var(--nys-space-100)',
-        }}
-      >
+      <h3>
         Former beneficial owners
       </h3>
-      <p
-        style={{
-          fontFamily: 'var(--nys-font-body)',
-          fontSize: 'var(--nys-font-size-sm)',
-          color: 'var(--nys-color-text-secondary)',
-          marginBottom: 'var(--nys-space-300)',
-        }}
-      >
+      <p>
         List any individuals or entities who previously held a beneficial ownership interest.
       </p>
 
@@ -293,58 +250,18 @@ export default function Ownership() {
         renderSummary={(item) => <OwnerSummary owner={item} isFormer={true} />}
       />
 
-      <div style={{ margin: 'var(--nys-space-400) 0' }}>
-        <NysDivider />
-      </div>
-
-      <h3
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-xl)',
-          marginBottom: 'var(--nys-space-100)',
-        }}
-      >
-        Supporting documentation
-      </h3>
-      <p
-        style={{
-          fontFamily: 'var(--nys-font-body)',
-          fontSize: 'var(--nys-font-size-sm)',
-          color: 'var(--nys-color-text-secondary)',
-          marginBottom: 'var(--nys-space-100)',
-        }}
-      >
-        Upload any required supporting documents for this registration.
-      </p>
-      <p
-        style={{
-          fontFamily: 'var(--nys-font-body)',
-          fontSize: 'var(--nys-font-size-sm)',
-          color: 'var(--nys-color-text-secondary)',
-          marginBottom: 'var(--nys-space-300)',
-        }}
-      >
-        You can upload PDF, JPG, or PNG files up to 10MB each
-      </p>
+      <NysDivider />
 
       <NysFileinput
-        label=""
+        label="Supporting documentation"
+        description="Upload any required supporting documents for this registration. You can upload PDF, JPG, or PNG files up to 10MB each"
         multiple
         dropzone
         accept=".pdf,.jpg,.jpeg,.png"
-        optional
         onNysChange={handleFilesChange}
       />
-
       {data.documents.length > 0 && (
-        <p
-          style={{
-            fontFamily: 'var(--nys-font-body)',
-            fontSize: 'var(--nys-font-size-sm)',
-            color: 'var(--nys-color-text-secondary)',
-            marginTop: 'var(--nys-space-200)',
-          }}
-        >
+        <p>
           {data.documents.length} file{data.documents.length !== 1 ? 's' : ''} staged for submission.
         </p>
       )}

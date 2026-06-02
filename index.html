@@ -1,13 +1,86 @@
 <!doctype html>
 <html lang="en" data-theme="business">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RAISE Act Registration — DFS</title>
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAISE Act Registration — DFS</title>
+  <script type="module">
+    import '@nysds/components';
+  </script>
+  <style>
+    body.gated {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    #app-container {
+      display: none;
+    }
+
+    body.authenticated #app-container {
+      display: block;
+    }
+
+    body.authenticated .password-gate {
+      display: none;
+    }
+  </style>
+</head>
+
+<body class="gated">
+  <div class="password-gate">
+    <h1>Enter Password to Continue</h1>
+    <form id="passwordForm">
+      <nys-textinput id="password-input" name="password" type="password" label="Password" required></nys-textinput>
+      <nys-button type="submit" label="Unlock" variant="filled"></nys-button>
+    </form>
+  </div>
+  <div id="app-container">
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  </div>
+  <script>
+    const PASSWORD_HASH = '56973bcc793ba8599645f115d9ee309b4be7f1988924bde8d5ac14aa695b3aaf';
+
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function checkPassword(e) {
+      e.preventDefault();
+      const inputEl = document.getElementById('password-input');
+      const input = inputEl.value || '';
+      const hash = await sha256(input);
+      console.log('Password hash:', hash);
+      console.log('Expected hash:', PASSWORD_HASH);
+      console.log('Match:', hash === PASSWORD_HASH);
+      if (hash === PASSWORD_HASH) {
+        sessionStorage.setItem('authed', 'true');
+        authenticate();
+      } else {
+        inputEl.showError = true;
+        inputEl.errorMessage = 'Incorrect password. Try again.';
+        inputEl.value = '';
+      }
+    }
+
+    function authenticate() {
+      document.body.classList.remove('gated');
+      document.body.classList.add('authenticated');
+    }
+
+    if (sessionStorage.getItem('authed') === 'true') {
+      authenticate();
+    }
+
+    document.getElementById('passwordForm')?.addEventListener('submit', checkPassword);
+  </script>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

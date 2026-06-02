@@ -57,11 +57,11 @@ interface ReviewFieldProps {
 
 function ReviewField({ label, value }: ReviewFieldProps) {
   return (
-    <div style={{ marginBottom: 'var(--nys-space-300)', fontFamily: 'var(--nys-font-body)' }}>
-      <div style={{ fontWeight: 'var(--nys-font-weight-semibold)', marginBottom: 'var(--nys-space-100)' }}>
+    <div>
+      <div>
         {label}:
       </div>
-      <div style={{ color: 'var(--nys-color-text)' }}>{value || '—'}</div>
+      <div>{value || '—'}</div>
     </div>
   );
 }
@@ -93,24 +93,11 @@ export default function ReviewCertify() {
   }
 
   return (
-    <div style={{ padding: 'var(--nys-space-400)' }}>
-      <h2
-        style={{
-          fontFamily: 'var(--nys-font-heading)',
-          fontSize: 'var(--nys-font-size-3xl)',
-          marginBottom: 'var(--nys-space-200)',
-        }}
-      >
+    <div>
+      <h2>
         Review &amp; Certify
       </h2>
-      <p
-        style={{
-          fontFamily: 'var(--nys-font-body)',
-          fontSize: 'var(--nys-font-size-sm)',
-          color: 'var(--nys-color-text-secondary)',
-          marginBottom: 'var(--nys-space-400)',
-        }}
-      >
+      <p>
         Review the information below before submitting your registration.
       </p>
 
@@ -144,7 +131,7 @@ export default function ReviewCertify() {
           label="NY Office Addresses"
           value={
             addresses.nyOffices.length > 0 ? (
-              <ul style={{ margin: 0, paddingLeft: 'var(--nys-space-300)' }}>
+              <ul>
                 {addresses.nyOffices.map((addr, i) => (
                   <li key={i}>{formatAddress(addr)}</li>
                 ))}
@@ -162,7 +149,7 @@ export default function ReviewCertify() {
           label="Current Owners"
           value={
             ownership.current.length > 0 ? (
-              <ul style={{ margin: 0, paddingLeft: 'var(--nys-space-300)' }}>
+              <ul>
                 {ownership.current.map((o, i) => (
                   <li key={i}>{formatOwner(o, false)}</li>
                 ))}
@@ -176,7 +163,7 @@ export default function ReviewCertify() {
           label="Former Owners"
           value={
             ownership.former.length > 0 ? (
-              <ul style={{ margin: 0, paddingLeft: 'var(--nys-space-300)' }}>
+              <ul>
                 {ownership.former.map((o, i) => (
                   <li key={i}>{formatOwner(o, true)}</li>
                 ))}
@@ -205,7 +192,7 @@ export default function ReviewCertify() {
           label="Uploaded Files"
           value={
             documents.length > 0 ? (
-              <ul style={{ margin: 0, paddingLeft: 'var(--nys-space-300)' }}>
+              <ul>
                 {documents.map((file, i) => (
                   <li key={i}>{file.name}</li>
                 ))}
@@ -220,9 +207,8 @@ export default function ReviewCertify() {
       {/* Certification */}
       <div
         data-field-name="certification"
-        style={{ marginTop: 'var(--nys-space-400)', marginBottom: 'var(--nys-space-400)' }}
       >
-        <h3 style={{ fontFamily: 'var(--nys-font-heading)', fontSize: 'var(--nys-font-size-xl)', marginBottom: 'var(--nys-space-300)' }}>
+        <h3>
           Certification
         </h3>
         <NysCheckbox
@@ -246,7 +232,7 @@ export default function ReviewCertify() {
       />
       <NysDivider />
       {/* Navigation */}
-      <div style={{ display: 'flex', gap: 'var(--nys-space-200)' }}>
+      <div>
         <NysButton
           label="Back"
           variant="text"

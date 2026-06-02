@@ -1,11 +1,8 @@
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useLayoutEffect } from 'react';
-import { NysGlobalHeader } from './wrappers/NysGlobalHeader';
 import { NysStepper } from './wrappers/NysStepper';
 import { NysStep } from './wrappers/NysStep';
 import { NysButton } from './wrappers/NysButton';
-import { NysAvatar } from './wrappers/NysAvatar';
-import { NysGlobalFooter } from './wrappers/NysGlobalFooter';
 import { useRegistration } from '../context/RegistrationContext';
 import { saveRegistration } from '../api/stubs';
 
@@ -57,61 +54,42 @@ export default function AppShell() {
   }
 
   return (
-    <>
-      <NysGlobalHeader
-        nysLogo
-        appName="Responsible AI Safety and Education (RAISE) Act"
-      >
-        <NysButton
-          slot="user-actions"
-          label="User Name"
-          prefixIcon="slotted"
+    <div className="nys-grid-container">
+      <div className="nys-grid-row">
+        <NysStepper
+          label="Register your Company"
+          className="nys-grid-col-12 nys-desktop:nys-grid-col-3"
         >
-          <NysAvatar
-            slot="prefix-icon"
-            ariaLabel="User avatar"
-            initials="NY"
-          />
-        </NysButton>
-      </NysGlobalHeader>
-      <div className="nys-grid-container">
-        <div className="nys-grid-row">
-          <NysStepper
-            label="Register your Company"
-            className="nys-grid-col-12 nys-desktop:nys-grid-col-3"
-          >
-            {STEPS.map((step, idx) => (
-              <NysStep
-                key={step.route}
-                label={step.label}
-                href={step.route}
-                current={idx === farthestStep || undefined}
-                selected={idx === selectedStep || undefined}
-                onNysStepClick={(e: CustomEvent) => {
-                  e.preventDefault();
-                  navigate(step.route);
-                }}
-              />
-            ))}
-            <div slot="actions">
-              <NysButton
-                label="Save and Exit"
-                variant="outline"
-                size="sm"
-                fullWidth
-                onNysClick={handleSaveAndExit}
-              />
-            </div>
-          </NysStepper>
-          <main
-            className="nys-grid-col-12 nys-desktop:nys-grid-col-9"
-            id="main-content"
-          >
-            <Outlet />
-          </main>
+          {STEPS.map((step, idx) => (
+            <NysStep
+              key={step.route}
+              label={step.label}
+              href={step.route}
+              current={idx === farthestStep || undefined}
+              selected={idx === selectedStep || undefined}
+              onNysStepClick={(e: CustomEvent) => {
+                e.preventDefault();
+                navigate(step.route);
+              }}
+            />
+          ))}
+          <div slot="actions">
+            <NysButton
+              label="Save and Exit"
+              variant="outline"
+              size="sm"
+              fullWidth
+              onNysClick={handleSaveAndExit}
+            />
+          </div>
+        </NysStepper>
+        <div
+          id="step-content"
+          className="nys-grid-col-12 nys-desktop:nys-grid-col-9"
+        >
+          <Outlet />
         </div>
       </div>
-      <NysGlobalFooter agencyName="Department of Financial Services" />
-    </>
+    </div>
   );
 }

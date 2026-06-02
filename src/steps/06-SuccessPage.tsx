@@ -1,8 +1,4 @@
 import { useLocation } from 'react-router-dom';
-import { NysGlobalHeader } from '../components/wrappers/NysGlobalHeader';
-import { NysGlobalFooter } from '../components/wrappers/NysGlobalFooter';
-import { NysButton } from '../components/wrappers/NysButton';
-import { NysAvatar } from '../components/wrappers/NysAvatar';
 import { SuccessConfirmation } from '../components/SuccessConfirmation';
 
 interface SuccessState {
@@ -20,32 +16,10 @@ export default function SuccessPage() {
   const contactEmail = state?.contactEmail ?? '';
 
   return (
-    <>
-      <NysGlobalHeader nysLogo appName="Responsible AI Safety and Education (RAISE) Act" >
-              <NysButton
-                slot="user-actions"
-                label="User Name"
-                prefixIcon="slotted"
-              >
-                <NysAvatar
-                  slot="prefix-icon"
-                  ariaLabel="User avatar"
-                  initials="NY"
-                />
-              </NysButton>
-            </NysGlobalHeader>
-      <div className="nys-grid-container">
-        <div className="nys-grid-row">
-          <main className="nys-grid-col-12" id="main-content">
-            <SuccessConfirmation
-              registrationId={registrationId}
-              submittedAt={submittedAt}
-              contactEmail={contactEmail}
-            />
-          </main>
-        </div>
-      </div>
-      <NysGlobalFooter agencyName="Department of Financial Services" />
-    </>
+  <SuccessConfirmation
+    registrationId={registrationId}
+    submittedAt={submittedAt}
+    contactEmail={contactEmail}
+  />
   );
 }
