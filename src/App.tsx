@@ -2,14 +2,14 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { RegistrationProvider } from './context/RegistrationContext';
 import MainLayout from './components/MainLayout';
 import AppShell from './components/AppShell';
-import LandingPage from './steps/00-LandingPage';
-import BusinessInfo from './steps/01-BusinessInfo';
-import Addresses from './steps/02-Addresses';
-import Ownership from './steps/03-Ownership';
-import Contacts from './steps/04-Contacts';
-import ReviewCertify from './steps/05-ReviewCertify';
-import SuccessPage from './steps/06-SuccessPage';
-import UserManagement from './steps/UserManagement';
+import LandingPage from './pages/00-LandingPage';
+import BusinessInfo from './pages/01-BusinessInfo';
+import Addresses from './pages/02-Addresses';
+import Ownership from './pages/03-Ownership';
+import Contacts from './pages/04-Contacts';
+import ReviewCertify from './pages/05-ReviewCertify';
+import SuccessPage from './pages/06-SuccessPage';
+import UserManagement from './pages/UserManagement';
 
 export default function App() {
   return (
