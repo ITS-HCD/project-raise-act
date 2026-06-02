@@ -6,7 +6,7 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RAISE Act Registration — DFS</title>
-  <script type="module">
+  <script async type="module">
     import '@nysds/components';
   </script>
   <style>
@@ -54,11 +54,12 @@
     async function checkPassword(e) {
       e.preventDefault();
       const inputEl = document.getElementById('password-input');
+      // Wait for web component to be ready
+      if (!inputEl || !inputEl.value !== undefined) {
+        await customElements.whenDefined('nys-textinput');
+      }
       const input = inputEl.value || '';
       const hash = await sha256(input);
-      console.log('Password hash:', hash);
-      console.log('Expected hash:', PASSWORD_HASH);
-      console.log('Match:', hash === PASSWORD_HASH);
       if (hash === PASSWORD_HASH) {
         sessionStorage.setItem('authed', 'true');
         authenticate();
@@ -78,7 +79,13 @@
       authenticate();
     }
 
-    document.getElementById('passwordForm')?.addEventListener('submit', checkPassword);
+    // Wait for web components to be defined before allowing form submission
+    Promise.all([
+      customElements.whenDefined('nys-textinput'),
+      customElements.whenDefined('nys-button')
+    ]).then(() => {
+      document.getElementById('passwordForm')?.addEventListener('submit', checkPassword);
+    });
   </script>
   <script type="module" src="/src/main.tsx"></script>
 </body>
