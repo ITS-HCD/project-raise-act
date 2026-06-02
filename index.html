@@ -1,76 +1,79 @@
 <!doctype html>
 <html lang="en" data-theme="business">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RAISE Act Registration — DFS</title>
-    <style>
-      body.gated { display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: var(--nys-color-background); }
-      .password-gate { text-align: center; padding: 2rem; max-width: 400px; width: 100%; }
-      .password-gate h1 { margin: 0 0 2rem 0; color: var(--nys-color-text); }
-      .password-gate form { display: flex; flex-direction: column; gap: 1rem; }
-      #app-container { display: none; }
-      body.authenticated #app-container { display: block; }
-      body.authenticated .password-gate { display: none; }
-    </style>
-  </head>
-  <body class="gated">
-    <div class="password-gate">
-      <h1>Enter Password to Continue</h1>
-      <form id="passwordForm">
-        <nys-textinput
-          id="password-input"
-          name="password"
-          type="password"
-          label="Password"
-          required
-          autofocus
-        ></nys-textinput>
-        <nys-button
-          type="submit"
-          label="Unlock"
-          variant="filled"
-          fullwidth="true"
-        ></nys-button>
-      </form>
-    </div>
-    <div id="app-container">
-      <div id="root"></div>
-    </div>
-    <script>
-      const PASSWORD_HASH = '__PASSWORD_HASH__';
 
-      async function sha256(str) {
-        const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-        return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-      }
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAISE Act Registration — DFS</title>
+  <style>
+    body.gated {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
 
-      async function checkPassword(e) {
-        e.preventDefault();
-        const inputEl = document.getElementById('password-input');
-        const input = inputEl.value;
-        if (await sha256(input) === PASSWORD_HASH) {
-          sessionStorage.setItem('authed', 'true');
-          authenticate();
-        } else {
-          inputEl.showError = true;
-          inputEl.errorMessage = 'Incorrect password. Try again.';
-          inputEl.value = '';
-        }
-      }
+    #app-container {
+      display: none;
+    }
 
-      function authenticate() {
-        document.body.classList.remove('gated');
-        document.body.classList.add('authenticated');
-      }
+    body.authenticated #app-container {
+      display: block;
+    }
 
-      if (sessionStorage.getItem('authed') === 'true') {
+    body.authenticated .password-gate {
+      display: none;
+    }
+  </style>
+</head>
+
+<body class="gated">
+  <div class="password-gate">
+    <h1>Enter Password to Continue</h1>
+    <form id="passwordForm">
+      <nys-textinput id="password-input" name="password" type="password" label="Password" required></nys-textinput>
+      <nys-button type="submit" label="Unlock" variant="filled"></nys-button>
+    </form>
+  </div>
+  <div id="app-container">
+    <div id="root"></div>
+  </div>
+  <script>
+    const PASSWORD_HASH = '__PASSWORD_HASH__';
+
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    async function checkPassword(e) {
+      e.preventDefault();
+      const inputEl = document.getElementById('password-input');
+      const input = inputEl.value;
+      if (await sha256(input) === PASSWORD_HASH) {
+        sessionStorage.setItem('authed', 'true');
         authenticate();
+      } else {
+        inputEl.showError = true;
+        inputEl.errorMessage = 'Incorrect password. Try again.';
+        inputEl.value = '';
       }
+    }
 
-      document.getElementById('passwordForm')?.addEventListener('submit', checkPassword);
-    </script>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    function authenticate() {
+      document.body.classList.remove('gated');
+      document.body.classList.add('authenticated');
+    }
+
+    if (sessionStorage.getItem('authed') === 'true') {
+      authenticate();
+    }
+
+    document.getElementById('passwordForm')?.addEventListener('submit', checkPassword);
+  </script>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>
