@@ -49,7 +49,7 @@ export default function LandingPage() {
               style={{ margin: 'var(--nys-space-250) 0' }}
               type="warning"
               heading="Disclosure Statement required to operate under the RAISE Act"
-              text={`${COMPANY_NAME} must be registered with the Department of Financial Services before submitting reports, disclosures, or incident filings. Registration ensures you meet New York State requirements.`}
+              text={`${COMPANY_NAME} must submit a disclosure statement before submitting reports or incident filings. A disclosure statement ensures you meet New York State requirements.`}
             />
 
             <div
@@ -78,15 +78,14 @@ export default function LandingPage() {
                   letterSpacing: 'var(--nys-font-letterspacing-ui-xl, 0.017px)',
                 }}
               >
-                No filings yet
+                Your disclosure statement has not been started.
               </p>
               <p>
-                {COMPANY_NAME} must be registered with the Department of Financial Services
-                before submitting reports, disclosures, or incident filings. Registration
-                ensures you meet New York State requirements.
+                {COMPANY_NAME} must submit a disclosure statement before submitting reports or incident filings. 
+A disclosure statement ensures you meet New York State requirements.
               </p>
               <NysButton
-                label="Start Registration"
+                label="Start Disclosure Statement"
                 variant="filled"
                 onNysClick={() => navigate('/register/business-info')}
               />
