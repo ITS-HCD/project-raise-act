@@ -138,7 +138,7 @@ export default function UserAuthorizationForm() {
                 id="stateProvince"
                 name="stateProvince"
                 label="State/Province/Region"
-                width="lg"
+                width="sm"
                 value={formData.stateProvince}
                 onNysChange={handleSelectChange}
               >
@@ -148,7 +148,7 @@ export default function UserAuthorizationForm() {
                 id="townCity"
                 name="townCity"
                 label="Town/City/Locality"
-                width="lg"
+                width="md"
                 value={formData.townCity}
                 onNysInput={handleInputChange}
               />
@@ -156,7 +156,7 @@ export default function UserAuthorizationForm() {
                 id="zipCode"
                 name="zipCode"
                 label="Zip/Postal Code"
-                width="lg"
+                width="md"
                 value={formData.zipCode}
                 onNysInput={handleInputChange}
               />
@@ -189,7 +189,7 @@ export default function UserAuthorizationForm() {
                 id="pointOfContactJobTitle"
                 name="pointOfContactJobTitle"
                 label="Job Title"
-                width="lg"
+                width="md"
                 value={formData.pointOfContactJobTitle}
                 onNysInput={handleInputChange}
               />
@@ -198,7 +198,7 @@ export default function UserAuthorizationForm() {
                 name="pointOfContactPhone"
                 label="Business Phone Number"
                 type="tel"
-                width="lg"
+                width="md"
                 value={formData.pointOfContactPhone}
                 onNysInput={handleInputChange}
               />
@@ -207,7 +207,7 @@ export default function UserAuthorizationForm() {
                 name="pointOfContactEmail"
                 label="Business Email"
                 type="email"
-                width="lg"
+                width="md"
                 value={formData.pointOfContactEmail}
                 onNysInput={handleInputChange}
               />
@@ -236,7 +236,7 @@ export default function UserAuthorizationForm() {
                 id="supervisorJobTitle"
                 name="supervisorJobTitle"
                 label="Job Title"
-                width="lg"
+                width="md"
                 value={formData.supervisorJobTitle}
                 onNysInput={handleInputChange}
               />
@@ -245,7 +245,7 @@ export default function UserAuthorizationForm() {
                 name="supervisorPhone"
                 label="Business Phone Number"
                 type="tel"
-                width="lg"
+                width="md"
                 value={formData.supervisorPhone}
                 onNysInput={handleInputChange}
               />
@@ -254,7 +254,7 @@ export default function UserAuthorizationForm() {
                 name="supervisorEmail"
                 label="Business Email"
                 type="email"
-                width="lg"
+                width="md"
                 value={formData.supervisorEmail}
                 onNysInput={handleInputChange}
               />
