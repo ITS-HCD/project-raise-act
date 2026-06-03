@@ -20,36 +20,33 @@ export default function UserAuthorizationConfirmation() {
   return (
     <div className="nys-grid-container">
       <div className="nys-grid-row">
-        <div className="nys-grid-col-12 nys-margin-y-400">
+        <div className="nys-grid-col-12 nys-margin-y-400 user-auth-confirmation">
           <NysAlert
             type="success"
             heading="Your authorization request was successfully submitted!"
             text={`Your authorization request for the RAISE System has been received on ${formattedDate}.`}
           />
-
-          <p>
-            <strong>
-              A confirmation email has been sent to marsaijoe@marsai.com.
-            </strong>
-          </p>
-
-          <p>
-            <strong>Authorization Request ID:</strong>{" "}
-            [authorization_request_id]
-          </p>
-
-          <p>
-            New York State is currently reviewing your authorization request and
-            will update you when the status of your request has changed, or to
-            request additional information.
-          </p>
-
-          <div style={{ marginTop: "var(--nys-space-300)" }}>
-            <NysButton
-              label="Return to dashboard"
-              onClick={handleReturnToDashboard}
-            />
+          <div>
+            <p>
+              <strong>
+                A confirmation email has been sent to marsaijoe@marsai.com.
+              </strong>
+            </p>
+            <p>
+              <strong>Authorization Request ID:</strong>{" "}
+              [authorization_request_id]
+            </p>
+            <br />
+            <p>
+              New York State is currently reviewing your authorization request
+              and will update you when the status of your request has changed,
+              or to request additional information.
+            </p>
           </div>
+          <NysButton
+            label="Return to dashboard"
+            onClick={handleReturnToDashboard}
+          />
         </div>
       </div>
     </div>

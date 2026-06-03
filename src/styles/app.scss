@@ -282,3 +282,9 @@
     margin: var(--nys-space-200) 0;
   }
 }
+
+.user-auth-confirmation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nys-space-500);
+}
