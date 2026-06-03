@@ -5,6 +5,7 @@ import { NysTextinput } from "../components/wrappers/NysTextinput";
 import { NysSelect } from "../components/wrappers/NysSelect";
 import { NysCheckbox } from "../components/wrappers/NysCheckbox";
 import { NysFileinput } from "../components/wrappers/NysFileinput";
+import { NysDivider } from "../components/wrappers/NysDivider";
 
 interface FormDataType {
   legalName: string;
@@ -93,7 +94,7 @@ export default function UserAuthorizationForm() {
         <div className="nys-grid-col-12 nys-margin-y-400 user-auth-form">
           <h1>Request Authorization</h1>
           <p>Complete and submit the form below to request authorization.</p>
-
+          <NysDivider />
           <form onSubmit={handleSubmit}>
             {/* Entity Information */}
             <h3>Entity Information</h3>
@@ -151,15 +152,13 @@ export default function UserAuthorizationForm() {
               value={formData.zipCode}
               onNysInput={handleInputChange}
             />
-
+            <NysDivider />
             {/* Point of Contact */}
-
             <h3>Point of Contact</h3>
             <p>
               This contact is responsible for receiving inquiries from the
               office or other governmental entities.
             </p>
-
             <NysTextinput
               id="pointOfContactFirstName"
               name="pointOfContactFirstName"
@@ -197,6 +196,7 @@ export default function UserAuthorizationForm() {
               value={formData.pointOfContactEmail}
               onNysInput={handleInputChange}
             />
+            <NysDivider />
             {/* Supervisor / Approving Official */}
             <h3>Supervisor / Approving Official</h3>
             <NysTextinput
@@ -236,17 +236,14 @@ export default function UserAuthorizationForm() {
               value={formData.supervisorEmail}
               onNysInput={handleInputChange}
             />
-
+            <NysDivider />
             {/* Supporting Documentation */}
-            <h3>Supporting Documentation</h3>
-            <p>
-              Upload any required supporting documents for this submission. You
-              can upload PDF, JPG, or PNG files up to 10MB each.
-            </p>
             <NysFileinput
+              label="Supporting Documentation"
+              description="Upload any required supporting documents for this submission.
+You can upload PDF, JPG, or PNG files up to 10MB each"
               id="files"
               name="files"
-              label="Choose files"
               multiple
               onNysChange={handleFileChange}
             />
