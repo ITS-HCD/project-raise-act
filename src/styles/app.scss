@@ -231,6 +231,14 @@
   }
 
   .nygov-card {
+    --nys-color-theme: var(--nys-color-state-blue-700);
+    --nys-color-theme-faint: var(--nys-color-state-blue-10);
+    --nys-color-theme-mid: var(--nys-color-state-blue-500);
+    --nys-color-theme-strong: var(--nys-color-state-blue-800);
+    --nys-color-theme-stronger: var(--nys-color-state-blue-900);
+    --nys-color-theme-weak: var(--nys-color-state-blue-100);
+    --nys-color-theme-weaker: var(--nys-color-state-blue-50);
+
     margin-top: var(--nys-space-400);
     padding: var(--nys-space-800);
     border: solid black 1px;
