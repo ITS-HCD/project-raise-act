@@ -103,6 +103,7 @@ export default function UserAuthorizationForm() {
                 id="legalName"
                 name="legalName"
                 label="Legal Name of Entity"
+                width="lg"
                 value={formData.legalName}
                 onNysInput={handleInputChange}
               />
@@ -110,6 +111,7 @@ export default function UserAuthorizationForm() {
                 id="country"
                 name="country"
                 label="Country"
+                width="lg"
                 value={formData.country}
                 onNysChange={handleSelectChange}
               >
@@ -120,6 +122,7 @@ export default function UserAuthorizationForm() {
                 id="streetAddress"
                 name="streetAddress"
                 label="Street Address"
+                width="lg"
                 value={formData.streetAddress}
                 onNysInput={handleInputChange}
               />
@@ -127,6 +130,7 @@ export default function UserAuthorizationForm() {
                 id="suiteUnit"
                 name="suiteUnit"
                 label="Suite/Unit"
+                width="lg"
                 value={formData.suiteUnit}
                 onNysInput={handleInputChange}
               />
@@ -134,6 +138,7 @@ export default function UserAuthorizationForm() {
                 id="stateProvince"
                 name="stateProvince"
                 label="State/Province/Region"
+                width="lg"
                 value={formData.stateProvince}
                 onNysChange={handleSelectChange}
               >
@@ -143,6 +148,7 @@ export default function UserAuthorizationForm() {
                 id="townCity"
                 name="townCity"
                 label="Town/City/Locality"
+                width="lg"
                 value={formData.townCity}
                 onNysInput={handleInputChange}
               />
@@ -150,6 +156,7 @@ export default function UserAuthorizationForm() {
                 id="zipCode"
                 name="zipCode"
                 label="Zip/Postal Code"
+                width="lg"
                 value={formData.zipCode}
                 onNysInput={handleInputChange}
               />
@@ -166,6 +173,7 @@ export default function UserAuthorizationForm() {
                 id="pointOfContactFirstName"
                 name="pointOfContactFirstName"
                 label="First Name"
+                width="lg"
                 value={formData.pointOfContactFirstName}
                 onNysInput={handleInputChange}
               />
@@ -173,6 +181,7 @@ export default function UserAuthorizationForm() {
                 id="pointOfContactLastName"
                 name="pointOfContactLastName"
                 label="Last Name"
+                width="lg"
                 value={formData.pointOfContactLastName}
                 onNysInput={handleInputChange}
               />
@@ -180,6 +189,7 @@ export default function UserAuthorizationForm() {
                 id="pointOfContactJobTitle"
                 name="pointOfContactJobTitle"
                 label="Job Title"
+                width="lg"
                 value={formData.pointOfContactJobTitle}
                 onNysInput={handleInputChange}
               />
@@ -188,6 +198,7 @@ export default function UserAuthorizationForm() {
                 name="pointOfContactPhone"
                 label="Business Phone Number"
                 type="tel"
+                width="lg"
                 value={formData.pointOfContactPhone}
                 onNysInput={handleInputChange}
               />
@@ -196,6 +207,7 @@ export default function UserAuthorizationForm() {
                 name="pointOfContactEmail"
                 label="Business Email"
                 type="email"
+                width="lg"
                 value={formData.pointOfContactEmail}
                 onNysInput={handleInputChange}
               />
@@ -208,6 +220,7 @@ export default function UserAuthorizationForm() {
                 id="supervisorFirstName"
                 name="supervisorFirstName"
                 label="First Name"
+                width="lg"
                 value={formData.supervisorFirstName}
                 onNysInput={handleInputChange}
               />
@@ -215,6 +228,7 @@ export default function UserAuthorizationForm() {
                 id="supervisorLastName"
                 name="supervisorLastName"
                 label="Last Name"
+                width="lg"
                 value={formData.supervisorLastName}
                 onNysInput={handleInputChange}
               />
@@ -222,6 +236,7 @@ export default function UserAuthorizationForm() {
                 id="supervisorJobTitle"
                 name="supervisorJobTitle"
                 label="Job Title"
+                width="lg"
                 value={formData.supervisorJobTitle}
                 onNysInput={handleInputChange}
               />
@@ -230,6 +245,7 @@ export default function UserAuthorizationForm() {
                 name="supervisorPhone"
                 label="Business Phone Number"
                 type="tel"
+                width="lg"
                 value={formData.supervisorPhone}
                 onNysInput={handleInputChange}
               />
@@ -238,6 +254,7 @@ export default function UserAuthorizationForm() {
                 name="supervisorEmail"
                 label="Business Email"
                 type="email"
+                width="lg"
                 value={formData.supervisorEmail}
                 onNysInput={handleInputChange}
               />
