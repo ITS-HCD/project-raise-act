@@ -1,8 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import { NysButton } from '../components/wrappers/NysButton';
 import { NysDivider } from '../components/wrappers/NysDivider';
 import '../styles/app.scss';
 
-export default function UserAuthentication() {
+export default function UserAuthenticationLogin() {
+  const navigate = useNavigate();
+
+  const handleSignIn = () => {
+    navigate('/user-authentication/form');
+  };
+
   return (
     <div id="user-authentication" className="nys-grid-container">
       <div className="nys-grid-row">
@@ -17,7 +24,7 @@ export default function UserAuthentication() {
               </svg>
               <h2>NY.GOV ID</h2>
               </div>
-            <NysButton label="Sign in" fullWidth></NysButton>
+            <NysButton label="Sign in" fullWidth onClick={handleSignIn}></NysButton>
             <NysButton label="Find my account" variant="outline" fullWidth></NysButton>
             <NysDivider />
             <div>
@@ -30,3 +37,4 @@ export default function UserAuthentication() {
     </div>
   );
 }
+
