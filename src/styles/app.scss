@@ -200,3 +200,33 @@
     align-self: center;
   }
 }
+
+.user-auth-signin {
+  text-align: center;
+
+  h2 {
+    color: var(--nys-color-theme, #084b52);
+    text-align: center;
+
+    /* UI Single Line/Extra Large/Bold */
+    font-family: var(--nys-font-family-ui, "Proxima Nova");
+    font-size: var(--nys-font-size-ui-xl, 20px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: var(--nys-font-size-ui-xl, 20px); /* 100% */
+    letter-spacing: var(--nys-font-letterspacing-ui-xl, 0.017px);
+  }
+
+  p {
+    color: var(--nys-color-text);
+    text-align: center;
+
+    /* UI/Medium/Regular */
+    font-family: var(--nys-font-family-ui, "Proxima Nova");
+    font-size: var(--nys-font-size-ui-md, 16px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: var(--nys-font-lineheight-ui-md, 24px); /* 150% */
+    letter-spacing: var(--nys-font-letterspacing-ui-md, 0.044px);
+  }
+}
