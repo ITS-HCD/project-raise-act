@@ -240,12 +240,18 @@
     gap: var(--nys-space-200);
 
     #nygov-header {
-      color: var(--nys-color-ink);
-      font-family: var(--nys-font-family-agency, "D Sari");
-      font-size: 32px;
-      font-style: normal;
-      font-weight: 600;
-      line-height: normal;
+      display: flex;
+      gap: var(--nys-space-150);
+
+      h2 {
+        color: var(--nys-color-ink);
+        font-family: var(--nys-font-family-agency, "D Sari");
+        font-size: var(--nys-font-size-h2, 32px);
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        padding: 0;
+      }
     }
   }
 }
