@@ -265,8 +265,6 @@
 }
 
 .user-auth-form {
-  border: solid red;
-
   h1 {
     color: var(--nys-color-ink);
     margin: 0;
@@ -278,5 +276,9 @@
     font-weight: 700;
     line-height: var(--nys-font-lineheight-heading-h1, 40px); /* 125% */
     letter-spacing: var(--nys-font-letterspacing-heading-h1, 0);
+  }
+
+  .form-section {
+    margin: var(--nys-space-200) 0;
   }
 }
