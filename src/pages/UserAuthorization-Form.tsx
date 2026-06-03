@@ -1,5 +1,6 @@
 import "../styles/app.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NysButton } from "../components/wrappers/NysButton";
 import { NysTextinput } from "../components/wrappers/NysTextinput";
 import { NysSelect } from "../components/wrappers/NysSelect";
@@ -30,6 +31,7 @@ interface FormDataType {
 }
 
 export default function UserAuthorizationForm() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormDataType>({
     legalName: "",
     country: "",
@@ -86,6 +88,7 @@ export default function UserAuthorizationForm() {
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+    navigate("/user-authorization/confirmation");
   };
 
   return (
