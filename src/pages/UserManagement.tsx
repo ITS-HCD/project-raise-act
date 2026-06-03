@@ -87,25 +87,25 @@ export default function UserManagement() {
             label="Email address"
             type="email"
             value={formData.email}
-            onInput={(e: any) => setFormData({ ...formData, email: e.target.value })}
+            onNysInput={(e: any) => setFormData({ ...formData, email: e.detail.value })}
             required
           />
           <NysTextinput
             label="First name"
             value={formData.firstname}
-            onInput={(e: any) => setFormData({ ...formData, firstname: e.target.value })}
+            onNysInput={(e: any) => setFormData({ ...formData, firstname: e.detail.value })}
             required
           />
           <NysTextinput
             label="Last name"
             value={formData.lastname}
-            onInput={(e: any) => setFormData({ ...formData, lastname: e.target.value })}
+            onNysInput={(e: any) => setFormData({ ...formData, lastname: e.detail.value })}
             required
           />
           <NysSelect
             label="Role"
             value={formData.role}
-            onInput={(e: any) => setFormData({ ...formData, role: e.target.value })}
+            onNysChange={(e: any) => setFormData({ ...formData, role: e.detail.value })}
             required
           >
             <NysOption value="">Select a role</NysOption>
