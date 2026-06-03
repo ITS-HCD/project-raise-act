@@ -153,184 +153,118 @@ export default function UserAuthorizationForm() {
             />
 
             {/* Point of Contact */}
-            <section className="nys-margin-y-400">
-              <h3>Point of Contact</h3>
-              <p>
-                This contact is responsible for receiving inquiries from the
-                office or other governmental entities.
-              </p>
 
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="pointOfContactFirstName"
-                    name="pointOfContactFirstName"
-                    label="First Name"
-                    value={formData.pointOfContactFirstName}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
+            <h3>Point of Contact</h3>
+            <p>
+              This contact is responsible for receiving inquiries from the
+              office or other governmental entities.
+            </p>
 
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="pointOfContactLastName"
-                    name="pointOfContactLastName"
-                    label="Last Name"
-                    value={formData.pointOfContactLastName}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="pointOfContactJobTitle"
-                    name="pointOfContactJobTitle"
-                    label="Job Title"
-                    value={formData.pointOfContactJobTitle}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="pointOfContactPhone"
-                    name="pointOfContactPhone"
-                    label="Business Phone Number"
-                    type="tel"
-                    value={formData.pointOfContactPhone}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="pointOfContactEmail"
-                    name="pointOfContactEmail"
-                    label="Business Email"
-                    type="email"
-                    value={formData.pointOfContactEmail}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-            </section>
-
+            <NysTextinput
+              id="pointOfContactFirstName"
+              name="pointOfContactFirstName"
+              label="First Name"
+              value={formData.pointOfContactFirstName}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="pointOfContactLastName"
+              name="pointOfContactLastName"
+              label="Last Name"
+              value={formData.pointOfContactLastName}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="pointOfContactJobTitle"
+              name="pointOfContactJobTitle"
+              label="Job Title"
+              value={formData.pointOfContactJobTitle}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="pointOfContactPhone"
+              name="pointOfContactPhone"
+              label="Business Phone Number"
+              type="tel"
+              value={formData.pointOfContactPhone}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="pointOfContactEmail"
+              name="pointOfContactEmail"
+              label="Business Email"
+              type="email"
+              value={formData.pointOfContactEmail}
+              onNysInput={handleInputChange}
+            />
             {/* Supervisor / Approving Official */}
-            <section className="nys-margin-y-400">
-              <h3>Supervisor / Approving Official</h3>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="supervisorFirstName"
-                    name="supervisorFirstName"
-                    label="First Name"
-                    value={formData.supervisorFirstName}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="supervisorLastName"
-                    name="supervisorLastName"
-                    label="Last Name"
-                    value={formData.supervisorLastName}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="supervisorJobTitle"
-                    name="supervisorJobTitle"
-                    label="Job Title"
-                    value={formData.supervisorJobTitle}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="supervisorPhone"
-                    name="supervisorPhone"
-                    label="Business Phone Number"
-                    type="tel"
-                    value={formData.supervisorPhone}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="supervisorEmail"
-                    name="supervisorEmail"
-                    label="Business Email"
-                    type="email"
-                    value={formData.supervisorEmail}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-            </section>
+            <h3>Supervisor / Approving Official</h3>
+            <NysTextinput
+              id="supervisorFirstName"
+              name="supervisorFirstName"
+              label="First Name"
+              value={formData.supervisorFirstName}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="supervisorLastName"
+              name="supervisorLastName"
+              label="Last Name"
+              value={formData.supervisorLastName}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="supervisorJobTitle"
+              name="supervisorJobTitle"
+              label="Job Title"
+              value={formData.supervisorJobTitle}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="supervisorPhone"
+              name="supervisorPhone"
+              label="Business Phone Number"
+              type="tel"
+              value={formData.supervisorPhone}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="supervisorEmail"
+              name="supervisorEmail"
+              label="Business Email"
+              type="email"
+              value={formData.supervisorEmail}
+              onNysInput={handleInputChange}
+            />
 
             {/* Supporting Documentation */}
-            <section className="nys-margin-y-400">
-              <h3>Supporting Documentation</h3>
-              <p>
-                Upload any required supporting documents for this submission.
-                You can upload PDF, JPG, or PNG files up to 10MB each.
-              </p>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysFileinput
-                    id="files"
-                    name="files"
-                    label="Choose files"
-                    multiple
-                    onNysChange={handleFileChange}
-                  />
-                </div>
-              </div>
-            </section>
+            <h3>Supporting Documentation</h3>
+            <p>
+              Upload any required supporting documents for this submission. You
+              can upload PDF, JPG, or PNG files up to 10MB each.
+            </p>
+            <NysFileinput
+              id="files"
+              name="files"
+              label="Choose files"
+              multiple
+              onNysChange={handleFileChange}
+            />
 
             {/* Certification */}
-            <section className="nys-margin-y-400">
-              <h3>Certification</h3>
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12">
-                  <NysCheckbox
-                    id="certification"
-                    name="certification"
-                    label="I certify that the information provided in this submission is true, complete, and current to the best of my knowledge."
-                    checked={formData.certification}
-                    onNysChange={handleCheckboxChange}
-                  />
-                </div>
-              </div>
-            </section>
+            <h3>Certification</h3>
+            <NysCheckbox
+              id="certification"
+              name="certification"
+              label="I certify that the information provided in this submission is true, complete, and current to the best of my knowledge."
+              checked={formData.certification}
+              onNysChange={handleCheckboxChange}
+            />
 
             {/* Action Buttons */}
             <div className="nys-grid-row nys-margin-y-400">
               <div className="nys-grid-col-12">
-                <NysButton type="button" variant="outline" label="Back" />
+                <NysButton type="button" variant="text" label="Back" />
                 <NysButton type="submit" label="Submit" />
               </div>
             </div>
