@@ -10,8 +10,8 @@ import Contacts from './pages/04-Contacts';
 import ReviewCertify from './pages/05-ReviewCertify';
 import SuccessPage from './pages/06-SuccessPage';
 import UserManagement from './pages/UserManagement';
-import UserAuthenticationLogin from './pages/UserAuthentication-Login';
-import UserAuthenticationForm from './pages/UserAuthentication-Form';
+import UserAuthorizationLogin from './pages/UserAuthorization-Login';
+import UserAuthorizationForm from './pages/UserAuthorization-Form';
 
 export default function App() {
   return (
@@ -22,8 +22,8 @@ export default function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/register/success" element={<SuccessPage />} />
           <Route path="/user-management" element={<UserManagement />} />
-          <Route path="/user-authentication" element={<UserAuthenticationLogin />} />
-          <Route path="/user-authentication/form" element={<UserAuthenticationForm />} />
+          <Route path="/user-authentication" element={<UserAuthorizationLogin />} />
+          <Route path="/user-authentication/form" element={<UserAuthorizationForm />} />
           <Route path="/register" element={<AppShell />}>
             <Route index element={<Navigate to="/register/business-info" replace />} />
             <Route path="business-info" element={<BusinessInfo />} />

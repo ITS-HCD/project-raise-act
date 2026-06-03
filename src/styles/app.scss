@@ -255,3 +255,19 @@
     }
   }
 }
+
+.user-auth-form {
+  border: solid red;
+
+  h1 {
+    color: var(--nys-color-ink);
+
+    /* UI/Heading/Heading 1/Bold */
+    font-family: var(--nys-font-family-heading, "Proxima Nova");
+    font-size: var(--nys-font-size-heading-h1, 32px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: var(--nys-font-lineheight-heading-h1, 40px); /* 125% */
+    letter-spacing: var(--nys-font-letterspacing-heading-h1, 0);
+  }
+}

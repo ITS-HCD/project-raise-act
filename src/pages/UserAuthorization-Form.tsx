@@ -28,7 +28,7 @@ interface FormDataType {
   certification: boolean;
 }
 
-export default function UserAuthenticationForm() {
+export default function UserAuthorizationForm() {
   const [formData, setFormData] = useState<FormDataType>({
     legalName: '',
     country: '',
@@ -90,8 +90,8 @@ export default function UserAuthenticationForm() {
   return (
     <div className="nys-grid-container">
       <div className="nys-grid-row">
-        <div className="nys-grid-col-12 nys-margin-y-400">
-          <h2>Request Authorization</h2>
+        <div className="nys-grid-col-12 nys-margin-y-400 user-auth-form">
+          <h1>Request Authorization</h1>
           <p>Complete and submit the form below to request authorization.</p>
 
           <form onSubmit={handleSubmit}>

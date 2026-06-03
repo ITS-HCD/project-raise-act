@@ -36,7 +36,7 @@ export default function MainLayout() {
         <ul>
           <li><Link to="/">Dashboard</Link></li>
           <li><Link to="/user-management">User Management</Link></li>
-          <li><Link to="/user-authentication">User Authentication</Link></li>
+          <li><Link to="/user-authentication">User Authorization</Link></li>
         </ul>
         <div slot="user-actions" style={{ display: 'flex', alignItems: 'center' }}>
           <NysButton

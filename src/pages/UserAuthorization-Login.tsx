@@ -3,7 +3,7 @@ import { NysButton } from '../components/wrappers/NysButton';
 import { NysDivider } from '../components/wrappers/NysDivider';
 import '../styles/app.scss';
 
-export default function UserAuthenticationLogin() {
+export default function UserAuthorizationLogin() {
   const navigate = useNavigate();
 
   const handleSignIn = () => {
