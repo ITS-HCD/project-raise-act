@@ -1,10 +1,10 @@
-import '../styles/app.scss';
-import { useState } from 'react';
-import { NysButton } from '../components/wrappers/NysButton';
-import { NysTextinput } from '../components/wrappers/NysTextinput';
-import { NysSelect } from '../components/wrappers/NysSelect';
-import { NysCheckbox } from '../components/wrappers/NysCheckbox';
-import { NysFileinput } from '../components/wrappers/NysFileinput';
+import "../styles/app.scss";
+import { useState } from "react";
+import { NysButton } from "../components/wrappers/NysButton";
+import { NysTextinput } from "../components/wrappers/NysTextinput";
+import { NysSelect } from "../components/wrappers/NysSelect";
+import { NysCheckbox } from "../components/wrappers/NysCheckbox";
+import { NysFileinput } from "../components/wrappers/NysFileinput";
 
 interface FormDataType {
   legalName: string;
@@ -30,61 +30,61 @@ interface FormDataType {
 
 export default function UserAuthorizationForm() {
   const [formData, setFormData] = useState<FormDataType>({
-    legalName: '',
-    country: '',
-    streetAddress: '',
-    suiteUnit: '',
-    stateProvince: '',
-    townCity: '',
-    zipCode: '',
-    pointOfContactFirstName: '',
-    pointOfContactLastName: '',
-    pointOfContactJobTitle: '',
-    pointOfContactPhone: '',
-    pointOfContactEmail: '',
-    supervisorFirstName: '',
-    supervisorLastName: '',
-    supervisorJobTitle: '',
-    supervisorPhone: '',
-    supervisorEmail: '',
+    legalName: "",
+    country: "",
+    streetAddress: "",
+    suiteUnit: "",
+    stateProvince: "",
+    townCity: "",
+    zipCode: "",
+    pointOfContactFirstName: "",
+    pointOfContactLastName: "",
+    pointOfContactJobTitle: "",
+    pointOfContactPhone: "",
+    pointOfContactEmail: "",
+    supervisorFirstName: "",
+    supervisorLastName: "",
+    supervisorJobTitle: "",
+    supervisorPhone: "",
+    supervisorEmail: "",
     files: [],
     certification: false,
   });
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSelectChange = (e: any) => {
     const { name } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: e.detail.value
+      [name]: e.detail.value,
     }));
   };
 
   const handleCheckboxChange = (e: any) => {
     const { name } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: e.detail.checked
+      [name]: e.detail.checked,
     }));
   };
 
   const handleFileChange = (e: any) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      files: Array.from(e.detail.files || [])
+      files: Array.from(e.detail.files || []),
     }));
   };
 
   const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    console.log("Form submitted:", formData);
   };
 
   return (
@@ -96,100 +96,69 @@ export default function UserAuthorizationForm() {
 
           <form onSubmit={handleSubmit}>
             {/* Entity Information */}
-            <section className="nys-margin-y-400">
-              <h3>Entity Information</h3>
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="legalName"
-                    name="legalName"
-                    label="Legal Name of Entity"
-                    value={formData.legalName}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysSelect
-                    id="country"
-                    name="country"
-                    label="Country"
-                    value={formData.country}
-                    onNysChange={handleSelectChange}
-                  >
-                    <option value="">Select Country</option>
-                    <option value="US">United States</option>
-                  </NysSelect>
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="streetAddress"
-                    name="streetAddress"
-                    label="Street Address"
-                    value={formData.streetAddress}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="suiteUnit"
-                    name="suiteUnit"
-                    label="Suite/Unit"
-                    value={formData.suiteUnit}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-12 nys-margin-bottom-200">
-                  <NysSelect
-                    id="stateProvince"
-                    name="stateProvince"
-                    label="State/Province/Region"
-                    value={formData.stateProvince}
-                    onNysChange={handleSelectChange}
-                  >
-                    <option value="">Select State</option>
-                  </NysSelect>
-                </div>
-              </div>
-
-              <div className="nys-grid-row">
-                <div className="nys-grid-col-6 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="townCity"
-                    name="townCity"
-                    label="Town/City/Locality"
-                    value={formData.townCity}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-
-                <div className="nys-grid-col-6 nys-margin-bottom-200">
-                  <NysTextinput
-                    id="zipCode"
-                    name="zipCode"
-                    label="Zip/Postal Code"
-                    value={formData.zipCode}
-                    onNysInput={handleInputChange}
-                  />
-                </div>
-              </div>
-            </section>
+            <h3>Entity Information</h3>
+            <NysTextinput
+              id="legalName"
+              name="legalName"
+              label="Legal Name of Entity"
+              value={formData.legalName}
+              onNysInput={handleInputChange}
+            />
+            <NysSelect
+              id="country"
+              name="country"
+              label="Country"
+              value={formData.country}
+              onNysChange={handleSelectChange}
+            >
+              <option value="">Select Country</option>
+              <option value="US">United States</option>
+            </NysSelect>
+            <NysTextinput
+              id="streetAddress"
+              name="streetAddress"
+              label="Street Address"
+              value={formData.streetAddress}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="suiteUnit"
+              name="suiteUnit"
+              label="Suite/Unit"
+              value={formData.suiteUnit}
+              onNysInput={handleInputChange}
+            />
+            <NysSelect
+              id="stateProvince"
+              name="stateProvince"
+              label="State/Province/Region"
+              value={formData.stateProvince}
+              onNysChange={handleSelectChange}
+            >
+              <option value="">Select State</option>
+            </NysSelect>
+            <NysTextinput
+              id="townCity"
+              name="townCity"
+              label="Town/City/Locality"
+              value={formData.townCity}
+              onNysInput={handleInputChange}
+            />
+            <NysTextinput
+              id="zipCode"
+              name="zipCode"
+              label="Zip/Postal Code"
+              value={formData.zipCode}
+              onNysInput={handleInputChange}
+            />
 
             {/* Point of Contact */}
             <section className="nys-margin-y-400">
               <h3>Point of Contact</h3>
-              <p>This contact is responsible for receiving inquiries from the office or other governmental entities.</p>
+              <p>
+                This contact is responsible for receiving inquiries from the
+                office or other governmental entities.
+              </p>
 
               <div className="nys-grid-row">
                 <div className="nys-grid-col-12 nys-margin-bottom-200">
@@ -324,7 +293,10 @@ export default function UserAuthorizationForm() {
             {/* Supporting Documentation */}
             <section className="nys-margin-y-400">
               <h3>Supporting Documentation</h3>
-              <p>Upload any required supporting documents for this submission. You can upload PDF, JPG, or PNG files up to 10MB each.</p>
+              <p>
+                Upload any required supporting documents for this submission.
+                You can upload PDF, JPG, or PNG files up to 10MB each.
+              </p>
 
               <div className="nys-grid-row">
                 <div className="nys-grid-col-12 nys-margin-bottom-200">

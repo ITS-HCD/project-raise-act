@@ -65,7 +65,7 @@ export default function UserManagement() {
       <NysPagination
         currentPage={currentPage}
         totalPages={5}
-        onNysChange={(e: CustomEvent) => setCurrentPage(e.detail.page)}
+        onNysChange={(e: CustomEvent<{ page: number }>) => setCurrentPage(e.detail.page)}
       />
 
       <NysModal
@@ -87,25 +87,25 @@ export default function UserManagement() {
             label="Email address"
             type="email"
             value={formData.email}
-            onNysInput={(e: any) => setFormData({ ...formData, email: e.detail.value })}
+            onNysInput={(e: CustomEvent<{ value: string }>) => setFormData({ ...formData, email: e.detail.value })}
             required
           />
           <NysTextinput
             label="First name"
             value={formData.firstname}
-            onNysInput={(e: any) => setFormData({ ...formData, firstname: e.detail.value })}
+            onNysInput={(e: CustomEvent<{ value: string }>) => setFormData({ ...formData, firstname: e.detail.value })}
             required
           />
           <NysTextinput
             label="Last name"
             value={formData.lastname}
-            onNysInput={(e: any) => setFormData({ ...formData, lastname: e.detail.value })}
+            onNysInput={(e: CustomEvent<{ value: string }>) => setFormData({ ...formData, lastname: e.detail.value })}
             required
           />
           <NysSelect
             label="Role"
             value={formData.role}
-            onNysChange={(e: any) => setFormData({ ...formData, role: e.detail.value })}
+            onNysChange={(e: CustomEvent<{ value: string }>) => setFormData({ ...formData, role: e.detail.value })}
             required
           >
             <NysOption value="">Select a role</NysOption>
