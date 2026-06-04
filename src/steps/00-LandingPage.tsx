@@ -9,33 +9,34 @@ export default function LandingPage() {
 
   return (
     <>
-      <h1
+      <div
         style={{
-          fontFamily: 'var(--nys-font-family-ui, "Proxima Nova")',
-          fontSize: 'var(--nys-font-size-ui-xl, 20px)',
-          fontStyle: 'normal',
-          fontWeight: 700,
-          lineHeight: 'var(--nys-font-lineheight-ui-xl, 28px)',
-          letterSpacing: 'var(--nys-font-letterspacing-ui-xl, 0.017px)',
-          margin: '0',
           background: 'var(--Neutral-0, #FFF)',
           boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.25)',
           display: 'flex',
-          height: '71px',
-          width: '100vw',
-          position: 'relative',
-          left: '50%',
-          marginLeft: '-50vw',
-          padding: '22px 39px',
           flexDirection: 'column',
           alignItems: 'flex-start',
+          justifyContent: 'center',
           gap: '20px',
-          flexShrink: '0',
+          minHeight: '71px',
+          padding: 'var(--nys-space-300) var(--nys-space-400)',
           alignSelf: 'stretch',
         }}
       >
-        {COMPANY_NAME}
-      </h1>
+        <h1
+          style={{
+            fontFamily: 'var(--nys-font-family-ui, "Proxima Nova")',
+            fontSize: 'var(--nys-font-size-ui-xl, 20px)',
+            fontStyle: 'normal',
+            fontWeight: 700,
+            lineHeight: 'var(--nys-font-lineheight-ui-xl, 28px)',
+            letterSpacing: 'var(--nys-font-letterspacing-ui-xl, 0.017px)',
+            margin: '0',
+          }}
+        >
+          {COMPANY_NAME}
+        </h1>
+      </div>
 
       <NysAlert
         style={{ margin: 'var(--nys-space-250) 0' }}
