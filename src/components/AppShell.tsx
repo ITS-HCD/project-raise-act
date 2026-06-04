@@ -37,7 +37,8 @@ export default function AppShell() {
   }, [selectedStep]);
 
   useLayoutEffect(() => {
-    (document.querySelector('nys-stepper') as any)?.requestUpdate?.();
+    const stepper = document.querySelector('nys-stepper') as HTMLElement & { requestUpdate?: () => void };
+    stepper?.requestUpdate?.();
   }, [selectedStep, farthestStep]);
 
   useEffect(() => {

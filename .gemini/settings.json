@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "nysds": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@nysds/mcp-server@next"
+      ],
+      "trust": true
+    }
+  }
+}

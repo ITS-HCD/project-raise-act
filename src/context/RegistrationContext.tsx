@@ -104,12 +104,12 @@ function reducer(state: RegistrationData, action: Action): RegistrationData {
   }
 }
 
-interface RegistrationContextValue {
+export interface RegistrationContextValue {
   data: RegistrationData;
   dispatch: React.Dispatch<Action>;
 }
 
-const RegistrationContext = createContext<RegistrationContextValue | null>(null);
+export const RegistrationContext = createContext<RegistrationContextValue | null>(null);
 
 export function RegistrationProvider({ children }: { children: ReactNode }) {
   const [data, dispatch] = useReducer(reducer, initialState);
@@ -121,8 +121,11 @@ export function RegistrationProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useRegistration(): RegistrationContextValue {
-  const ctx = useContext(RegistrationContext);
-  if (!ctx) throw new Error('useRegistration must be used within RegistrationProvider');
-  return ctx;
+export function useRegistration() {
+  const context = useContext(RegistrationContext);
+  if (!context) {
+    throw new Error('useRegistration must be used within a RegistrationProvider');
+  }
+  return context;
 }
+

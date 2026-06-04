@@ -109,11 +109,14 @@
 
 // Layout
 #main-content {
-  max-width: 64em;
-  padding: 0 var(--nys-space-200);
+  max-width: 80em;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @media (min-width: 30em) {
-    padding: 0 var(--nys-space-200);
+    padding: 0;
   }
 
   @media (min-width: 64em) {
@@ -164,4 +167,124 @@
   display: flex;
   flex-direction: column;
   gap: var(--nys-space-300);
+}
+
+#user-management {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nys-space-200);
+  width: 100%;
+  padding: var(--nys-space-400);
+
+  @media (min-width: 80em) {
+    margin: 0 auto;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--nys-font-family-heading);
+    font-size: var(--nys-font-size-h1);
+    line-height: var(--nys-font-lineheight-h1);
+    letter-spacing: var(--nys-font-letterspacing-heading-h1);
+  }
+
+  nys-table {
+    max-width: 50rem;
+    width: 100%;
+  }
+
+  nys-table,
+  nys-pagination {
+    align-self: center;
+  }
+}
+
+.user-auth-signin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    color: var(--nys-color-theme, #084b52);
+
+    /* UI Single Line/Extra Large/Bold */
+    font-family: var(--nys-font-family-ui, "Proxima Nova");
+    font-size: var(--nys-font-size-ui-xl, 20px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: var(--nys-font-size-ui-xl, 20px); /* 100% */
+    letter-spacing: var(--nys-font-letterspacing-ui-xl, 0.017px);
+  }
+
+  p {
+    color: var(--nys-color-text);
+
+    /* UI/Medium/Regular */
+    font-family: var(--nys-font-family-ui, "Proxima Nova");
+    font-size: var(--nys-font-size-ui-md, 16px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: var(--nys-font-lineheight-ui-md, 24px); /* 150% */
+    letter-spacing: var(--nys-font-letterspacing-ui-md, 0.044px);
+  }
+
+  .nygov-card {
+    --nys-color-theme: var(--nys-color-state-blue-700);
+    --nys-color-theme-faint: var(--nys-color-state-blue-10);
+    --nys-color-theme-mid: var(--nys-color-state-blue-500);
+    --nys-color-theme-strong: var(--nys-color-state-blue-800);
+    --nys-color-theme-stronger: var(--nys-color-state-blue-900);
+    --nys-color-theme-weak: var(--nys-color-state-blue-100);
+    --nys-color-theme-weaker: var(--nys-color-state-blue-50);
+
+    margin-top: var(--nys-space-400);
+    padding: var(--nys-space-800);
+    border: solid black 1px;
+    width: fit;
+    display: flex;
+    flex-direction: column;
+    gap: var(--nys-space-200);
+
+    #nygov-header {
+      display: flex;
+      gap: var(--nys-space-150);
+
+      h2 {
+        color: var(--nys-color-ink);
+        font-family: var(--nys-font-family-agency, "D Sari");
+        font-size: var(--nys-font-size-h2, 32px);
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        padding: 0;
+      }
+    }
+  }
+}
+
+.user-auth-form {
+  h1 {
+    color: var(--nys-color-ink);
+    margin: 0;
+
+    /* UI/Heading/Heading 1/Bold */
+    font-family: var(--nys-font-family-heading, "Proxima Nova");
+    font-size: var(--nys-font-size-heading-h1, 32px);
+    font-style: normal;
+    font-weight: 700;
+    line-height: var(--nys-font-lineheight-heading-h1, 40px); /* 125% */
+    letter-spacing: var(--nys-font-letterspacing-heading-h1, 0);
+  }
+
+  .form-section {
+    margin: var(--nys-space-200) 0;
+  }
+}
+
+.user-auth-confirmation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nys-space-500);
 }
