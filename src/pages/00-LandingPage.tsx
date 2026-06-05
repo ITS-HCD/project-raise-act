@@ -1,48 +1,26 @@
 import { useNavigate } from 'react-router-dom';
+import { useRegistration } from '../context/RegistrationContext';
 import { NysAlert } from '../components/wrappers/NysAlert';
 import { NysButton } from '../components/wrappers/NysButton';
 
-const COMPANY_NAME = 'Example Frontier Systems Inc.';
-
 export default function LandingPage() {
   const navigate = useNavigate();
+  const { data } = useRegistration();
+  const companyName = data.businessInfo.legalName;
 
   return (
     <>
-      <div
-        style={{
-          background: 'var(--Neutral-0, #FFF)',
-          boxShadow: '0 4px 4px 0 rgba(0, 0, 0, 0.25)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          justifyContent: 'center',
-          gap: '20px',
-          minHeight: '71px',
-          padding: 'var(--nys-space-300) var(--nys-space-400)',
-          alignSelf: 'stretch',
-        }}
-      >
-        <h1
-          style={{
-            fontFamily: 'var(--nys-font-family-ui, "Proxima Nova")',
-            fontSize: 'var(--nys-font-size-ui-xl, 20px)',
-            fontStyle: 'normal',
-            fontWeight: 700,
-            lineHeight: 'var(--nys-font-lineheight-ui-xl, 28px)',
-            letterSpacing: 'var(--nys-font-letterspacing-ui-xl, 0.017px)',
-            margin: '0',
-          }}
-        >
-          {COMPANY_NAME}
-        </h1>
-      </div>
+      {companyName && (
+        <div className="company-banner">
+          <p className="company-banner__name">{companyName}</p>
+        </div>
+      )}
 
       <NysAlert
         style={{ margin: 'var(--nys-space-250) 0' }}
         type="warning"
         heading="Disclosure Statement required to operate under the RAISE Act"
-        text={`${COMPANY_NAME} must submit a disclosure statement before submitting reports or incident filings. A disclosure statement ensures you meet New York State requirements.`}
+        text={`${companyName || 'Your company'} must submit a disclosure statement before submitting reports or incident filings. A disclosure statement ensures you meet New York State requirements.`}
       />
 
       <div
@@ -74,7 +52,7 @@ export default function LandingPage() {
           Your disclosure statement has not been started.
         </p>
         <p>
-          {COMPANY_NAME} must submit a disclosure statement before submitting reports or incident filings. 
+          {companyName || 'Your company'} must submit a disclosure statement before submitting reports or incident filings.
 A disclosure statement ensures you meet New York State requirements.
         </p>
         <NysButton

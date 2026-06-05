@@ -21,6 +21,7 @@ export interface Contact {
   firstName: string;
   lastName: string;
   title: string;
+  phoneCountryCode: string;
   phone: string;
   email: string;
 }

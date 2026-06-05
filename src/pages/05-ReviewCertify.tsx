@@ -38,7 +38,7 @@ function formatContact(contact: Contact): string {
   return [
     `${contact.firstName} ${contact.lastName}`.trim(),
     contact.title,
-    contact.phone,
+    [contact.phoneCountryCode, contact.phone].filter(Boolean).join(' '),
     contact.email,
   ]
     .filter(Boolean)

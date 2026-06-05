@@ -288,3 +288,33 @@
   flex-direction: column;
   gap: var(--nys-space-500);
 }
+
+// Company context banner (landing page) — surface chrome, not the document heading
+.company-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--nys-space-250, 20px);
+  min-height: 71px;
+  padding: var(--nys-space-300) var(--nys-space-400);
+  background: var(--nys-color-ink-reverse);
+  box-shadow: var(--nys-shadow-sm);
+  align-self: stretch;
+}
+
+.company-banner__name {
+  margin: 0;
+  font-family: var(--nys-font-family-ui, "Proxima Nova");
+  font-size: var(--nys-font-size-ui-xl, 20px);
+  font-weight: 700;
+  line-height: var(--nys-font-lineheight-ui-xl, 28px);
+  letter-spacing: var(--nys-font-letterspacing-ui-xl, 0.017px);
+}
+
+// Route-change focus is moved to the page heading for screen-reader users;
+// suppress the visual focus ring on these programmatic (tabindex="-1") targets.
+h1[tabindex="-1"]:focus,
+h2[tabindex="-1"]:focus {
+  outline: none;
+}

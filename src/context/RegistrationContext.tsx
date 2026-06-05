@@ -14,6 +14,7 @@ const emptyContact: Contact = {
   firstName: '',
   lastName: '',
   title: '',
+  phoneCountryCode: '+1',
   phone: '',
   email: '',
 };
