@@ -118,19 +118,12 @@
 
 #main-content {
   max-width: 80em;
-  padding: 0;
+  // Start/end gutter at every breakpoint so content never touches the edges.
+  padding-inline: var(--nys-space-400);
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1 0 auto; // grow to absorb extra height, pushing the footers to the bottom
-
-  @media (min-width: 30em) {
-    padding: 0;
-  }
-
-  @media (min-width: 64em) {
-    padding: 0 var(--nys-space-400);
-  }
 
   @media (min-width: 80em) {
     margin: 0 auto;
