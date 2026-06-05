@@ -289,7 +289,8 @@
   gap: var(--nys-space-500);
 }
 
-// Company context banner (landing page) — surface chrome, not the document heading
+// Company context banner — global app chrome at the top of every page once a
+// company name is set. Surface chrome, not the document heading.
 .company-banner {
   display: flex;
   flex-direction: column;
@@ -301,6 +302,8 @@
   background: var(--nys-color-ink-reverse);
   box-shadow: var(--nys-shadow-sm);
   align-self: stretch;
+  width: 100%;
+  margin-bottom: var(--nys-space-300);
 }
 
 .company-banner__name {

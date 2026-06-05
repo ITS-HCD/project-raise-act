@@ -8,10 +8,13 @@ import { NysButton } from "./wrappers/NysButton";
 import { NysAvatar } from "./wrappers/NysAvatar";
 import { NysDropdownMenu } from "./wrappers/NysDropdownMenu";
 import { NysDropdownMenuItem } from "./wrappers/NysDropdownMenuItem";
+import { useRegistration } from "../context/RegistrationContext";
 
 export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { data } = useRegistration();
+  const companyName = data.businessInfo.legalName;
 
   useEffect(() => {
     const el = document.querySelector<HTMLElement>("h1, h2");
@@ -22,7 +25,7 @@ export default function MainLayout() {
   }, [location.pathname]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem("authed");
+    localStorage.removeItem("authed");
     navigate("/");
     setTimeout(() => {
       window.location.reload();
@@ -61,6 +64,11 @@ export default function MainLayout() {
         </div>
       </NysGlobalHeader>
       <main id="main-content">
+        {companyName && (
+          <div className="company-banner">
+            <p className="company-banner__name">{companyName}</p>
+          </div>
+        )}
         <Outlet />
       </main>
       <NysGlobalFooter agencyName="Responsible AI Safety and Education (RAISE) Act" />

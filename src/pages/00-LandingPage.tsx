@@ -10,12 +10,6 @@ export default function LandingPage() {
 
   return (
     <>
-      {companyName && (
-        <div className="company-banner">
-          <p className="company-banner__name">{companyName}</p>
-        </div>
-      )}
-
       <NysAlert
         style={{ margin: 'var(--nys-space-250) 0' }}
         type="warning"
