@@ -47,4 +47,7 @@ export interface RegistrationData {
   };
   documents: File[];
   certification: boolean;
+  // True once the Business Info step has been submitted (passed validation and
+  // advanced). Gates the global company banner so it only appears afterward.
+  businessInfoSubmitted: boolean;
 }

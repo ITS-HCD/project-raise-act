@@ -289,21 +289,35 @@
   gap: var(--nys-space-500);
 }
 
-// Company context banner — global app chrome at the top of every page once a
-// company name is set. Surface chrome, not the document heading.
+// Company context banner — global app chrome shown at the top of every page
+// once the Business Info step has been submitted. The band is full-bleed to the
+// viewport edges; its content is constrained to the same 80em container as the
+// global header. Surface chrome, not the document heading.
 .company-banner {
+  width: 100%;
+  background: var(--nys-color-ink-reverse);
+  // NYSDS has no shadow token/utility, so the elevation is an explicit value
+  // (matches the original design's drop shadow).
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.company-banner__inner {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 80em; // same content width as the global header
+  margin-inline: auto;
+  min-height: 71px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: center;
   gap: var(--nys-space-250, 20px);
-  min-height: 71px;
   padding: var(--nys-space-300) var(--nys-space-400);
-  background: var(--nys-color-ink-reverse);
-  box-shadow: var(--nys-shadow-sm);
-  align-self: stretch;
-  width: 100%;
-  margin-bottom: var(--nys-space-300);
+
+  // Flush with the global header's app name on wide screens (where the 80em
+  // container is centered and the header has no inner gutter).
+  @media (min-width: 80em) {
+    padding-inline: 0;
+  }
 }
 
 .company-banner__name {

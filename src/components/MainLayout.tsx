@@ -15,6 +15,7 @@ export default function MainLayout() {
   const navigate = useNavigate();
   const { data } = useRegistration();
   const companyName = data.businessInfo.legalName;
+  const showCompanyBanner = Boolean(companyName) && data.businessInfoSubmitted;
 
   useEffect(() => {
     const el = document.querySelector<HTMLElement>("h1, h2");
@@ -63,12 +64,14 @@ export default function MainLayout() {
           </NysDropdownMenu>
         </div>
       </NysGlobalHeader>
-      <main id="main-content">
-        {companyName && (
-          <div className="company-banner">
+      {showCompanyBanner && (
+        <div className="company-banner">
+          <div className="company-banner__inner">
             <p className="company-banner__name">{companyName}</p>
           </div>
-        )}
+        </div>
+      )}
+      <main id="main-content">
         <Outlet />
       </main>
       <NysGlobalFooter agencyName="Responsible AI Safety and Education (RAISE) Act" />

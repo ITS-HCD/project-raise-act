@@ -42,6 +42,7 @@ const initialState: RegistrationData = {
   },
   documents: [],
   certification: false,
+  businessInfoSubmitted: false,
 };
 
 type Action =
@@ -55,6 +56,7 @@ type Action =
   | { type: 'UPDATE_TERTIARY_CONTACT'; payload: Partial<Contact> | null }
   | { type: 'SET_DOCUMENTS'; payload: File[] }
   | { type: 'SET_CERTIFICATION'; payload: boolean }
+  | { type: 'MARK_BUSINESS_INFO_SUBMITTED' }
   | { type: 'RESET' };
 
 function reducer(state: RegistrationData, action: Action): RegistrationData {
@@ -100,6 +102,8 @@ function reducer(state: RegistrationData, action: Action): RegistrationData {
       return { ...state, documents: action.payload };
     case 'SET_CERTIFICATION':
       return { ...state, certification: action.payload };
+    case 'MARK_BUSINESS_INFO_SUBMITTED':
+      return { ...state, businessInfoSubmitted: true };
     case 'RESET':
       return initialState;
     default:
