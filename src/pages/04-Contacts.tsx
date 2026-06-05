@@ -2,14 +2,31 @@ import { useNavigate } from 'react-router-dom';
 import { useRegistration } from '../context/RegistrationContext';
 import { useStepValidation } from '../utils/useStepValidation';
 import { NysTextinput } from '../components/wrappers/NysTextinput';
+import { NysSelect } from '../components/wrappers/NysSelect';
 import { NysDivider } from '../components/wrappers/NysDivider';
 import StepNavigation from '../components/StepNavigation';
 import type { Contact } from '../types/registration';
+
+const COUNTRY_CODES = [
+  { value: '+1', label: 'United States (+1)' },
+  { value: '+1', label: 'Canada (+1)' },
+  { value: '+52', label: 'Mexico (+52)' },
+  { value: '+44', label: 'United Kingdom (+44)' },
+  { value: '+61', label: 'Australia (+61)' },
+  { value: '+86', label: 'China (+86)' },
+  { value: '+49', label: 'Germany (+49)' },
+  { value: '+33', label: 'France (+33)' },
+  { value: '+91', label: 'India (+91)' },
+  { value: '+81', label: 'Japan (+81)' },
+  { value: '+82', label: 'South Korea (+82)' },
+  { value: '+65', label: 'Singapore (+65)' },
+];
 
 const EMPTY_CONTACT: Contact = {
   firstName: '',
   lastName: '',
   title: '',
+  phoneCountryCode: '+1',
   phone: '',
   email: '',
 };
@@ -75,10 +92,24 @@ function ContactFields({
           onNysInput={handleInput('title')}
         />
       </div>
+      <div data-field-name={`${prefix}.phoneCountryCode`}>
+        <NysSelect
+          label="Country code"
+          width="sm"
+          value={contact.phoneCountryCode}
+          onNysChange={handleInput('phoneCountryCode')}
+        >
+          {COUNTRY_CODES.map((c) => (
+            <option key={c.label} value={c.value}>
+              {c.label}
+            </option>
+          ))}
+        </NysSelect>
+      </div>
       <div data-field-name={`${prefix}.phone`}>
         <NysTextinput
           label="Business Phone Number"
-          type="tel"
+          type="text"
           required={required}
           optional={!required}
           value={contact.phone}

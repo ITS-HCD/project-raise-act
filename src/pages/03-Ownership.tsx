@@ -50,7 +50,16 @@ function OwnerFormFields({
 
   function handleDateInput(field: 'startDate' | 'endDate') {
     return (e: Event) => {
-      const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
+      // nys-datepicker emits a Date object (or ISO string); store a YYYY-MM-DD
+      // string so the value matches Owner['startDate']/['endDate'] (string) and
+      // never reaches isRequired() as a non-string.
+      const raw = (e as CustomEvent<{ id: string; value: string | Date }>).detail.value;
+      const value =
+        raw instanceof Date
+          ? `${raw.getFullYear()}-${String(raw.getMonth() + 1).padStart(2, '0')}-${String(
+              raw.getDate(),
+            ).padStart(2, '0')}`
+          : raw ?? '';
       onChange({ ...owner, [field]: value });
     };
   }
@@ -168,6 +177,7 @@ export default function Ownership() {
   const { validate } = useStepValidation(3, data);
 
   const { current, former } = data.ownership;
+  const { ownershipStructure } = data.businessInfo;
 
   function handleContinue() {
     if (validate()) navigate('/register/contacts');
@@ -187,7 +197,7 @@ export default function Ownership() {
         Current beneficial owners
       </h3>
       <p>
-        List all individuals or entities with a beneficial ownership interest in the company.
+        List each person or entity that beneficially owns the applicable ownership threshold as of the filing date (privately or closely held: 5% or more; publicly traded: 50% or more).
       </p>
 
       <RepeatableFieldGroup<Owner>
@@ -195,6 +205,7 @@ export default function Ownership() {
         emptyItem={EMPTY_CURRENT_OWNER}
         addLabel="+ Add additional owner"
         entryLabel="owner"
+        openWhenEmpty
         onAdd={(owner) =>
           dispatch({ type: 'SET_CURRENT_OWNERS', payload: [...current, owner] })
         }
@@ -215,40 +226,44 @@ export default function Ownership() {
         renderSummary={(item) => <OwnerSummary owner={item} isFormer={false} />}
       />
 
-      <NysDivider />
+      {ownershipStructure === 'private' && (
+        <>
+          <NysDivider />
 
-      {/* Section B: Former Beneficial Owners */}
-      <h3>
-        Former beneficial owners
-      </h3>
-      <p>
-        List any individuals or entities who previously held a beneficial ownership interest.
-      </p>
+          {/* Section B: Former Beneficial Owners */}
+          <h3>
+            Former beneficial owners
+          </h3>
+          <p>
+            List any person or entity who held a beneficial ownership interest that ended within the past 5 years.
+          </p>
 
-      <RepeatableFieldGroup<Owner>
-        items={former}
-        emptyItem={EMPTY_FORMER_OWNER}
-        addLabel="+ Add additional former owner"
-        entryLabel="former owner"
-        onAdd={(owner) =>
-          dispatch({ type: 'SET_FORMER_OWNERS', payload: [...former, owner] })
-        }
-        onUpdate={(index, owner) => {
-          const updated = [...former];
-          updated[index] = owner;
-          dispatch({ type: 'SET_FORMER_OWNERS', payload: updated });
-        }}
-        onRemove={(index) =>
-          dispatch({
-            type: 'SET_FORMER_OWNERS',
-            payload: former.filter((_, i) => i !== index),
-          })
-        }
-        renderForm={(item, onChange) => (
-          <OwnerFormFields owner={item} onChange={onChange} isFormer={true} />
-        )}
-        renderSummary={(item) => <OwnerSummary owner={item} isFormer={true} />}
-      />
+          <RepeatableFieldGroup<Owner>
+            items={former}
+            emptyItem={EMPTY_FORMER_OWNER}
+            addLabel="+ Add additional former owner"
+            entryLabel="former owner"
+            onAdd={(owner) =>
+              dispatch({ type: 'SET_FORMER_OWNERS', payload: [...former, owner] })
+            }
+            onUpdate={(index, owner) => {
+              const updated = [...former];
+              updated[index] = owner;
+              dispatch({ type: 'SET_FORMER_OWNERS', payload: updated });
+            }}
+            onRemove={(index) =>
+              dispatch({
+                type: 'SET_FORMER_OWNERS',
+                payload: former.filter((_, i) => i !== index),
+              })
+            }
+            renderForm={(item, onChange) => (
+              <OwnerFormFields owner={item} onChange={onChange} isFormer={true} />
+            )}
+            renderSummary={(item) => <OwnerSummary owner={item} isFormer={true} />}
+          />
+        </>
+      )}
 
       <NysDivider />
 

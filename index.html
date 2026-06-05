@@ -53,15 +53,14 @@
 
     async function checkPassword(e) {
       e.preventDefault();
-      const inputEl = document.getElementById('password-input');
+      let inputEl = document.getElementById('password-input');
       // Wait for web component to be ready
-      if (!inputEl || !inputEl.value !== undefined) {
-        await customElements.whenDefined('nys-textinput');
-      }
+      if (!inputEl) await customElements.whenDefined('nys-textinput');
+      inputEl = document.getElementById('password-input');
       const input = inputEl.value || '';
       const hash = await sha256(input);
       if (hash === PASSWORD_HASH) {
-        sessionStorage.setItem('authed', 'true');
+        localStorage.setItem('authed', 'true');
         authenticate();
       } else {
         inputEl.showError = true;
@@ -75,7 +74,7 @@
       document.body.classList.add('authenticated');
     }
 
-    if (sessionStorage.getItem('authed') === 'true') {
+    if (localStorage.getItem('authed') === 'true') {
       authenticate();
     }
 
@@ -85,6 +84,14 @@
       customElements.whenDefined('nys-button')
     ]).then(() => {
       document.getElementById('passwordForm')?.addEventListener('submit', checkPassword);
+      document.getElementById('password-input')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const form = document.getElementById('passwordForm');
+          if (form?.requestSubmit) form.requestSubmit();
+          else checkPassword(e);
+        }
+      });
     });
   </script>
   <script type="module" src="/src/main.tsx"></script>

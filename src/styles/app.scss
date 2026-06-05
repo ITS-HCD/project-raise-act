@@ -108,20 +108,22 @@
 }
 
 // Layout
+// Make the app a full-height column so the footers rest at the bottom of the
+// viewport on short pages, but get pushed down (not fixed/sticky) by tall content.
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 #main-content {
   max-width: 80em;
-  padding: 0;
+  // Start/end gutter at every breakpoint so content never touches the edges.
+  padding-inline: var(--nys-space-400);
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  @media (min-width: 30em) {
-    padding: 0;
-  }
-
-  @media (min-width: 64em) {
-    padding: 0 var(--nys-space-400);
-  }
+  flex: 1 0 auto; // grow to absorb extra height, pushing the footers to the bottom
 
   @media (min-width: 80em) {
     margin: 0 auto;
@@ -287,4 +289,53 @@
   display: flex;
   flex-direction: column;
   gap: var(--nys-space-500);
+}
+
+// Company context banner — global app chrome shown at the top of every page
+// once the Business Info step has been submitted. The band is full-bleed to the
+// viewport edges; its content is constrained to the same 80em container as the
+// global header. Surface chrome, not the document heading.
+.company-banner {
+  position: relative;
+  z-index: 1; // lift above the following content so the drop shadow shows over the stepper
+  width: 100%;
+  background: var(--nys-color-ink-reverse);
+  // NYSDS has no shadow token/utility, so the elevation is an explicit value
+  // (matches the original design's drop shadow).
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.company-banner__inner {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 80em; // same content width as the global header
+  margin-inline: auto;
+  min-height: 71px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--nys-space-250, 20px);
+  padding: var(--nys-space-300) var(--nys-space-400);
+
+  // Flush with the global header's app name on wide screens (where the 80em
+  // container is centered and the header has no inner gutter).
+  @media (min-width: 80em) {
+    padding-inline: 0;
+  }
+}
+
+.company-banner__name {
+  margin: 0;
+  font-family: var(--nys-font-family-ui, "Proxima Nova");
+  font-size: var(--nys-font-size-ui-xl, 20px);
+  font-weight: 700;
+  line-height: var(--nys-font-lineheight-ui-xl, 28px);
+  letter-spacing: var(--nys-font-letterspacing-ui-xl, 0.017px);
+}
+
+// Route-change focus is moved to the page heading for screen-reader users;
+// suppress the visual focus ring on these programmatic (tabindex="-1") targets.
+h1[tabindex="-1"]:focus,
+h2[tabindex="-1"]:focus {
+  outline: none;
 }

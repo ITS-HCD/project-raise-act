@@ -94,6 +94,8 @@ export default function Addresses() {
 
   const { principal, nyOffices } = data.addresses;
 
+  const isUS = principal.country === 'US' || principal.country === '';
+
   function handleContinue() {
     if (validate()) navigate('/register/ownership');
   }
@@ -158,22 +160,31 @@ export default function Addresses() {
         onNysInput={update('suite')}
       />
 
-      <NysSelect
-        label="State"
-        width="sm"
-        required
-        value={principal.state}
-        showError={getFieldProps('principal.state').showError}
-        errorMessage={getFieldProps('principal.state').errorMessage}
-        onNysChange={update('state')}
-      >
-        <option value="">-- Select a state --</option>
-        {US_STATES.map((s) => (
-          <option key={s.value} value={s.value}>
-            {s.value}
-          </option>
-        ))}
-      </NysSelect>
+      {isUS ? (
+        <NysSelect
+          label="State"
+          width="sm"
+          required
+          value={principal.state}
+          showError={getFieldProps('principal.state').showError}
+          errorMessage={getFieldProps('principal.state').errorMessage}
+          onNysChange={update('state')}
+        >
+          <option value="">-- Select a state --</option>
+          {US_STATES.map((s) => (
+            <option key={s.value} value={s.value}>
+              {s.value}
+            </option>
+          ))}
+        </NysSelect>
+      ) : (
+        <NysTextinput
+          label="State/Province/Region"
+          value={principal.state}
+          onNysInput={update('state')}
+          width="sm"
+        />
+      )}
 
       <NysTextinput
         label="City"
@@ -185,16 +196,25 @@ export default function Addresses() {
         onNysInput={update('city')}
       />
 
-      <NysTextinput
-        label="Zip"
-        required
-        value={principal.zip}
-        width="md"
-        pattern="^\d{5}(-\d{4})?$"
-        showError={getFieldProps('principal.zip').showError}
-        errorMessage={getFieldProps('principal.zip').errorMessage}
-        onNysInput={update('zip')}
-      />
+      {isUS ? (
+        <NysTextinput
+          label="Zip"
+          required
+          value={principal.zip}
+          width="md"
+          pattern="^\d{5}(-\d{4})?$"
+          showError={getFieldProps('principal.zip').showError}
+          errorMessage={getFieldProps('principal.zip').errorMessage}
+          onNysInput={update('zip')}
+        />
+      ) : (
+        <NysTextinput
+          label="Postal Code"
+          value={principal.zip}
+          onNysInput={update('zip')}
+          width="md"
+        />
+      )}
 
       <NysDivider />
 

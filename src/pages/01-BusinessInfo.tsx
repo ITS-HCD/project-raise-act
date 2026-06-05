@@ -17,7 +17,10 @@ export default function BusinessInfo() {
   const { legalName, additionalNames, ownershipStructure } = data.businessInfo;
 
   function handleContinue() {
-    if (validate()) navigate('/register/addresses');
+    if (validate()) {
+      dispatch({ type: 'MARK_BUSINESS_INFO_SUBMITTED' });
+      navigate('/register/addresses');
+    }
   }
 
   function handleLegalNameInput(e: Event) {

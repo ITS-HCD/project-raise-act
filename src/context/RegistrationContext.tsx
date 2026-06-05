@@ -1,5 +1,7 @@
-import { createContext, useContext, useReducer, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useReducer, type ReactNode } from 'react';
 import type { RegistrationData, Address, Owner, Contact } from '../types/registration';
+
+const STORAGE_KEY = 'raise-registration';
 
 const emptyAddress: Address = {
   country: '',
@@ -14,6 +16,7 @@ const emptyContact: Contact = {
   firstName: '',
   lastName: '',
   title: '',
+  phoneCountryCode: '+1',
   phone: '',
   email: '',
 };
@@ -39,6 +42,7 @@ const initialState: RegistrationData = {
   },
   documents: [],
   certification: false,
+  businessInfoSubmitted: false,
 };
 
 type Action =
@@ -52,6 +56,7 @@ type Action =
   | { type: 'UPDATE_TERTIARY_CONTACT'; payload: Partial<Contact> | null }
   | { type: 'SET_DOCUMENTS'; payload: File[] }
   | { type: 'SET_CERTIFICATION'; payload: boolean }
+  | { type: 'MARK_BUSINESS_INFO_SUBMITTED' }
   | { type: 'RESET' };
 
 function reducer(state: RegistrationData, action: Action): RegistrationData {
@@ -97,6 +102,8 @@ function reducer(state: RegistrationData, action: Action): RegistrationData {
       return { ...state, documents: action.payload };
     case 'SET_CERTIFICATION':
       return { ...state, certification: action.payload };
+    case 'MARK_BUSINESS_INFO_SUBMITTED':
+      return { ...state, businessInfoSubmitted: true };
     case 'RESET':
       return initialState;
     default:
@@ -111,8 +118,32 @@ export interface RegistrationContextValue {
 
 export const RegistrationContext = createContext<RegistrationContextValue | null>(null);
 
+// Rehydrate from localStorage so entered data (e.g. the company name) survives
+// a page refresh. Uploaded `documents` are File objects that can't be serialized,
+// so they're always restored empty.
+function loadState(fallback: RegistrationData): RegistrationData {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<RegistrationData>;
+      return { ...fallback, ...parsed, documents: [] };
+    }
+  } catch {
+    // Corrupt/unavailable storage — fall back to the empty state.
+  }
+  return fallback;
+}
+
 export function RegistrationProvider({ children }: { children: ReactNode }) {
-  const [data, dispatch] = useReducer(reducer, initialState);
+  const [data, dispatch] = useReducer(reducer, initialState, loadState);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...data, documents: [] }));
+    } catch {
+      // Ignore quota/serialization errors — persistence is best-effort.
+    }
+  }, [data]);
 
   return (
     <RegistrationContext.Provider value={{ data, dispatch }}>
