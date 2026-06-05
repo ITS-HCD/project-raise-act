@@ -12,6 +12,9 @@ interface RepeatableFieldGroupProps<T> {
   emptyItem: T;
   addLabel?: string;
   entryLabel?: string;
+  // Open the first (add) form immediately when there are no items yet, so the
+  // user can start typing without first clicking the add button.
+  openWhenEmpty?: boolean;
 }
 
 export function RepeatableFieldGroup<T>({
@@ -24,8 +27,11 @@ export function RepeatableFieldGroup<T>({
   emptyItem,
   addLabel = '+ Add',
   entryLabel = 'entry',
+  openWhenEmpty = false,
 }: RepeatableFieldGroupProps<T>) {
-  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [editingIndex, setEditingIndex] = useState<number | null>(
+    openWhenEmpty && items.length === 0 ? -1 : null
+  );
   const [draftItem, setDraftItem] = useState<T>(emptyItem);
 
   function handleOpenAdd() {

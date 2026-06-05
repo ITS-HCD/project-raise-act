@@ -108,12 +108,21 @@
 }
 
 // Layout
+// Make the app a full-height column so the footers rest at the bottom of the
+// viewport on short pages, but get pushed down (not fixed/sticky) by tall content.
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 #main-content {
   max-width: 80em;
   padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex: 1 0 auto; // grow to absorb extra height, pushing the footers to the bottom
 
   @media (min-width: 30em) {
     padding: 0;
@@ -294,6 +303,8 @@
 // viewport edges; its content is constrained to the same 80em container as the
 // global header. Surface chrome, not the document heading.
 .company-banner {
+  position: relative;
+  z-index: 1; // lift above the following content so the drop shadow shows over the stepper
   width: 100%;
   background: var(--nys-color-ink-reverse);
   // NYSDS has no shadow token/utility, so the elevation is an explicit value

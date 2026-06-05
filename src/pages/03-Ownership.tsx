@@ -205,6 +205,7 @@ export default function Ownership() {
         emptyItem={EMPTY_CURRENT_OWNER}
         addLabel="+ Add additional owner"
         entryLabel="owner"
+        openWhenEmpty
         onAdd={(owner) =>
           dispatch({ type: 'SET_CURRENT_OWNERS', payload: [...current, owner] })
         }
