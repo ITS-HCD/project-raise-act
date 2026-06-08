@@ -14,7 +14,7 @@ export function ReviewSection({ title, onEdit, children }: ReviewSectionProps) {
     <div className={styles.section}>
       <div className={styles.header}>
         <h3 className={styles.title}>{title}</h3>
-        <NysButton variant="text" label="Edit Section" size="sm" onClick={onEdit} />
+        <NysButton variant="text" label="Edit" prefixIcon="edit_square" size="sm" onClick={onEdit} />
       </div>
       {children}
       <NysDivider />

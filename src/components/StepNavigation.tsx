@@ -14,7 +14,15 @@ export default function StepNavigation({
   continueLabel = 'Continue',
 }: StepNavigationProps) {
   return (
-    <div style={{ display: 'flex', gap: 'var(--nys-space-200)'}}>
+    // Primary action first in the DOM (first tab stop); CSS renders it on the
+    // right and Back on the left.
+    <div className="wizard-nav">
+      <NysButton
+        label={continueLabel}
+        variant="filled"
+        type="button"
+        onNysClick={onContinue}
+      />
       {showBack && (
         <NysButton
           label="Back"
@@ -23,12 +31,6 @@ export default function StepNavigation({
           onNysClick={onBack}
         />
       )}
-      <NysButton
-        label={continueLabel}
-        variant="filled"
-        type="button"
-        onNysClick={onContinue}
-      />
     </div>
   );
 }

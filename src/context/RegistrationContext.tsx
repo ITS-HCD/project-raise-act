@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer, type ReactNode } from 'react';
-import type { RegistrationData, Address, Owner, Contact } from '../types/registration';
+import type { RegistrationData, Address, Owner, Contact, ReviewState } from '../types/registration';
 
 const STORAGE_KEY = 'raise-registration';
 
@@ -43,6 +43,8 @@ const initialState: RegistrationData = {
   documents: [],
   certification: false,
   businessInfoSubmitted: false,
+  submission: null,
+  reviewState: 'not_started',
 };
 
 type Action =
@@ -57,6 +59,8 @@ type Action =
   | { type: 'SET_DOCUMENTS'; payload: File[] }
   | { type: 'SET_CERTIFICATION'; payload: boolean }
   | { type: 'MARK_BUSINESS_INFO_SUBMITTED' }
+  | { type: 'SET_SUBMISSION'; payload: NonNullable<RegistrationData['submission']> }
+  | { type: 'SET_REVIEW_STATE'; payload: ReviewState }
   | { type: 'RESET' };
 
 function reducer(state: RegistrationData, action: Action): RegistrationData {
@@ -104,6 +108,10 @@ function reducer(state: RegistrationData, action: Action): RegistrationData {
       return { ...state, certification: action.payload };
     case 'MARK_BUSINESS_INFO_SUBMITTED':
       return { ...state, businessInfoSubmitted: true };
+    case 'SET_SUBMISSION':
+      return { ...state, submission: action.payload, reviewState: 'under_review' };
+    case 'SET_REVIEW_STATE':
+      return { ...state, reviewState: action.payload };
     case 'RESET':
       return initialState;
     default:

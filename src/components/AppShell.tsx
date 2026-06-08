@@ -3,6 +3,7 @@ import { useEffect, useLayoutEffect } from 'react';
 import { NysStepper } from './wrappers/NysStepper';
 import { NysStep } from './wrappers/NysStep';
 import { NysButton } from './wrappers/NysButton';
+import { AdditionalInfoAlert } from './AdditionalInfoAlert';
 import { useRegistration } from '../context/RegistrationContext';
 import { saveRegistration } from '../api/stubs';
 
@@ -24,7 +25,7 @@ function routeToStepIndex(pathname: string): number {
 export default function AppShell() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { data } = useRegistration();
+  const { data, dispatch } = useRegistration();
 
   const selectedStep = routeToStepIndex(location.pathname);
 
@@ -51,6 +52,11 @@ export default function AppShell() {
 
   async function handleSaveAndExit() {
     await saveRegistration(selectedStep + 1, data);
+    // A saved-but-unsubmitted disclosure shows the "continue" card on the
+    // dashboard. Don't downgrade a disclosure that's already been submitted.
+    if (data.reviewState === 'not_started' || data.reviewState === 'in_progress') {
+      dispatch({ type: 'SET_REVIEW_STATE', payload: 'in_progress' });
+    }
     navigate('/');
   }
 
@@ -58,7 +64,7 @@ export default function AppShell() {
     <div className="nys-grid-container">
       <div className="nys-grid-row">
         <NysStepper
-          label="Register your Company"
+          label="Disclosure Statement"
           className="nys-grid-col-12 nys-desktop:nys-grid-col-3"
         >
           {STEPS.map((step, idx) => (
@@ -88,6 +94,9 @@ export default function AppShell() {
           id="step-content"
           className="nys-grid-col-12 nys-desktop:nys-grid-col-9"
         >
+          {data.reviewState === 'needs_info' && (
+            <AdditionalInfoAlert className="step-content__alert" />
+          )}
           <Outlet />
         </div>
       </div>

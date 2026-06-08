@@ -57,7 +57,7 @@ export default function BusinessInfo() {
 
   return (
     <div>
-      <h2>Register your Company</h2>
+      <h2>Add Your Company Details</h2>
 
       {/* Legal Company Name */}
       <NysTextinput
@@ -151,7 +151,7 @@ export default function BusinessInfo() {
       {/* Supporting Documentation */}
         <NysFileinput
           label="Supporting documentation"
-          description="Upload any required supporting documents for this registration. You can upload PDF, JPG, or PNG files up to 10MB each"
+          description="Upload any required supporting documents for this disclosure statement. You can upload PDF, JPG, or PNG files up to 10MB each"
           multiple
           dropzone
           accept=".pdf,.jpg,.jpeg,.png"

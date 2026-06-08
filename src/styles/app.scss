@@ -117,6 +117,7 @@
 }
 
 #main-content {
+  box-sizing: border-box; // keep the inline padding inside max-width so we never overflow the viewport at ~80em
   max-width: 80em;
   // Start/end gutter at every breakpoint so content never touches the edges.
   padding-inline: var(--nys-space-400);
@@ -291,6 +292,128 @@
   gap: var(--nys-space-500);
 }
 
+// Dashboard (home page) — disclosure statement status cards and the reviewer
+// preview toggle. One wrapper so spacing is owned here rather than inline.
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  // Clear the global header at the top and the global footer at the bottom.
+  padding-block: var(--nys-space-400) var(--nys-space-600);
+
+  &__alert {
+    margin-bottom: var(--nys-space-250);
+  }
+
+  // Shared status card (not started / in progress / under review / needs info /
+  // approved). Centered, fixed max width, generous vertical padding.
+  &-card {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto var(--nys-space-400);
+    padding: var(--nys-space-800) var(--nys-space-400);
+    border: var(--nys-border-width-sm) solid var(--nys-color-neutral-300);
+    border-radius: var(--nys-radius-md);
+    gap: var(--nys-space-200);
+    text-align: center;
+
+    &__heading {
+      margin: 0;
+      color: var(--nys-color-theme);
+      font-family: var(--nys-font-family-ui);
+      font-size: var(--nys-font-size-ui-xl);
+      font-weight: var(--nys-font-weight-semibold);
+      line-height: var(--nys-font-lineheight-ui-xl);
+      letter-spacing: var(--nys-font-letterspacing-ui-xl);
+    }
+
+    &__body {
+      margin: 0;
+      color: var(--nys-color-text);
+      font-family: var(--nys-font-family-ui);
+      font-size: var(--nys-font-size-ui-md);
+      font-weight: var(--nys-font-weight-regular);
+      line-height: var(--nys-font-lineheight-ui-md);
+      letter-spacing: var(--nys-font-letterspacing-ui-md);
+    }
+
+    &__divider {
+      width: 100%;
+      max-width: 520px;
+      margin: var(--nys-space-100) auto;
+      border: 0;
+      border-top: var(--nys-border-width-sm) solid var(--nys-color-neutral-200);
+    }
+
+    // Label/value rows under the divider (Submitted on / Approved on, etc.).
+    &__details {
+      display: flex;
+      flex-direction: column;
+      gap: var(--nys-space-100);
+      color: var(--nys-color-text);
+      font-family: var(--nys-font-family-ui);
+      font-size: var(--nys-font-size-ui-md);
+      line-height: var(--nys-font-lineheight-ui-md);
+      letter-spacing: var(--nys-font-letterspacing-ui-md);
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  // Reviewer preview toggle — surface chrome marking it as a demo-only control.
+  &__toggle {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 880px;
+    margin: var(--nys-space-600) auto 0;
+    padding: var(--nys-space-300);
+    border: var(--nys-border-width-sm) solid var(--nys-color-neutral-200);
+    border-radius: var(--nys-radius-md);
+    background: var(--nys-color-surface-raised);
+  }
+
+  &__toggle-action {
+    margin-top: var(--nys-space-300);
+  }
+}
+
+// Wizard step banner shown when the disclosure statement needs more info.
+.step-content__alert {
+  margin-bottom: var(--nys-space-300);
+}
+
+// Wizard step navigation row. The primary action (Continue / Submit) is first
+// in the DOM so it's the first keyboard tab stop, but renders on the right via
+// row-reverse; Back sits on the left. NYSDS has no space-between or reverse
+// flex utility, so this composes flex with DS spacing tokens.
+.wizard-nav {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--nys-space-200);
+}
+
+// Post-submission confirmation screen.
+.success-confirmation {
+  padding: var(--nys-space-400);
+
+  &__alert {
+    margin-bottom: var(--nys-space-400);
+  }
+
+  p {
+    margin: 0 0 var(--nys-space-400);
+    font-family: var(--nys-font-family-body);
+  }
+}
+
 // Company context banner — global app chrome shown at the top of every page
 // once the Business Info step has been submitted. The band is full-bleed to the
 // viewport edges; its content is constrained to the same 80em container as the
@@ -308,20 +431,17 @@
 .company-banner__inner {
   box-sizing: border-box;
   width: 100%;
-  max-width: 80em; // same content width as the global header
-  margin-inline: auto;
   min-height: 71px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: var(--nys-space-250, 20px);
-  padding: var(--nys-space-300) var(--nys-space-400);
-
-  // Flush with the global header's app name on wide screens (where the 80em
-  // container is centered and the header has no inner gutter).
-  @media (min-width: 80em) {
-    padding-inline: 0;
-  }
+  padding-block: var(--nys-space-300);
+  // Align the company name to the same centered 80em container as the global
+  // header — i.e. no inner gutter once the viewport exceeds 80em (so it lines up
+  // with the header app name and nav), but never narrower than the standard
+  // start/end gutter, so it doesn't touch the edge below ~80em.
+  padding-inline: max(var(--nys-space-400), calc((100% - 80em) / 2));
 }
 
 .company-banner__name {

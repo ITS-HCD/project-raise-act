@@ -21,30 +21,29 @@ export function SuccessConfirmation({
   });
 
   return (
-    <div style={{ padding: 'var(--nys-space-400)' }}>
-      <div style={{ marginBottom: 'var(--nys-space-400)' }}>
+    <div className="success-confirmation">
+      <div className="success-confirmation__alert">
         <NysAlert
           type="success"
-          heading="Your registration was successfully submitted!"
-          text={`Your recent registration submission in the DFS RAISE System has been received on ${formattedDate}.`}
+          heading="Your disclosure statement was successfully submitted!"
+          text={`Your disclosure statement in the RAISE System has been received on ${formattedDate}.`}
         />
       </div>
 
-      <p style={{ fontFamily: 'var(--nys-font-family-body)', marginBottom: 'var(--nys-space-300)' }}>
-        DFS is currently reviewing your submission and will update you when the status of
-        your registration has changed, or to request additional information.
+      <p>
+        {contactEmail && (
+          <>
+            <strong>A confirmation email has been sent to {contactEmail}.</strong>
+            <br />
+          </>
+        )}
+        <strong>Disclosure ID:</strong> {registrationId}
       </p>
 
-      {contactEmail && (
-        <p style={{ fontFamily: 'var(--nys-font-family-body)', marginBottom: 'var(--nys-space-300)' }}>
-          <strong>Confirmation email sent to:</strong> {contactEmail}
-        </p>
-      )}
-
-      <p style={{ fontFamily: 'var(--nys-font-family-body)', marginBottom: 'var(--nys-space-400)' }}>
-        If you need to refer to this registration, you can reference:
-        <br />
-        <strong>Registration ID:</strong> {registrationId}
+      <p>
+        New York State is currently reviewing your disclosure statement and will update
+        you when the status of your disclosure statement has changed, or to request
+        additional information.
       </p>
 
       <NysButton

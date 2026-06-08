@@ -14,3 +14,53 @@
   font-weight: var(--nys-font-weight-semibold);
   margin: 0;
 }
+
+/* A labeled field: descriptive label on its own line, value stacked below. */
+.field {
+  margin-bottom: var(--nys-space-200);
+}
+
+.fieldLabel {
+  margin: 0;
+  font-weight: var(--nys-font-weight-semibold);
+  color: var(--nys-color-text);
+}
+
+.fieldValue {
+  margin: 0;
+  color: var(--nys-color-text);
+}
+
+/* Grouped sub-record (an owner or a contact) separated from the next. */
+.block {
+  margin-bottom: var(--nys-space-300);
+}
+
+.block:last-child {
+  margin-bottom: 0;
+}
+
+/* Inline "Label: value" line used inside owner blocks. */
+.line {
+  margin: 0;
+  color: var(--nys-color-text);
+}
+
+.line strong {
+  font-weight: var(--nys-font-weight-semibold);
+}
+
+/* Bold lead line for a contact block (e.g. "Point of Contact"). */
+.blockHeading {
+  margin: 0 0 var(--nys-space-50);
+  font-weight: var(--nys-font-weight-semibold);
+}
+
+/* Document row: paperclip icon + filename. */
+.doc {
+  display: flex;
+  align-items: center;
+  gap: var(--nys-space-100);
+  margin-bottom: var(--nys-space-100);
+  color: var(--nys-color-text);
+}

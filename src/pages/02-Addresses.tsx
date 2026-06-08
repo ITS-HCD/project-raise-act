@@ -289,7 +289,7 @@ export default function Addresses() {
 
       <NysFileinput
         label="Supporting documentation"
-        description="Upload any required supporting documents for this registration. You can upload PDF, JPG, or PNG files up to 10MB each"
+        description="Upload any required supporting documents for this disclosure statement. You can upload PDF, JPG, or PNG files up to 10MB each"
         multiple
         dropzone
         accept=".pdf,.jpg,.jpeg,.png"
