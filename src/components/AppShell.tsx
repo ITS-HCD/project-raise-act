@@ -65,7 +65,7 @@ export default function AppShell() {
       <div className="nys-grid-row">
         <NysStepper
           label="Disclosure Statement"
-          className="nys-grid-col-12 nys-desktop:nys-grid-col-3"
+          className="wizard-stepper nys-grid-col-12 nys-desktop:nys-grid-col-3"
         >
           {STEPS.map((step, idx) => (
             <NysStep

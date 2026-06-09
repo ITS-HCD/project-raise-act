@@ -172,6 +172,18 @@
   gap: var(--nys-space-300);
 }
 
+// Below the tablet breakpoint the stepper renders as a full-width bar. Break it
+// out of the page (#main-content) and grid-container gutters so the bar sits
+// flush to the viewport edges; reset at tablet+ where normal gutters apply (and
+// at desktop it becomes a sidebar column).
+.wizard-stepper {
+  margin-inline: calc(50% - 50vw);
+
+  @media (min-width: 40em) {
+    margin-inline: 0;
+  }
+}
+
 #user-management {
   display: flex;
   flex-direction: column;
@@ -452,6 +464,87 @@
   line-height: var(--nys-font-lineheight-ui-xl, 28px);
   letter-spacing: var(--nys-font-letterspacing-ui-xl, 0.017px);
 }
+
+// Top row: company name on the left, expand/collapse toggle on the right.
+.company-banner__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nys-space-200);
+}
+
+// Link-styled expand/collapse control.
+.company-banner__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nys-space-50);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: var(--nys-color-link);
+  font-family: var(--nys-font-family-ui);
+  font-size: var(--nys-font-size-ui-md);
+  font-weight: var(--nys-font-weight-semibold);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.company-banner__divider {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-top: var(--nys-border-width-sm) solid var(--nys-color-neutral-200);
+}
+
+// Expanded detail area. Layout (column → row) is driven by NYSDS flex utility
+// classes in the markup; this just supplies gaps and the tablet+ separator.
+.company-banner__details {
+  gap: var(--nys-space-400);
+
+  @media (min-width: 40em) {
+    align-items: flex-start;
+    gap: var(--nys-space-500);
+  }
+}
+
+.company-banner__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nys-space-50);
+
+  p {
+    margin: 0;
+    color: var(--nys-color-text);
+  }
+}
+
+.company-banner__stats {
+  gap: var(--nys-space-400);
+
+  @media (min-width: 40em) {
+    padding-inline-start: var(--nys-space-500);
+    border-inline-start: var(--nys-border-width-sm) solid var(--nys-color-neutral-200);
+  }
+}
+
+.company-banner__stat {
+  gap: var(--nys-space-100);
+  align-items: flex-start; // keep the badge sized to its content, not stretched
+}
+
+.company-banner__stat-label {
+  font-weight: var(--nys-font-weight-semibold);
+  color: var(--nys-color-text);
+}
+
+// Small caption marking placeholder (non-real) status values.
+.company-banner__stat-note {
+  font-size: var(--nys-font-size-ui-xs);
+  font-style: italic;
+  color: var(--nys-color-text-weaker);
+}
+
 
 // Route-change focus is moved to the page heading for screen-reader users;
 // suppress the visual focus ring on these programmatic (tabindex="-1") targets.

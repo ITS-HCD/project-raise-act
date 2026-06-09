@@ -8,14 +8,11 @@ import { NysButton } from "./wrappers/NysButton";
 import { NysAvatar } from "./wrappers/NysAvatar";
 import { NysDropdownMenu } from "./wrappers/NysDropdownMenu";
 import { NysDropdownMenuItem } from "./wrappers/NysDropdownMenuItem";
-import { useRegistration } from "../context/RegistrationContext";
+import { CompanyBanner } from "./CompanyBanner";
 
 export default function MainLayout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { data } = useRegistration();
-  const companyName = data.businessInfo.legalName;
-  const showCompanyBanner = Boolean(companyName) && data.businessInfoSubmitted;
 
   useEffect(() => {
     const el = document.querySelector<HTMLElement>("h1, h2");
@@ -64,13 +61,7 @@ export default function MainLayout() {
           </NysDropdownMenu>
         </div>
       </NysGlobalHeader>
-      {showCompanyBanner && (
-        <div className="company-banner">
-          <div className="company-banner__inner">
-            <p className="company-banner__name">{companyName}</p>
-          </div>
-        </div>
-      )}
+      <CompanyBanner />
       <main id="main-content">
         <Outlet />
       </main>

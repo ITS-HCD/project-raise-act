@@ -65,6 +65,10 @@ export interface RegistrationData {
   // True once the Business Info step has been submitted (passed validation and
   // advanced). Gates the global company banner so it only appears afterward.
   businessInfoSubmitted: boolean;
+  // Snapshot of the legal company name taken when the Business Info step is
+  // submitted. The global banner shows THIS (not the live, still-editable
+  // `legalName`) so it doesn't update keystroke-by-keystroke while editing.
+  companyNameOnFile: string;
   // Set once the full disclosure statement has been submitted from the final
   // review step. Drives the "under review" dashboard card and survives refresh
   // via localStorage. Null until submission succeeds.

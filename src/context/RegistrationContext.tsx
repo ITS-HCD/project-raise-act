@@ -43,6 +43,7 @@ const initialState: RegistrationData = {
   documents: [],
   certification: false,
   businessInfoSubmitted: false,
+  companyNameOnFile: '',
   submission: null,
   reviewState: 'not_started',
 };
@@ -59,6 +60,7 @@ type Action =
   | { type: 'SET_DOCUMENTS'; payload: File[] }
   | { type: 'SET_CERTIFICATION'; payload: boolean }
   | { type: 'MARK_BUSINESS_INFO_SUBMITTED' }
+  | { type: 'CLEAR_COMPANY' }
   | { type: 'SET_SUBMISSION'; payload: NonNullable<RegistrationData['submission']> }
   | { type: 'SET_REVIEW_STATE'; payload: ReviewState }
   | { type: 'RESET' };
@@ -107,7 +109,21 @@ function reducer(state: RegistrationData, action: Action): RegistrationData {
     case 'SET_CERTIFICATION':
       return { ...state, certification: action.payload };
     case 'MARK_BUSINESS_INFO_SUBMITTED':
-      return { ...state, businessInfoSubmitted: true };
+      // Snapshot the name now so the banner reflects the submitted value, not
+      // subsequent live edits to the field.
+      return {
+        ...state,
+        businessInfoSubmitted: true,
+        companyNameOnFile: state.businessInfo.legalName,
+      };
+    case 'CLEAR_COMPANY':
+      // Demo helper: hide the banner and reset the company name.
+      return {
+        ...state,
+        businessInfoSubmitted: false,
+        companyNameOnFile: '',
+        businessInfo: { ...state.businessInfo, legalName: '' },
+      };
     case 'SET_SUBMISSION':
       return { ...state, submission: action.payload, reviewState: 'under_review' };
     case 'SET_REVIEW_STATE':
@@ -134,7 +150,13 @@ function loadState(fallback: RegistrationData): RegistrationData {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as Partial<RegistrationData>;
-      return { ...fallback, ...parsed, documents: [] };
+      const merged = { ...fallback, ...parsed, documents: [] };
+      // Backfill the banner snapshot for sessions saved before this field
+      // existed, so the banner doesn't disappear on first load after upgrade.
+      if (!merged.companyNameOnFile && merged.businessInfoSubmitted) {
+        merged.companyNameOnFile = merged.businessInfo.legalName;
+      }
+      return merged;
     }
   } catch {
     // Corrupt/unavailable storage — fall back to the empty state.

@@ -223,7 +223,7 @@ export default function LandingPage() {
           prefixIcon="delete"
           variant="outline"
           size="sm"
-          onNysClick={() => dispatch({ type: 'UPDATE_BUSINESS_INFO', payload: { legalName: '' } })}
+          onNysClick={() => dispatch({ type: 'CLEAR_COMPANY' })}
         />
       </section>
     </div>
