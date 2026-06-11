@@ -6,7 +6,6 @@ import type { Address } from '../types/registration';
 import { NysTextinput } from '../components/wrappers/NysTextinput';
 import { NysSelect } from '../components/wrappers/NysSelect';
 import { NysDivider } from '../components/wrappers/NysDivider';
-import { NysFileinput } from '../components/wrappers/NysFileinput';
 import { NysButton } from '../components/wrappers/NysButton';
 import StepNavigation from '../components/StepNavigation';
 
@@ -285,20 +284,6 @@ export default function Addresses() {
         style={{ '--nys-button-color': 'var(--nys-color-theme)', '--nys-button-color--hover': 'var(--nys-color-theme-strong)', '--nys-button-color--active': 'var(--nys-color-theme-stronger)' } as React.CSSProperties}
       />
 
-      <NysDivider />
-
-      <NysFileinput
-        label="Supporting documentation"
-        description="Upload any required supporting documents for this disclosure statement. You can upload PDF, JPG, or PNG files up to 10MB each"
-        multiple
-        dropzone
-        accept=".pdf,.jpg,.jpeg,.png"
-        onNysChange={(e: Event) => {
-          const { files } = (e as CustomEvent<{ id: string; files: File[] }>).detail;
-          dispatch({ type: 'SET_DOCUMENTS', payload: files });
-        }}
-      />
-      
       <NysDivider />
 
       <StepNavigation

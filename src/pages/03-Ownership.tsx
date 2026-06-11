@@ -17,7 +17,6 @@ const EMPTY_CURRENT_OWNER: Owner = {
   lastName: '',
   entityName: '',
   percentageOwned: NaN,
-  startDate: '',
 };
 
 const EMPTY_FORMER_OWNER: Owner = {
@@ -48,11 +47,11 @@ function OwnerFormFields({
     };
   }
 
-  function handleDateInput(field: 'startDate' | 'endDate') {
+  function handleDateInput(field: 'endDate') {
     return (e: Event) => {
       // nys-datepicker emits a Date object (or ISO string); store a YYYY-MM-DD
-      // string so the value matches Owner['startDate']/['endDate'] (string) and
-      // never reaches isRequired() as a non-string.
+      // string so the value matches Owner['endDate'] (string) and never reaches
+      // isRequired() as a non-string.
       const raw = (e as CustomEvent<{ id: string; value: string | Date }>).detail.value;
       const value =
         raw instanceof Date
@@ -129,13 +128,6 @@ function OwnerFormFields({
         }}
       />
 
-      <NysDatepicker
-        label="Ownership Start Date"
-        required
-        value={owner.startDate || undefined}
-        onNysInput={handleDateInput('startDate')}
-      />
-
       {isFormer && (
         <NysDatepicker
           label="Ownership End Date"
@@ -161,7 +153,6 @@ function OwnerSummary({ owner, isFormer }: { owner: Owner; isFormer: boolean }) 
       <div>
         {[
           pct && `${pct} owned`,
-          owner.startDate && `Start: ${owner.startDate}`,
           isFormer && owner.endDate && `End: ${owner.endDate}`,
         ]
           .filter(Boolean)

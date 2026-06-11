@@ -13,7 +13,6 @@ export interface Owner {
   lastName: string;
   entityName: string;
   percentageOwned: number;
-  startDate: string;
   endDate?: string;
 }
 
@@ -23,6 +22,7 @@ export interface Contact {
   title: string;
   phoneCountryCode: string;
   phone: string;
+  phoneExtension: string;
   email: string;
 }
 

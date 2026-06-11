@@ -175,7 +175,9 @@ export default function LandingPage() {
             />
             <div className="dashboard-card">
               <p className="dashboard-card__heading">Your disclosure statement has not been started.</p>
-              <p className="dashboard-card__body">{requirementText}</p>
+              <p className="dashboard-card__body">
+                It takes about 10–15 minutes. You can save your progress and return at any time.
+              </p>
               <NysButton
                 label="Start Disclosure Statement"
                 variant="filled"

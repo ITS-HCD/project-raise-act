@@ -36,9 +36,11 @@ function ownerName(owner: Owner): string {
 
 function contactPhone(contact: Contact): string {
   if (!contact.phone) return '';
-  return contact.phoneCountryCode && contact.phoneCountryCode !== '+1'
-    ? `${contact.phoneCountryCode} ${contact.phone}`
-    : contact.phone;
+  const base =
+    contact.phoneCountryCode && contact.phoneCountryCode !== '+1'
+      ? `${contact.phoneCountryCode} ${contact.phone}`
+      : contact.phone;
+  return contact.phoneExtension ? `${base} ext. ${contact.phoneExtension}` : base;
 }
 
 // Descriptive label with the value stacked underneath; supports multi-line values.
@@ -83,7 +85,6 @@ function OwnerBlock({ owner, isFormer }: { owner: Owner; isFormer: boolean }) {
       {!isNaN(owner.percentageOwned) && (
         <Line label="Ownership percentage" value={`${owner.percentageOwned}%`} />
       )}
-      {owner.startDate && <Line label="Ownership start date" value={formatDate(owner.startDate)} />}
       {isFormer && owner.endDate && (
         <Line label="Ownership end date" value={formatDate(owner.endDate)} />
       )}

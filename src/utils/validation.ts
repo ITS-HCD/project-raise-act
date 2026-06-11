@@ -1,6 +1,18 @@
-import type { RegistrationData } from '../types/registration';
+import type { RegistrationData, Contact } from '../types/registration';
 
 export type ValidationErrors = Record<string, string>;
+
+// Stand-in for a not-yet-created secondary/tertiary contact so each field
+// fails the required check (rather than throwing on a null contact).
+const EMPTY_CONTACT: Contact = {
+  firstName: '',
+  lastName: '',
+  title: '',
+  phoneCountryCode: '',
+  phone: '',
+  phoneExtension: '',
+  email: '',
+};
 
 export function isRequired(value: string | number | undefined | null): boolean {
   if (value === null || value === undefined) return false;
@@ -76,8 +88,6 @@ export function validateStep(stepNumber: number, data: RegistrationData): Valida
         }
         if (!isValidPercentage(owner.percentageOwned))
           errors[`current[${i}].percentageOwned`] = 'Enter a percentage between 0 and 100.';
-        if (!isRequired(owner.startDate))
-          errors[`current[${i}].startDate`] = 'Start date is required.';
       });
 
       if (data.businessInfo.ownershipStructure === 'private') {
@@ -95,33 +105,37 @@ export function validateStep(stepNumber: number, data: RegistrationData): Valida
           }
           if (!isValidPercentage(owner.percentageOwned))
             errors[`former[${i}].percentageOwned`] = 'Enter a percentage between 0 and 100.';
-          if (!isRequired(owner.startDate))
-            errors[`former[${i}].startDate`] = 'Start date is required.';
-          if (!isRequired(owner.endDate)) {
+          if (!isRequired(owner.endDate))
             errors[`former[${i}].endDate`] = 'End date is required.';
-          } else if (owner.startDate && !isDateAfter(owner.endDate!, owner.startDate)) {
-            errors[`former[${i}].endDate`] = 'End date must be after start date.';
-          }
         });
       }
       break;
     }
 
     case 4: {
-      const c = data.contacts.primary;
-      if (!isRequired(c.firstName)) errors['primary.firstName'] = 'First name is required.';
-      if (!isRequired(c.lastName)) errors['primary.lastName'] = 'Last name is required.';
-      if (!isRequired(c.title)) errors['primary.title'] = 'Title is required.';
-      if (!isRequired(c.phone)) {
-        errors['primary.phone'] = 'Business phone is required.';
-      } else if (!isValidPhone(c.phone)) {
-        errors['primary.phone'] = 'Enter a valid phone number.';
-      }
-      if (!isRequired(c.email)) {
-        errors['primary.email'] = 'Business email is required.';
-      } else if (!isValidEmail(c.email)) {
-        errors['primary.email'] = 'Enter a valid email address.';
-      }
+      // The statute (§ 1428(3)(d)) requires a point of contact, secondary
+      // contact, and tertiary contact, so all three are validated as required.
+      // The phone extension is always optional and is not validated here.
+      const validateContact = (prefix: string, contact: Contact | null) => {
+        const c = contact ?? EMPTY_CONTACT;
+        if (!isRequired(c.firstName)) errors[`${prefix}.firstName`] = 'First name is required.';
+        if (!isRequired(c.lastName)) errors[`${prefix}.lastName`] = 'Last name is required.';
+        if (!isRequired(c.title)) errors[`${prefix}.title`] = 'Title is required.';
+        if (!isRequired(c.phone)) {
+          errors[`${prefix}.phone`] = 'Business phone is required.';
+        } else if (!isValidPhone(c.phone)) {
+          errors[`${prefix}.phone`] = 'Enter a valid phone number.';
+        }
+        if (!isRequired(c.email)) {
+          errors[`${prefix}.email`] = 'Business email is required.';
+        } else if (!isValidEmail(c.email)) {
+          errors[`${prefix}.email`] = 'Enter a valid email address.';
+        }
+      };
+
+      validateContact('primary', data.contacts.primary);
+      validateContact('secondary', data.contacts.secondary);
+      validateContact('tertiary', data.contacts.tertiary);
       break;
     }
 

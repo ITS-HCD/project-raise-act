@@ -7,19 +7,21 @@ import { NysDivider } from '../components/wrappers/NysDivider';
 import StepNavigation from '../components/StepNavigation';
 import type { Contact } from '../types/registration';
 
+// Labels lead with the dial code so the actual prefix stays visible in the
+// narrow select even when the country name is truncated.
 const COUNTRY_CODES = [
-  { value: '+1', label: 'United States (+1)' },
-  { value: '+1', label: 'Canada (+1)' },
-  { value: '+52', label: 'Mexico (+52)' },
-  { value: '+44', label: 'United Kingdom (+44)' },
-  { value: '+61', label: 'Australia (+61)' },
-  { value: '+86', label: 'China (+86)' },
-  { value: '+49', label: 'Germany (+49)' },
-  { value: '+33', label: 'France (+33)' },
-  { value: '+91', label: 'India (+91)' },
-  { value: '+81', label: 'Japan (+81)' },
-  { value: '+82', label: 'South Korea (+82)' },
-  { value: '+65', label: 'Singapore (+65)' },
+  { value: '+1', label: '+1 (US)' },
+  { value: '+1', label: '+1 (CA)' },
+  { value: '+52', label: '+52 (MX)' },
+  { value: '+44', label: '+44 (UK)' },
+  { value: '+61', label: '+61 (AU)' },
+  { value: '+86', label: '+86 (CN)' },
+  { value: '+49', label: '+49 (DE)' },
+  { value: '+33', label: '+33 (FR)' },
+  { value: '+91', label: '+91 (IN)' },
+  { value: '+81', label: '+81 (JP)' },
+  { value: '+82', label: '+82 (KR)' },
+  { value: '+65', label: '+65 (SG)' },
 ];
 
 const EMPTY_CONTACT: Contact = {
@@ -28,6 +30,7 @@ const EMPTY_CONTACT: Contact = {
   title: '',
   phoneCountryCode: '+1',
   phone: '',
+  phoneExtension: '',
   email: '',
 };
 
@@ -92,31 +95,50 @@ function ContactFields({
           onNysInput={handleInput('title')}
         />
       </div>
-      <div data-field-name={`${prefix}.phoneCountryCode`}>
-        <NysSelect
-          label="Country code"
-          width="sm"
-          value={contact.phoneCountryCode}
-          onNysChange={handleInput('phoneCountryCode')}
-        >
-          {COUNTRY_CODES.map((c) => (
-            <option key={c.label} value={c.value}>
-              {c.label}
-            </option>
-          ))}
-        </NysSelect>
-      </div>
-      <div data-field-name={`${prefix}.phone`}>
-        <NysTextinput
-          label="Business Phone Number"
-          type="text"
-          required={required}
-          optional={!required}
-          value={contact.phone}
-          showError={field('phone').showError}
-          errorMessage={field('phone').errorMessage}
-          onNysInput={handleInput('phone')}
-        />
+      <div
+        style={{
+          display: 'flex',
+          gap: 'var(--nys-space-100)',
+          alignItems: 'flex-start',
+          flexWrap: 'wrap',
+        }}
+      >
+        <div data-field-name={`${prefix}.phoneCountryCode`}>
+          <NysSelect
+            label="Country code"
+            width="sm"
+            value={contact.phoneCountryCode}
+            onNysChange={handleInput('phoneCountryCode')}
+          >
+            {COUNTRY_CODES.map((c) => (
+              <option key={c.label} value={c.value}>
+                {c.label}
+              </option>
+            ))}
+          </NysSelect>
+        </div>
+        <div data-field-name={`${prefix}.phone`} style={{ flex: '1 1 10rem' }}>
+          <NysTextinput
+            label="Business Phone Number"
+            type="text"
+            required={required}
+            optional={!required}
+            value={contact.phone}
+            showError={field('phone').showError}
+            errorMessage={field('phone').errorMessage}
+            onNysInput={handleInput('phone')}
+          />
+        </div>
+        <div data-field-name={`${prefix}.phoneExtension`}>
+          <NysTextinput
+            label="Extension"
+            type="text"
+            width="sm"
+            optional
+            value={contact.phoneExtension}
+            onNysInput={handleInput('phoneExtension')}
+          />
+        </div>
       </div>
       <div data-field-name={`${prefix}.email`}>
         <NysTextinput
@@ -157,12 +179,7 @@ export default function Contacts() {
       <p>
         This contact is responsible for receiving inquiries from the office or other governmental entities.
       </p>
-      <NysDivider />
 
-      {/* Primary Contact */}
-      <h3>
-        Primary Contact
-      </h3>
       <ContactFields
         contact={primary}
         required={true}
@@ -179,7 +196,7 @@ export default function Contacts() {
       </h3>
       <ContactFields
         contact={secondary ?? EMPTY_CONTACT}
-        required={false}
+        required={true}
         onChange={(update) =>
           dispatch({ type: 'UPDATE_SECONDARY_CONTACT', payload: update })
         }
@@ -195,7 +212,7 @@ export default function Contacts() {
       </h3>
       <ContactFields
         contact={tertiary ?? EMPTY_CONTACT}
-        required={false}
+        required={true}
         onChange={(update) =>
           dispatch({ type: 'UPDATE_TERTIARY_CONTACT', payload: update })
         }

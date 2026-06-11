@@ -6,7 +6,6 @@ import { NysRadiogroup } from '../components/wrappers/NysRadiogroup';
 import { NysRadiobutton } from '../components/wrappers/NysRadiobutton';
 import { NysButton } from '../components/wrappers/NysButton';
 import { NysDivider } from '../components/wrappers/NysDivider';
-import { NysFileinput } from '../components/wrappers/NysFileinput';
 import StepNavigation from '../components/StepNavigation';
 
 export default function BusinessInfo() {
@@ -145,21 +144,6 @@ export default function BusinessInfo() {
           />
         </NysRadiogroup>
       </div>
-
-      <NysDivider />
-
-      {/* Supporting Documentation */}
-        <NysFileinput
-          label="Supporting documentation"
-          description="Upload any required supporting documents for this disclosure statement. You can upload PDF, JPG, or PNG files up to 10MB each"
-          multiple
-          dropzone
-          accept=".pdf,.jpg,.jpeg,.png"
-          onNysChange={(e: Event) => {
-            const { files } = (e as CustomEvent<{ id: string; files: File[] }>).detail;
-            dispatch({ type: 'SET_DOCUMENTS', payload: files });
-          }}
-        />
 
       <NysDivider />
 

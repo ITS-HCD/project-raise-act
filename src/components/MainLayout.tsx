@@ -22,6 +22,12 @@ export default function MainLayout() {
     }
   }, [location.pathname]);
 
+  // The user-authorization flow (sign in / request authorization) is the
+  // not-logged-in view: there's no signed-in user or company yet. So its routes
+  // suppress the authenticated chrome — the user menu, the logged-in nav links,
+  // and the company panel.
+  const isUnauthRoute = location.pathname.startsWith("/user-authorization");
+
   const handleLogout = () => {
     localStorage.removeItem("authed");
     navigate("/");
@@ -34,34 +40,38 @@ export default function MainLayout() {
     <>
       <NysUnavHeader hideSearch hideTranslate />
       <NysGlobalHeader appName="Responsible AI Safety and Education (RAISE) Act">
-        <ul>
-          <li>
-            <Link to="/">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/user-management">User Management</Link>
-          </li>
-          <li>
-            <Link to="/user-authorization">User Authorization</Link>
-          </li>
-        </ul>
-        <div
-          slot="user-actions"
-          style={{ display: "flex", alignItems: "center" }}
-        >
-          <NysButton
-            id="user-menu-trigger"
-            label="User Name"
-            prefixIcon="slotted"
+        {!isUnauthRoute && (
+          <ul>
+            <li>
+              <Link to="/">Dashboard</Link>
+            </li>
+            <li>
+              <Link to="/user-management">User Management</Link>
+            </li>
+            <li>
+              <Link to="/user-authorization">User Authorization</Link>
+            </li>
+          </ul>
+        )}
+        {!isUnauthRoute && (
+          <div
+            slot="user-actions"
+            style={{ display: "flex", alignItems: "center" }}
           >
-            <NysAvatar slot="prefix-icon" initials="NY" />
-          </NysButton>
-          <NysDropdownMenu for="user-menu-trigger">
-            <NysDropdownMenuItem label="Sign out" onClick={handleLogout} />
-          </NysDropdownMenu>
-        </div>
+            <NysButton
+              id="user-menu-trigger"
+              label="User Name"
+              prefixIcon="slotted"
+            >
+              <NysAvatar slot="prefix-icon" initials="NY" />
+            </NysButton>
+            <NysDropdownMenu for="user-menu-trigger">
+              <NysDropdownMenuItem label="Sign out" onClick={handleLogout} />
+            </NysDropdownMenu>
+          </div>
+        )}
       </NysGlobalHeader>
-      <CompanyBanner />
+      {!isUnauthRoute && <CompanyBanner />}
       <main id="main-content">
         <Outlet />
       </main>

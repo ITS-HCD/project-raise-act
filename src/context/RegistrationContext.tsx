@@ -18,6 +18,7 @@ const emptyContact: Contact = {
   title: '',
   phoneCountryCode: '+1',
   phone: '',
+  phoneExtension: '',
   email: '',
 };
 
