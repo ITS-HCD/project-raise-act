@@ -105,8 +105,6 @@ export function validateStep(stepNumber: number, data: RegistrationData): Valida
           }
           if (!isValidPercentage(owner.percentageOwned))
             errors[`former[${i}].percentageOwned`] = 'Enter a percentage between 0 and 100.';
-          if (!isRequired(owner.endDate))
-            errors[`former[${i}].endDate`] = 'End date is required.';
         });
       }
       break;

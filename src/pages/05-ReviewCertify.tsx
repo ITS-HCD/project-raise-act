@@ -16,18 +16,6 @@ const ownershipLabels: Record<string, string> = {
   public: 'Publicly traded',
 };
 
-// Format a YYYY-MM-DD value as "Month D, YYYY" without timezone drift.
-function formatDate(value: string): string {
-  if (!value) return '';
-  const [y, m, d] = value.split('-').map(Number);
-  if (!y || !m || !d) return value;
-  return new Date(y, m - 1, d).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
-
 function ownerName(owner: Owner): string {
   return owner.type === 'person'
     ? `${owner.firstName} ${owner.lastName}`.trim()
@@ -84,9 +72,6 @@ function OwnerBlock({ owner, isFormer }: { owner: Owner; isFormer: boolean }) {
       <Line label="Owner status" value={isFormer ? 'Former owner' : 'Current owner'} />
       {!isNaN(owner.percentageOwned) && (
         <Line label="Ownership percentage" value={`${owner.percentageOwned}%`} />
-      )}
-      {isFormer && owner.endDate && (
-        <Line label="Ownership end date" value={formatDate(owner.endDate)} />
       )}
     </div>
   );

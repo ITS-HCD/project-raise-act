@@ -4,24 +4,18 @@ import { useStepValidation } from '../utils/useStepValidation';
 import { NysTextinput } from '../components/wrappers/NysTextinput';
 import { NysRadiogroup } from '../components/wrappers/NysRadiogroup';
 import { NysRadiobutton } from '../components/wrappers/NysRadiobutton';
-import { NysDatepicker } from '../components/wrappers/NysDatepicker';
 import { NysDivider } from '../components/wrappers/NysDivider';
 import { NysFileinput } from '../components/wrappers/NysFileinput';
 import { RepeatableFieldGroup } from '../components/RepeatableFieldGroup';
 import StepNavigation from '../components/StepNavigation';
 import type { Owner } from '../types/registration';
 
-const EMPTY_CURRENT_OWNER: Owner = {
+const EMPTY_OWNER: Owner = {
   type: 'person',
   firstName: '',
   lastName: '',
   entityName: '',
   percentageOwned: NaN,
-};
-
-const EMPTY_FORMER_OWNER: Owner = {
-  ...EMPTY_CURRENT_OWNER,
-  endDate: '',
 };
 
 function getOwnerDisplayName(owner: Owner): string {
@@ -34,31 +28,13 @@ function getOwnerDisplayName(owner: Owner): string {
 function OwnerFormFields({
   owner,
   onChange,
-  isFormer = false,
 }: {
   owner: Owner;
   onChange: (o: Owner) => void;
-  isFormer?: boolean;
 }) {
   function handleInput(field: keyof Owner) {
     return (e: Event) => {
       const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
-      onChange({ ...owner, [field]: value });
-    };
-  }
-
-  function handleDateInput(field: 'endDate') {
-    return (e: Event) => {
-      // nys-datepicker emits a Date object (or ISO string); store a YYYY-MM-DD
-      // string so the value matches Owner['endDate'] (string) and never reaches
-      // isRequired() as a non-string.
-      const raw = (e as CustomEvent<{ id: string; value: string | Date }>).detail.value;
-      const value =
-        raw instanceof Date
-          ? `${raw.getFullYear()}-${String(raw.getMonth() + 1).padStart(2, '0')}-${String(
-              raw.getDate(),
-            ).padStart(2, '0')}`
-          : raw ?? '';
       onChange({ ...owner, [field]: value });
     };
   }
@@ -127,20 +103,11 @@ function OwnerFormFields({
           onChange({ ...owner, percentageOwned: raw === '' ? NaN : Number(raw) });
         }}
       />
-
-      {isFormer && (
-        <NysDatepicker
-          label="Ownership End Date"
-          required
-          value={owner.endDate || undefined}
-          onNysInput={handleDateInput('endDate')}
-        />
-      )}
     </div>
   );
 }
 
-function OwnerSummary({ owner, isFormer }: { owner: Owner; isFormer: boolean }) {
+function OwnerSummary({ owner }: { owner: Owner }) {
   const name = getOwnerDisplayName(owner);
   const type = owner.type === 'person' ? 'Person' : 'Entity';
   const pct = isNaN(owner.percentageOwned) ? '' : `${owner.percentageOwned}%`;
@@ -150,14 +117,7 @@ function OwnerSummary({ owner, isFormer }: { owner: Owner; isFormer: boolean }) 
       <strong>
         {name} — {type}
       </strong>
-      <div>
-        {[
-          pct && `${pct} owned`,
-          isFormer && owner.endDate && `End: ${owner.endDate}`,
-        ]
-          .filter(Boolean)
-          .join(' · ')}
-      </div>
+      <div>{pct && `${pct} owned`}</div>
     </div>
   );
 }
@@ -193,7 +153,7 @@ export default function Ownership() {
 
       <RepeatableFieldGroup<Owner>
         items={current}
-        emptyItem={EMPTY_CURRENT_OWNER}
+        emptyItem={EMPTY_OWNER}
         addLabel="+ Add additional owner"
         entryLabel="owner"
         openWhenEmpty
@@ -212,9 +172,9 @@ export default function Ownership() {
           })
         }
         renderForm={(item, onChange) => (
-          <OwnerFormFields owner={item} onChange={onChange} isFormer={false} />
+          <OwnerFormFields owner={item} onChange={onChange} />
         )}
-        renderSummary={(item) => <OwnerSummary owner={item} isFormer={false} />}
+        renderSummary={(item) => <OwnerSummary owner={item} />}
       />
 
       {ownershipStructure === 'private' && (
@@ -231,7 +191,7 @@ export default function Ownership() {
 
           <RepeatableFieldGroup<Owner>
             items={former}
-            emptyItem={EMPTY_FORMER_OWNER}
+            emptyItem={EMPTY_OWNER}
             addLabel="+ Add additional former owner"
             entryLabel="former owner"
             onAdd={(owner) =>
@@ -249,9 +209,9 @@ export default function Ownership() {
               })
             }
             renderForm={(item, onChange) => (
-              <OwnerFormFields owner={item} onChange={onChange} isFormer={true} />
+              <OwnerFormFields owner={item} onChange={onChange} />
             )}
-            renderSummary={(item) => <OwnerSummary owner={item} isFormer={true} />}
+            renderSummary={(item) => <OwnerSummary owner={item} />}
           />
         </>
       )}
