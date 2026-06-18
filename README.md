@@ -36,8 +36,9 @@ No environment variables are required to run the app locally — all API calls a
 ## Screenshots
 
 `npm run screenshots` drives a headless Chromium browser (Playwright) through every
-LFD-facing view and writes a full-page `@2x` PNG for each to `screenshots/`
-(git-ignored). Useful for documentation, design review, and spotting visual
+LFD-facing view and writes a full-page `@2x` PNG for each to `screenshots/`.
+The latest captures are committed to that folder; re-running the script
+refreshes them. Useful for documentation, design review, and spotting visual
 regressions.
 
 ### One-time setup
