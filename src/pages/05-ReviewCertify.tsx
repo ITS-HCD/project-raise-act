@@ -211,7 +211,7 @@ export default function ReviewCertify() {
       <div data-field-name="certification">
         <h3>Certification</h3>
         <NysCheckbox
-          label="I certify that the information provided in this submission is true, complete, and current to the best of my knowledge."
+          label="The information provided in this submission is true, complete, and current to the best of my knowledge."
           required
           checked={certification}
           showError={certProps.showError}
