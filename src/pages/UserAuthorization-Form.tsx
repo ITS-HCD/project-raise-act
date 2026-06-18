@@ -212,7 +212,7 @@ export default function UserAuthorizationForm() {
               <NysTextinput
                 id="legalName"
                 name="legalName"
-                label="Legal Name of Entity"
+                label="Legal Name of Large Frontier Developer"
                 width="lg"
                 value={formData.legalName}
                 onNysInput={handleInputChange}
@@ -484,7 +484,7 @@ You can upload PDF, JPG, or PNG files up to 10MB each"
               <NysCheckbox
                 id="certification"
                 name="certification"
-                label="I certify that the information provided in this submission is true, complete, and current to the best of my knowledge."
+                label="The information provided in this submission is true, complete, and current to the best of my knowledge."
                 checked={formData.certification}
                 onNysChange={handleCheckboxChange}
               />

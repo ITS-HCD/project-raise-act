@@ -12,7 +12,6 @@ export interface Owner {
   firstName: string;
   lastName: string;
   entityName: string;
-  percentageOwned: number;
 }
 
 export interface Contact {

@@ -35,11 +35,6 @@ export function isValidZip(value: string): boolean {
   return /^\d{5}(-\d{4})?$/.test(value.trim());
 }
 
-export function isValidPercentage(value: string | number): boolean {
-  const n = typeof value === 'string' ? parseFloat(value) : value;
-  return !isNaN(n) && n >= 0 && n <= 100;
-}
-
 export function isDateAfter(date: string, referenceDate: string): boolean {
   if (!date || !referenceDate) return false;
   return new Date(date) > new Date(referenceDate);
@@ -86,8 +81,6 @@ export function validateStep(stepNumber: number, data: RegistrationData): Valida
           if (!isRequired(owner.entityName))
             errors[`current[${i}].entityName`] = 'Entity name is required.';
         }
-        if (!isValidPercentage(owner.percentageOwned))
-          errors[`current[${i}].percentageOwned`] = 'Enter a percentage between 0 and 100.';
       });
 
       if (data.businessInfo.ownershipStructure === 'private') {
@@ -103,8 +96,6 @@ export function validateStep(stepNumber: number, data: RegistrationData): Valida
             if (!isRequired(owner.entityName))
               errors[`former[${i}].entityName`] = 'Entity name is required.';
           }
-          if (!isValidPercentage(owner.percentageOwned))
-            errors[`former[${i}].percentageOwned`] = 'Enter a percentage between 0 and 100.';
         });
       }
       break;

@@ -64,15 +64,11 @@ function AddressLines({ addr }: { addr: Address }) {
   );
 }
 
-function OwnerBlock({ owner, isFormer }: { owner: Owner; isFormer: boolean }) {
+function OwnerBlock({ owner }: { owner: Owner }) {
   return (
     <div className={styles.block}>
       <Line label="Owner name" value={ownerName(owner) || '(unnamed)'} />
       <Line label="Owner type" value={owner.type === 'person' ? 'Person' : 'Entity'} />
-      <Line label="Owner status" value={isFormer ? 'Former owner' : 'Current owner'} />
-      {!isNaN(owner.percentageOwned) && (
-        <Line label="Ownership percentage" value={`${owner.percentageOwned}%`} />
-      )}
     </div>
   );
 }
@@ -149,9 +145,6 @@ export default function ReviewCertify() {
             {additionalNames.join(', ')}
           </StackedField>
         )}
-        {ownershipStructure && (
-          <StackedField label="Ownership structure:">{ownershipStructure}</StackedField>
-        )}
       </ReviewSection>
 
       {/* Addresses */}
@@ -172,17 +165,20 @@ export default function ReviewCertify() {
 
       {/* Ownership */}
       <ReviewSection title="Ownership" onEdit={() => navigate('/register/ownership')}>
+        {ownershipStructure && (
+          <StackedField label="Ownership structure:">{ownershipStructure}</StackedField>
+        )}
         {ownership.current.length > 0 && (
           <StackedField label="Current beneficial owners to disclose:">
             {ownership.current.map((o, i) => (
-              <OwnerBlock key={i} owner={o} isFormer={false} />
+              <OwnerBlock key={i} owner={o} />
             ))}
           </StackedField>
         )}
         {ownership.former.length > 0 && (
-          <StackedField label="Former beneficial owners to disclose:">
+          <StackedField label="Previous beneficial owners to disclose (only for privately or closely held large frontier developer or ultimate parent):">
             {ownership.former.map((o, i) => (
-              <OwnerBlock key={i} owner={o} isFormer />
+              <OwnerBlock key={i} owner={o} />
             ))}
           </StackedField>
         )}

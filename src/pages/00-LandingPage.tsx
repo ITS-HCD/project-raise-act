@@ -167,16 +167,10 @@ export default function LandingPage() {
       default:
         return (
           <>
-            <NysAlert
-              className="dashboard__alert"
-              type="warning"
-              heading="Disclosure Statement required to operate under the RAISE Act"
-              text={requirementText}
-            />
             <div className="dashboard-card">
               <p className="dashboard-card__heading">Your disclosure statement has not been started.</p>
               <p className="dashboard-card__body">
-                It takes about 10–15 minutes. You can save your progress and return at any time.
+                You can save your progress and return at any time.
               </p>
               <NysButton
                 label="Start Disclosure Statement"

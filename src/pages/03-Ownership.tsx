@@ -15,7 +15,6 @@ const EMPTY_OWNER: Owner = {
   firstName: '',
   lastName: '',
   entityName: '',
-  percentageOwned: NaN,
 };
 
 function getOwnerDisplayName(owner: Owner): string {
@@ -89,20 +88,6 @@ function OwnerFormFields({
           onNysInput={handleInput('entityName')}
         />
       )}
-
-      <NysTextinput
-        label="Percentage Owned"
-        type="number"
-        width="sm"
-        required
-        value={isNaN(owner.percentageOwned) ? '' : String(owner.percentageOwned)}
-        min={0}
-        max={100}
-        onNysInput={(e: Event) => {
-          const raw = (e as CustomEvent<{ value: string }>).detail.value;
-          onChange({ ...owner, percentageOwned: raw === '' ? NaN : Number(raw) });
-        }}
-      />
     </div>
   );
 }
@@ -110,14 +95,12 @@ function OwnerFormFields({
 function OwnerSummary({ owner }: { owner: Owner }) {
   const name = getOwnerDisplayName(owner);
   const type = owner.type === 'person' ? 'Person' : 'Entity';
-  const pct = isNaN(owner.percentageOwned) ? '' : `${owner.percentageOwned}%`;
 
   return (
     <div>
       <strong>
         {name} — {type}
       </strong>
-      <div>{pct && `${pct} owned`}</div>
     </div>
   );
 }
@@ -186,7 +169,7 @@ export default function Ownership() {
             Former beneficial owners
           </h3>
           <p>
-            List any person or entity who held a beneficial ownership interest that ended within the past 5 years.
+            If the large frontier developer or its ultimate parent is privately or closely held, then list any person or entity who held a beneficial ownership interest of 5% or more that ended within the past 5 years.
           </p>
 
           <RepeatableFieldGroup<Owner>

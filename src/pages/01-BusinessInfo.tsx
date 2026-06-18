@@ -58,6 +58,41 @@ export default function BusinessInfo() {
     <div>
       <h2>Add Your Company Details</h2>
 
+      {/* Ownership Structure */}
+      <div data-field-name="ownershipStructure">
+        <NysRadiogroup
+          label="Ownership structure of large frontier developer (LFD) or ultimate parent"
+          required
+          showError={ownershipProps.showError}
+          errorMessage={ownershipProps.errorMessage}
+        >
+          <NysRadiobutton
+            name="ownershipStructure"
+            value="private"
+            label="Privately or closely held"
+            checked={ownershipStructure === 'private'}
+            onNysChange={(e: Event) => {
+              const detail = (e as CustomEvent<{ id: string; checked: boolean; name: string; value: string }>)
+                .detail;
+              if (detail.checked) handleOwnershipChange('private');
+            }}
+          />
+          <NysRadiobutton
+            name="ownershipStructure"
+            value="public"
+            label="Publicly traded"
+            checked={ownershipStructure === 'public'}
+            onNysChange={(e: Event) => {
+              const detail = (e as CustomEvent<{ id: string; checked: boolean; name: string; value: string }>)
+                .detail;
+              if (detail.checked) handleOwnershipChange('public');
+            }}
+          />
+        </NysRadiogroup>
+      </div>
+
+      <NysDivider />
+
       {/* Legal Company Name */}
       <NysTextinput
         label="Legal Company Name"
@@ -108,41 +143,6 @@ export default function BusinessInfo() {
         ))}
 
         <NysButton label="+ Add additional name" variant="text" onNysClick={handleAddName} />
-      </div>
-
-      <NysDivider />
-
-      {/* Ownership Structure */}
-      <div data-field-name="ownershipStructure">
-        <NysRadiogroup
-          label="Ownership structure of LFD or ultimate parent"
-          required
-          showError={ownershipProps.showError}
-          errorMessage={ownershipProps.errorMessage}
-        >
-          <NysRadiobutton
-            name="ownershipStructure"
-            value="private"
-            label="Privately or closely held"
-            checked={ownershipStructure === 'private'}
-            onNysChange={(e: Event) => {
-              const detail = (e as CustomEvent<{ id: string; checked: boolean; name: string; value: string }>)
-                .detail;
-              if (detail.checked) handleOwnershipChange('private');
-            }}
-          />
-          <NysRadiobutton
-            name="ownershipStructure"
-            value="public"
-            label="Publicly traded"
-            checked={ownershipStructure === 'public'}
-            onNysChange={(e: Event) => {
-              const detail = (e as CustomEvent<{ id: string; checked: boolean; name: string; value: string }>)
-                .detail;
-              if (detail.checked) handleOwnershipChange('public');
-            }}
-          />
-        </NysRadiogroup>
       </div>
 
       <NysDivider />
