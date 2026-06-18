@@ -24,6 +24,7 @@ npm run dev        # Dev server on http://localhost:5173
 | `npm run build`   | TypeScript check + production bundle  |
 | `npm run preview` | Preview production build locally      |
 | `npm run lint`    | Run ESLint                            |
+| `npm run screenshots` | Capture a full-page screenshot of every LFD-facing view (see below) |
 
 ### Prerequisites
 
@@ -31,6 +32,65 @@ npm run dev        # Dev server on http://localhost:5173
 - npm 9+
 
 No environment variables are required to run the app locally — all API calls are currently stubbed with mock responses and a simulated 500ms delay.
+
+## Screenshots
+
+`npm run screenshots` drives a headless Chromium browser (Playwright) through every
+LFD-facing view and writes a full-page `@2x` PNG for each to `screenshots/`
+(git-ignored). Useful for documentation, design review, and spotting visual
+regressions.
+
+### One-time setup
+
+Playwright is already a dev dependency (installed by `npm install`), but the
+browser binary is downloaded separately:
+
+```
+npx playwright install chromium
+```
+
+### Running it
+
+The script captures a **running** instance of the app, so start the server first,
+then run the script in a second terminal:
+
+```
+npm run dev          # terminal 1 — leave running
+npm run screenshots  # terminal 2
+```
+
+Output lands in `screenshots/`, numbered in walkthrough order:
+
+| File                            | View                                    |
+| ------------------------------- | --------------------------------------- |
+| `01-auth-signin`                | Sign-in                                 |
+| `02-auth-details`               | Authorization Details                   |
+| `03-auth-submitted`             | Authorization Submitted Successfully    |
+| `04-disclosure-landing`         | Disclosure Statement Landing Page       |
+| `05-disclosure-business-info`   | Business Information                     |
+| `06-disclosure-address`         | Address                                 |
+| `07-disclosure-ownership`       | Ownership                               |
+| `08-disclosure-contacts`        | Contacts                                |
+| `09-disclosure-review`          | Review and Certify                      |
+| `10-disclosure-submitted`       | Disclosure Statement Submitted Successfully |
+
+To capture a production build instead of the dev server, point `BASE_URL` at the
+preview server:
+
+```
+npm run build && npm run preview
+BASE_URL=http://localhost:4173/project-raise-act npm run screenshots
+```
+
+Notes:
+
+- The app is served under Vite's `/project-raise-act/` base path, so `BASE_URL`
+  includes it. The default targets the dev server
+  (`http://localhost:5173/project-raise-act`).
+- The app sits behind a client-side password gate (`index.html`). The script
+  bypasses it automatically by pre-seeding `localStorage.authed`, so no password
+  is needed.
+- To add or reorder views, edit the `PAGES` list in `scripts/screenshots.mjs`.
 
 ## Project Structure
 
