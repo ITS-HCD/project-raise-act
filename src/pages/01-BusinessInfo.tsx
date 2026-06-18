@@ -2,8 +2,6 @@ import { useNavigate } from 'react-router-dom';
 import { useRegistration } from '../context/RegistrationContext';
 import { useStepValidation } from '../utils/useStepValidation';
 import { NysTextinput } from '../components/wrappers/NysTextinput';
-import { NysRadiogroup } from '../components/wrappers/NysRadiogroup';
-import { NysRadiobutton } from '../components/wrappers/NysRadiobutton';
 import { NysButton } from '../components/wrappers/NysButton';
 import { NysDivider } from '../components/wrappers/NysDivider';
 import StepNavigation from '../components/StepNavigation';
@@ -13,7 +11,7 @@ export default function BusinessInfo() {
   const { data, dispatch } = useRegistration();
   const { validate, getFieldProps } = useStepValidation(1, data);
 
-  const { legalName, additionalNames, ownershipStructure } = data.businessInfo;
+  const { legalName, additionalNames } = data.businessInfo;
 
   function handleContinue() {
     if (validate()) {
@@ -25,10 +23,6 @@ export default function BusinessInfo() {
   function handleLegalNameInput(e: Event) {
     const value = (e as CustomEvent<{ id: string; value: string }>).detail.value;
     dispatch({ type: 'UPDATE_BUSINESS_INFO', payload: { legalName: value } });
-  }
-
-  function handleOwnershipChange(value: 'private' | 'public') {
-    dispatch({ type: 'UPDATE_BUSINESS_INFO', payload: { ownershipStructure: value } });
   }
 
   function handleAddName() {
@@ -52,46 +46,10 @@ export default function BusinessInfo() {
   }
 
   const legalNameProps = getFieldProps('legalName');
-  const ownershipProps = getFieldProps('ownershipStructure');
 
   return (
     <div>
       <h2>Add Your Company Details</h2>
-
-      {/* Ownership Structure */}
-      <div data-field-name="ownershipStructure">
-        <NysRadiogroup
-          label="Ownership structure of large frontier developer (LFD) or ultimate parent"
-          required
-          showError={ownershipProps.showError}
-          errorMessage={ownershipProps.errorMessage}
-        >
-          <NysRadiobutton
-            name="ownershipStructure"
-            value="private"
-            label="Privately or closely held"
-            checked={ownershipStructure === 'private'}
-            onNysChange={(e: Event) => {
-              const detail = (e as CustomEvent<{ id: string; checked: boolean; name: string; value: string }>)
-                .detail;
-              if (detail.checked) handleOwnershipChange('private');
-            }}
-          />
-          <NysRadiobutton
-            name="ownershipStructure"
-            value="public"
-            label="Publicly traded"
-            checked={ownershipStructure === 'public'}
-            onNysChange={(e: Event) => {
-              const detail = (e as CustomEvent<{ id: string; checked: boolean; name: string; value: string }>)
-                .detail;
-              if (detail.checked) handleOwnershipChange('public');
-            }}
-          />
-        </NysRadiogroup>
-      </div>
-
-      <NysDivider />
 
       {/* Legal Company Name */}
       <NysTextinput

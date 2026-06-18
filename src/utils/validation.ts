@@ -47,8 +47,6 @@ export function validateStep(stepNumber: number, data: RegistrationData): Valida
     case 1: {
       if (!isRequired(data.businessInfo.legalName))
         errors['legalName'] = 'Legal Company Name is required.';
-      if (!isRequired(data.businessInfo.ownershipStructure))
-        errors['ownershipStructure'] = 'Ownership structure is required.';
       break;
     }
 
@@ -69,6 +67,9 @@ export function validateStep(stepNumber: number, data: RegistrationData): Valida
     }
 
     case 3: {
+      if (!isRequired(data.businessInfo.ownershipStructure))
+        errors['ownershipStructure'] = 'Ownership structure is required.';
+
       data.ownership.current.forEach((owner, i) => {
         if (!isRequired(owner.type))
           errors[`current[${i}].type`] = 'Owner type is required.';

@@ -108,13 +108,18 @@ function OwnerSummary({ owner }: { owner: Owner }) {
 export default function Ownership() {
   const navigate = useNavigate();
   const { data, dispatch } = useRegistration();
-  const { validate } = useStepValidation(3, data);
+  const { validate, getFieldProps } = useStepValidation(3, data);
 
   const { current, former } = data.ownership;
   const { ownershipStructure } = data.businessInfo;
+  const ownershipProps = getFieldProps('ownershipStructure');
 
   function handleContinue() {
     if (validate()) navigate('/register/contacts');
+  }
+
+  function handleOwnershipChange(value: 'private' | 'public') {
+    dispatch({ type: 'UPDATE_BUSINESS_INFO', payload: { ownershipStructure: value } });
   }
 
   function handleFilesChange(e: Event) {
@@ -125,6 +130,41 @@ export default function Ownership() {
   return (
     <div>
       <h2>Ownership</h2>
+
+      {/* Ownership Structure */}
+      <div data-field-name="ownershipStructure">
+        <NysRadiogroup
+          label="Ownership structure of large frontier developer (LFD) or ultimate parent"
+          required
+          showError={ownershipProps.showError}
+          errorMessage={ownershipProps.errorMessage}
+        >
+          <NysRadiobutton
+            name="ownershipStructure"
+            value="private"
+            label="Privately or closely held"
+            checked={ownershipStructure === 'private'}
+            onNysChange={(e: Event) => {
+              const detail = (e as CustomEvent<{ id: string; checked: boolean; name: string; value: string }>)
+                .detail;
+              if (detail.checked) handleOwnershipChange('private');
+            }}
+          />
+          <NysRadiobutton
+            name="ownershipStructure"
+            value="public"
+            label="Publicly traded"
+            checked={ownershipStructure === 'public'}
+            onNysChange={(e: Event) => {
+              const detail = (e as CustomEvent<{ id: string; checked: boolean; name: string; value: string }>)
+                .detail;
+              if (detail.checked) handleOwnershipChange('public');
+            }}
+          />
+        </NysRadiogroup>
+      </div>
+
+      <NysDivider />
 
       {/* Section A: Current Beneficial Owners */}
       <h3>
