@@ -131,7 +131,7 @@ export default function ReviewCertify() {
 
   return (
     <div>
-      <h2>Review &amp; Certify</h2>
+      <h2>Review &amp; Submit</h2>
       <p>Review the information below before submitting.</p>
       <NysDivider />
 
@@ -209,7 +209,7 @@ export default function ReviewCertify() {
 
       {/* Certification */}
       <div data-field-name="certification">
-        <h3>Certification</h3>
+        <h3>Confirmation</h3>
         <NysCheckbox
           label="The information provided in this submission is true, complete, and current to the best of my knowledge."
           required

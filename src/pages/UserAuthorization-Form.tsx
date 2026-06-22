@@ -480,7 +480,7 @@ You can upload PDF, JPG, or PNG files up to 10MB each"
 
             {/* Certification */}
             <div className="form-section">
-              <h3>Certification</h3>
+              <h3>Confirmation</h3>
               <NysCheckbox
                 id="certification"
                 name="certification"

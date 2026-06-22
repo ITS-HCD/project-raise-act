@@ -14,7 +14,7 @@ const STEPS = [
   { label: 'Addresses', route: '/register/addresses' },
   { label: 'Ownership', route: '/register/ownership' },
   { label: 'Contacts', route: '/register/contacts' },
-  { label: 'Review & Certify', route: '/register/review' },
+  { label: 'Review & Submit', route: '/register/review' },
 ];
 
 function routeToStepIndex(pathname: string): number {
